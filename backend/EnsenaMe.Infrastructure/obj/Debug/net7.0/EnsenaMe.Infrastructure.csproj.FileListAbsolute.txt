@@ -1,0 +1,12 @@
+C:\Users\ckenl\Development\EnsenaMe\backend\EnsenaMe.Infrastructure\bin\Debug\net7.0\EnsenaMe.Infrastructure.deps.json
+C:\Users\ckenl\Development\EnsenaMe\backend\EnsenaMe.Infrastructure\bin\Debug\net7.0\EnsenaMe.Infrastructure.dll
+C:\Users\ckenl\Development\EnsenaMe\backend\EnsenaMe.Infrastructure\bin\Debug\net7.0\EnsenaMe.Infrastructure.pdb
+C:\Users\ckenl\Development\EnsenaMe\backend\EnsenaMe.Infrastructure\obj\Debug\net7.0\EnsenaMe.Infrastructure.csproj.AssemblyReference.cache
+C:\Users\ckenl\Development\EnsenaMe\backend\EnsenaMe.Infrastructure\obj\Debug\net7.0\EnsenaMe.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ckenl\Development\EnsenaMe\backend\EnsenaMe.Infrastructure\obj\Debug\net7.0\EnsenaMe.Infrastructure.AssemblyInfoInputs.cache
+C:\Users\ckenl\Development\EnsenaMe\backend\EnsenaMe.Infrastructure\obj\Debug\net7.0\EnsenaMe.Infrastructure.AssemblyInfo.cs
+C:\Users\ckenl\Development\EnsenaMe\backend\EnsenaMe.Infrastructure\obj\Debug\net7.0\EnsenaMe.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\ckenl\Development\EnsenaMe\backend\EnsenaMe.Infrastructure\obj\Debug\net7.0\EnsenaMe.Infrastructure.dll
+C:\Users\ckenl\Development\EnsenaMe\backend\EnsenaMe.Infrastructure\obj\Debug\net7.0\refint\EnsenaMe.Infrastructure.dll
+C:\Users\ckenl\Development\EnsenaMe\backend\EnsenaMe.Infrastructure\obj\Debug\net7.0\EnsenaMe.Infrastructure.pdb
+C:\Users\ckenl\Development\EnsenaMe\backend\EnsenaMe.Infrastructure\obj\Debug\net7.0\ref\EnsenaMe.Infrastructure.dll

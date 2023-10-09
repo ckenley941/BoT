@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v7.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v7.0": {
+      "EnsenaMe.Infrastructure/1.0.0": {
+        "runtime": {
+          "EnsenaMe.Infrastructure.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "EnsenaMe.Infrastructure/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

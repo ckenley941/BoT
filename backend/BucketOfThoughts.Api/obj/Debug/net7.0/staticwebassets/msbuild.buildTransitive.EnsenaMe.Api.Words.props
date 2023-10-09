@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\EnsenaMe.Api.Words.props" />
+</Project>

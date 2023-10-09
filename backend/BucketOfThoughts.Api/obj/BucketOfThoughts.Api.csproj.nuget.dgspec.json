@@ -1,0 +1,489 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\ckenl\\Development\\BucketOfThoughts\\backend\\BucketOfThoughts.Api\\BucketOfThoughts.Api.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\ckenl\\Development\\BucketOfThoughts\\backend\\Auth.Data.SqlServer\\Auth.Data.SqlServer.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\ckenl\\Development\\BucketOfThoughts\\backend\\Auth.Data.SqlServer\\Auth.Data.SqlServer.csproj",
+        "projectName": "Auth.Data.SqlServer",
+        "projectPath": "C:\\Users\\ckenl\\Development\\BucketOfThoughts\\backend\\Auth.Data.SqlServer\\Auth.Data.SqlServer.csproj",
+        "packagesPath": "C:\\Users\\ckenl\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ckenl\\Development\\BucketOfThoughts\\backend\\Auth.Data.SqlServer\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\ckenl\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.10, )"
+            },
+            "Microsoft.AspNetCore.Identity.UI": {
+              "target": "Package",
+              "version": "[7.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[7.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.10, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\ckenl\\Development\\BucketOfThoughts\\backend\\BucketOfThoughts.Api\\BucketOfThoughts.Api.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\ckenl\\Development\\BucketOfThoughts\\backend\\BucketOfThoughts.Api\\BucketOfThoughts.Api.csproj",
+        "projectName": "BucketOfThoughts.Api",
+        "projectPath": "C:\\Users\\ckenl\\Development\\BucketOfThoughts\\backend\\BucketOfThoughts.Api\\BucketOfThoughts.Api.csproj",
+        "packagesPath": "C:\\Users\\ckenl\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ckenl\\Development\\BucketOfThoughts\\backend\\BucketOfThoughts.Api\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\ckenl\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "C:\\Users\\ckenl\\Development\\BucketOfThoughts\\backend\\Auth.Data.SqlServer\\Auth.Data.SqlServer.csproj": {
+                "projectPath": "C:\\Users\\ckenl\\Development\\BucketOfThoughts\\backend\\Auth.Data.SqlServer\\Auth.Data.SqlServer.csproj"
+              },
+              "C:\\Users\\ckenl\\Development\\BucketOfThoughts\\backend\\Common.Data.Objects\\Common.Data.Objects.csproj": {
+                "projectPath": "C:\\Users\\ckenl\\Development\\BucketOfThoughts\\backend\\Common.Data.Objects\\Common.Data.Objects.csproj"
+              },
+              "C:\\Users\\ckenl\\Development\\BucketOfThoughts\\backend\\EnsenaMe.Data.MongoDB\\EnsenaMe.Data.MongoDB.csproj": {
+                "projectPath": "C:\\Users\\ckenl\\Development\\BucketOfThoughts\\backend\\EnsenaMe.Data.MongoDB\\EnsenaMe.Data.MongoDB.csproj"
+              },
+              "C:\\Users\\ckenl\\Development\\BucketOfThoughts\\backend\\EnsenaMe.Data.SqlServer\\EnsenaMe.Data.SqlServer.csproj": {
+                "projectPath": "C:\\Users\\ckenl\\Development\\BucketOfThoughts\\backend\\EnsenaMe.Data.SqlServer\\EnsenaMe.Data.SqlServer.csproj"
+              },
+              "C:\\Users\\ckenl\\Development\\BucketOfThoughts\\backend\\Thoughts.Data.SqlServer\\Thoughts.Data.SqlServer.csproj": {
+                "projectPath": "C:\\Users\\ckenl\\Development\\BucketOfThoughts\\backend\\Thoughts.Data.SqlServer\\Thoughts.Data.SqlServer.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Authentication.Cookies": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[7.0.10, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.10, )"
+            },
+            "Microsoft.AspNetCore.Identity.UI": {
+              "target": "Package",
+              "version": "[7.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.3, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[7.0.10, )"
+            },
+            "Microsoft.Extensions.Caching.StackExchangeRedis": {
+              "target": "Package",
+              "version": "[7.0.10, )"
+            },
+            "StackExchange.Redis": {
+              "target": "Package",
+              "version": "[2.6.122, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.2.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\ckenl\\Development\\BucketOfThoughts\\backend\\Common.Data.Objects\\Common.Data.Objects.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\ckenl\\Development\\BucketOfThoughts\\backend\\Common.Data.Objects\\Common.Data.Objects.csproj",
+        "projectName": "Common.Data.Objects",
+        "projectPath": "C:\\Users\\ckenl\\Development\\BucketOfThoughts\\backend\\Common.Data.Objects\\Common.Data.Objects.csproj",
+        "packagesPath": "C:\\Users\\ckenl\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ckenl\\Development\\BucketOfThoughts\\backend\\Common.Data.Objects\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\ckenl\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\ckenl\\Development\\BucketOfThoughts\\backend\\EnsenaMe.Data.MongoDB\\EnsenaMe.Data.MongoDB.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\ckenl\\Development\\BucketOfThoughts\\backend\\EnsenaMe.Data.MongoDB\\EnsenaMe.Data.MongoDB.csproj",
+        "projectName": "EnsenaMe.Data.MongoDB",
+        "projectPath": "C:\\Users\\ckenl\\Development\\BucketOfThoughts\\backend\\EnsenaMe.Data.MongoDB\\EnsenaMe.Data.MongoDB.csproj",
+        "packagesPath": "C:\\Users\\ckenl\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ckenl\\Development\\BucketOfThoughts\\backend\\EnsenaMe.Data.MongoDB\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\ckenl\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "C:\\Users\\ckenl\\Development\\BucketOfThoughts\\backend\\Common.Data.Objects\\Common.Data.Objects.csproj": {
+                "projectPath": "C:\\Users\\ckenl\\Development\\BucketOfThoughts\\backend\\Common.Data.Objects\\Common.Data.Objects.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Microsoft.Extensions.Options": {
+              "target": "Package",
+              "version": "[7.0.1, )"
+            },
+            "MongoDB.Bson": {
+              "target": "Package",
+              "version": "[2.20.0, )"
+            },
+            "MongoDB.Driver": {
+              "target": "Package",
+              "version": "[2.20.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\ckenl\\Development\\BucketOfThoughts\\backend\\EnsenaMe.Data.SqlServer\\EnsenaMe.Data.SqlServer.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\ckenl\\Development\\BucketOfThoughts\\backend\\EnsenaMe.Data.SqlServer\\EnsenaMe.Data.SqlServer.csproj",
+        "projectName": "EnsenaMe.Data.SqlServer",
+        "projectPath": "C:\\Users\\ckenl\\Development\\BucketOfThoughts\\backend\\EnsenaMe.Data.SqlServer\\EnsenaMe.Data.SqlServer.csproj",
+        "packagesPath": "C:\\Users\\ckenl\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ckenl\\Development\\BucketOfThoughts\\backend\\EnsenaMe.Data.SqlServer\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\ckenl\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.Relational": {
+              "target": "Package",
+              "version": "[7.0.3, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[7.0.3, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.3, )"
+            },
+            "Microsoft.Extensions.Logging.Abstractions": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\ckenl\\Development\\BucketOfThoughts\\backend\\Thoughts.Data.SqlServer\\Thoughts.Data.SqlServer.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\ckenl\\Development\\BucketOfThoughts\\backend\\Thoughts.Data.SqlServer\\Thoughts.Data.SqlServer.csproj",
+        "projectName": "Thoughts.Data.SqlServer",
+        "projectPath": "C:\\Users\\ckenl\\Development\\BucketOfThoughts\\backend\\Thoughts.Data.SqlServer\\Thoughts.Data.SqlServer.csproj",
+        "packagesPath": "C:\\Users\\ckenl\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ckenl\\Development\\BucketOfThoughts\\backend\\Thoughts.Data.SqlServer\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\ckenl\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[7.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.10, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

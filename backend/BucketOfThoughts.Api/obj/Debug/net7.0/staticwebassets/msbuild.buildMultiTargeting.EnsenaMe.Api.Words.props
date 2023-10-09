@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\EnsenaMe.Api.Words.props" />
+</Project>
