@@ -34,6 +34,9 @@ namespace BucketOfThoughts.Core.Infrastructure
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+
+
+            builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
             //builder.Services.AddDbContext<AuthIdentityDbContext>(options =>
             //    options.UseSqlServer(builder.Configuration.GetConnectionString("Home"),
             //    b => b.MigrationsAssembly(typeof(AuthIdentityDbContext).Assembly.FullName)), ServiceLifetime.Transient);

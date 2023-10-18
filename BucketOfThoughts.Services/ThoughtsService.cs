@@ -17,28 +17,32 @@ namespace BucketOfThoughts.Services
         }
 
         public async Task<Thought> GetRandomThoughtAsync()
-        {
+        {            
             //Eventually remove from cache what has already been used so we don't repeat random thoughts or added a flag
-            var thoughts = await _cache.GetRecordAsync<List<Thought>>("Thoughts");
-
-            if (thoughts == null)
+            return new Thought()
             {
-                thoughts = _dbContext.Thoughts
-                    .Include(x => x.ThoughtDetails)
-                    .Include(x => x.ThoughtCategory)
-                    //.Include(x => x.ThoughtFiles)
-                    .ToList();
-                await _cache.SetRecordAsync("Thoughts", thoughts);
-            }
+                Description = "Test"
+            };
+            //var thoughts = await _cache.GetRecordAsync<List<Thought>>("Thoughts");
+
+            //if (thoughts == null)
+            //{
+            //    thoughts = _dbContext.Thoughts
+            //        .Include(x => x.ThoughtDetails)
+            //        .Include(x => x.ThoughtCategory)
+            //        //.Include(x => x.ThoughtFiles)
+            //        .ToList();
+            //    await _cache.SetRecordAsync("Thoughts", thoughts);
+            //}
 
 
-            if (thoughts?.Count <= 0)
-            {
-                throw new Exception("Thoughts not found"); //TODO make custom not found exception passing in name of object not found "{} not found"
-            }
+            //if (thoughts?.Count <= 0)
+            //{
+            //    throw new Exception("Thoughts not found"); //TODO make custom not found exception passing in name of object not found "{} not found"
+            //}
 
-            var rand = new Random();
-            return thoughts[rand.Next(thoughts.Count)];
+            //var rand = new Random();
+            //return thoughts[rand.Next(thoughts.Count)];
         }
 
         public async Task<List<ThoughtCategory>> GetThoughtCategoriesAsync()
