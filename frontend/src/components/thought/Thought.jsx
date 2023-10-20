@@ -25,7 +25,7 @@ export default function Thought() {
     return (
         <Card variant="outlined">
         <CardContent>
-        <Typography variant="h5">  {thought.description }</Typography>  
+        <Typography variant="h5"> Test {thought.description }</Typography>  
             { thought.thoughtDetails.map((t, i) => (
                 <Grid key={i}>
                   <div>{t.description}</div>
