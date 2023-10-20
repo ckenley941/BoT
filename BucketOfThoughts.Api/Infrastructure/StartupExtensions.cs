@@ -1,25 +1,15 @@
-﻿using Common.Data.Objects.Words;
-using BucketOfThoughts.Api.Handlers;
-using BucketOfThoughts.Services;
-using EnsenaMe.Data.Contexts;
-using Microsoft.EntityFrameworkCore;
-using EnsenaMe.Data.MongoDB;
-using Thoughts.Data.SqlServer;
-using System.Text.Json.Serialization;
-using Microsoft.Extensions.Caching.Distributed;
-using StackExchange.Redis;
-using Microsoft.Extensions.Caching.StackExchangeRedis;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Configuration;
-using Auth.Data.SqlServer;
-using Auth.Data.SqlServer.Models;
-using Common.Data.Objects.Thoughts;
-using Microsoft.AspNetCore.Diagnostics;
-using static System.Net.Mime.MediaTypeNames;
+﻿using BucketOfThoughts.Api.Handlers;
 using BucketOfThoughts.FileService;
-using Microsoft.Extensions.DependencyInjection;
 using BucketOfThoughts.Imports.Thoughts;
+using BucketOfThoughts.Services;
+using Common.Data.Objects.Thoughts;
+using Common.Data.Objects.Words;
+using EnsenaMe.Data.Contexts;
+using EnsenaMe.Data.MongoDB;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace BucketOfThoughts.Core.Infrastructure
 {
@@ -78,16 +68,10 @@ namespace BucketOfThoughts.Core.Infrastructure
                 options.UseSqlServer(configuration.GetConnectionString("Home"),
                 b => b.MigrationsAssembly(typeof(EnsenaMeContext).Assembly.FullName)), ServiceLifetime.Transient);
 
-            services.AddDbContext<BucketOfThoughtsProdContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("Home"),
-                b => b.MigrationsAssembly(typeof(BucketOfThoughtsProdContext).Assembly.FullName)), ServiceLifetime.Transient);
-
             services.AddScoped<RandomWordHandler>();
             services.AddScoped<ThoughtsHandler>();
 
             services.AddScoped<IWordsService, WordsService>();
-            services.AddScoped<IThoughtsService, ThoughtsService>();
-            services.AddScoped<IUserService, UserService>();
             services.AddScoped<ICsvProcessor, CsvProcessor>();
             services.AddScoped<IIngestionFileProcessor, ThoughtDataProcessor>();
 
@@ -134,27 +118,12 @@ namespace BucketOfThoughts.Core.Infrastructure
                     : Results.NotFound()
                 );
 
-            app.MapGet("/api/thoughts/random",
-                async (ThoughtsHandler thoughtsHandler) =>
-                    await thoughtsHandler.GetRandomThoughtAsync()
-                    is Thought randomThought
-                    ? Results.Ok(randomThought)
-                    : Results.NotFound()
-                );
-
-            app.MapGet("/api/thoughtcategories",
-                async (ThoughtsHandler thoughtsHandler) =>
-                    await thoughtsHandler.GetThoughtCategoriesAsync()
-                    is List<ThoughtCategory> thoughtCategories
-                    ? Results.Ok(thoughtCategories)
-                    : Results.NotFound()
-                );
 
             app.MapPost("/api/thoughts",
                 async (ThoughtsHandler thoughtsHandler, InsertThoughtDto newThought) =>
                     {
-                        var thought = await thoughtsHandler.AddThoughtAsync(newThought);
-                        Results.Created($"/api/thoughts/{thought.ThoughtId}", thought);
+                        //var thought = await thoughtsHandler.AddThoughtAsync(newThought);
+                        //Results.Created($"/api/thoughts/{thought.ThoughtId}", thought);
                     }
                 );
         }

@@ -18,10 +18,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnsenaMe.Data.MongoDB", "En
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Data.Objects", "Common.Data.Objects\Common.Data.Objects.csproj", "{0ECD25C3-4A2F-4A19-A468-A910532D4119}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thoughts.Data.SqlServer", "Thoughts.Data.SqlServer\Thoughts.Data.SqlServer.csproj", "{3B9DF3A4-D743-4468-8591-E926FCA3B7B7}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auth.Data.SqlServer", "Auth.Data.SqlServer\Auth.Data.SqlServer.csproj", "{26E074A8-288F-4341-8510-72AC6AFABAEA}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BucketOfThoughts.FileService", "BucketOfThoughts.FileService\BucketOfThoughts.FileService.csproj", "{EBDD65FB-6103-4438-8674-6AFD8F67AA42}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BucketOfThoughts.Imports", "BucketOfThoughts.Import\BucketOfThoughts.Imports.csproj", "{29D81B8E-A91C-4407-9BAB-422319549BA9}"
@@ -30,7 +26,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BucketOfThoughts.Services",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BucketOfThoughts.Core.Infrastructure", "BucketOfThoughts.Core.Infrastructure\BucketOfThoughts.Core.Infrastructure.csproj", "{2E86B588-AD29-48CB-BF20-115B8025E705}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BucketOfThoughts.Serverless", "BucketOfThoughts.Serverless\BucketOfThoughts.Serverless.csproj", "{A5468A25-784F-493C-AB0D-1E32FCEE10C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BucketOfThoughts.Api.ThoughtModule", "BucketOfThoughts.Api.ThoughtModule\BucketOfThoughts.Api.ThoughtModule.csproj", "{42F95472-FDBC-4489-B4B9-BC227DA21623}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BucketOfThoughts.Api.ThoughtHandlers", "BucketOfThoughts.Api.ThoughtHandlers\BucketOfThoughts.Api.ThoughtHandlers.csproj", "{A526CEEA-448A-48CA-A089-24680A116273}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BucketOfThoughts.Services.ThoughtModule", "BucketOfThoughts.Services.ThoughtModule\BucketOfThoughts.Services.ThoughtModule.csproj", "{85506955-5714-460D-9B1C-32935B7715B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,14 +54,6 @@ Global
 		{0ECD25C3-4A2F-4A19-A468-A910532D4119}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0ECD25C3-4A2F-4A19-A468-A910532D4119}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0ECD25C3-4A2F-4A19-A468-A910532D4119}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3B9DF3A4-D743-4468-8591-E926FCA3B7B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3B9DF3A4-D743-4468-8591-E926FCA3B7B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3B9DF3A4-D743-4468-8591-E926FCA3B7B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3B9DF3A4-D743-4468-8591-E926FCA3B7B7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{26E074A8-288F-4341-8510-72AC6AFABAEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{26E074A8-288F-4341-8510-72AC6AFABAEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{26E074A8-288F-4341-8510-72AC6AFABAEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{26E074A8-288F-4341-8510-72AC6AFABAEA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EBDD65FB-6103-4438-8674-6AFD8F67AA42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EBDD65FB-6103-4438-8674-6AFD8F67AA42}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBDD65FB-6103-4438-8674-6AFD8F67AA42}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -78,10 +70,18 @@ Global
 		{2E86B588-AD29-48CB-BF20-115B8025E705}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E86B588-AD29-48CB-BF20-115B8025E705}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E86B588-AD29-48CB-BF20-115B8025E705}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A5468A25-784F-493C-AB0D-1E32FCEE10C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A5468A25-784F-493C-AB0D-1E32FCEE10C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A5468A25-784F-493C-AB0D-1E32FCEE10C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A5468A25-784F-493C-AB0D-1E32FCEE10C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42F95472-FDBC-4489-B4B9-BC227DA21623}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42F95472-FDBC-4489-B4B9-BC227DA21623}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42F95472-FDBC-4489-B4B9-BC227DA21623}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42F95472-FDBC-4489-B4B9-BC227DA21623}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A526CEEA-448A-48CA-A089-24680A116273}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A526CEEA-448A-48CA-A089-24680A116273}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A526CEEA-448A-48CA-A089-24680A116273}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A526CEEA-448A-48CA-A089-24680A116273}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85506955-5714-460D-9B1C-32935B7715B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85506955-5714-460D-9B1C-32935B7715B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85506955-5714-460D-9B1C-32935B7715B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85506955-5714-460D-9B1C-32935B7715B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

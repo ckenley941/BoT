@@ -20,18 +20,16 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.12" />
     <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.0.10" />
     <PackageReference Include="StackExchange.Redis" Version="2.6.122" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Auth.Data.SqlServer\Auth.Data.SqlServer.csproj" />
     <ProjectReference Include="..\BucketOfThoughts.FileService\BucketOfThoughts.FileService.csproj" />
     <ProjectReference Include="..\BucketOfThoughts.Import\BucketOfThoughts.Imports.csproj" />
     <ProjectReference Include="..\BucketOfThoughts.Services\BucketOfThoughts.Services.csproj" />
-    <ProjectReference Include="..\Thoughts.Data.SqlServer\Thoughts.Data.SqlServer.csproj" />
     <ProjectReference Include="..\EnsenaMe.Data.MongoDB\EnsenaMe.Data.MongoDB.csproj" />
     <ProjectReference Include="..\Common.Data.Objects\Common.Data.Objects.csproj" />
     <ProjectReference Include="..\EnsenaMe.Data.SqlServer\EnsenaMe.Data.SqlServer.csproj" />

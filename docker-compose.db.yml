@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: local-db
+    networks: 
+      - dev
+    restart: always
+    healthcheck:
+      test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-S", "localhost",
+       "-U", "SA", "-P", "@Local?DevPass!", "-Q", "'select name from sys.databases'"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "@Local?DevPass!"
+    ports:
+      - "1434:1433"
+
+networks:
+  dev:

@@ -8,9 +8,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BucketOfThoughts.Core.Infrastructure\BucketOfThoughts.Core.Infrastructure.csproj" />
+    <ProjectReference Include="..\BucketOfThoughts.ThoughtHandlers\BucketOfThoughts.Api.ThoughtModule.csproj" />
     <ProjectReference Include="..\Common.Data.Objects\Common.Data.Objects.csproj" />
     <ProjectReference Include="..\EnsenaMe.Data.SqlServer\EnsenaMe.Data.SqlServer.csproj" />
-    <ProjectReference Include="..\Thoughts.Data.SqlServer\Thoughts.Data.SqlServer.csproj" />
   </ItemGroup>
 
 </Project>
