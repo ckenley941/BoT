@@ -22,6 +22,11 @@ namespace BucketOfThoughts.Api.Handlers
             // package will act as the webserver translating request and responses between the Lambda event source and ASP.NET Core.
             services.AddAWSLambdaHosting(LambdaEventSource.RestApi);
 
+            services.AddCors(p => p.AddPolicy("corsapp", builder =>
+            {
+                builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+            }));
+
             services.AddDbContext<ThoughtsDbContext>(
                 options =>
                   options.UseSqlServer(configuration.GetConnectionString("BucketOfThoughtsConnection"),
@@ -54,11 +59,30 @@ namespace BucketOfThoughts.Api.Handlers
 
             return services;
         }
-        
-        public static WebApplication AddMinimumApiEndpoints(this WebApplication app)
-        {
-            app.MapGet("/", () => "Welcome to running ASP.NET Core Minimal API on AWS Lambda");
 
+        public static WebApplication AddMiddleware(this WebApplication app)
+        {
+            app.UseHttpsRedirection();
+            app.UseAuthorization();
+            app.MapControllers();
+
+            app.AddMinimumApiEndpoints();
+
+            app.UseCors("corsapp");
+            return app;
+        }
+
+        private static WebApplication AddMinimumApiEndpoints(this WebApplication app)
+        {
+            app.MapGet("/health", () => "Health check");
+            app.AddThoughtApiEndpoints();
+            app.AddWordApiEndpoints();
+
+            return app;
+        }
+
+        private static WebApplication AddThoughtApiEndpoints(this WebApplication app)
+        {
             app.MapGet("/api/thoughts/random",
               async (GetRandomThoughtHandler handler) =>
                   await handler.HandleAsync()
@@ -83,14 +107,18 @@ namespace BucketOfThoughts.Api.Handlers
                 }
                 );
 
-            app.MapGet("/api/words/random",
-              async (GetRandomWordHandler handler) =>
-                  await handler.HandleAsync()
-                  is WordTranslationDto randomWord
-                  ? Results.Ok(randomWord)
-                  : Results.NotFound()
-              );
+            return app;
+        }
 
+        private static WebApplication AddWordApiEndpoints(this WebApplication app)
+        {
+            app.MapGet("/api/words/random",
+             async (GetRandomWordHandler handler) =>
+                 await handler.HandleAsync()
+                 is WordTranslationDto randomWord
+                 ? Results.Ok(randomWord)
+                 : Results.NotFound()
+             );
 
             return app;
         }

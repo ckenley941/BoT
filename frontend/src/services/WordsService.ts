@@ -5,7 +5,7 @@ export function getWordById(id: number) {
   }
 
 export function getRandomWord() {
-    return client.get(`${apiUrl}/words/GetRandomWord`);
+    return client.get(`${apiUrl}/words/random`);
   }
 
 export function getWordTranslations(id: number) {
