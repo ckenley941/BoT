@@ -1,5 +1,4 @@
-﻿using Common.Data.Objects.Thoughts;
-using CsvHelper.Configuration;
+﻿using CsvHelper.Configuration;
 
 namespace BucketOfThoughts.Imports.Thoughts
 {

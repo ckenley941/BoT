@@ -1,5 +1,5 @@
 ﻿using BucketOfThoughts.FileService;
-using Common.Data.Objects.Thoughts;
+using BucketOfThoughts.Services.Thoughts.Objects;
 
 namespace BucketOfThoughts.Imports.Thoughts
 {
