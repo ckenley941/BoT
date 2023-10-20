@@ -8,4 +8,4 @@ var app = builder.Build();
 
 app.AddMiddleware();
 
-app.Run();
+app.Run(); //Trigger CI/CD pipeline
