@@ -7,6 +7,7 @@ const devUrl = "https://localhost:57568/";
 
 export const mainUrl = prodUrl;
 export const apiUrl = mainUrl + "api";
+console.log(apiUrl);
 
 export const client = axios.create({
     baseURL: apiUrl,
