@@ -8,6 +8,10 @@ export function getRandomThought() {
     return client.get(`${apiUrl}/thoughtcategories`);
   }
 
+  export function getThoughts() {
+    return client.get(`${apiUrl}/thoughts`);
+  }
+
   export function insertThought(newThought: NewThought) {
     return client.post(`${apiUrl}/thoughts`, newThought);
   }

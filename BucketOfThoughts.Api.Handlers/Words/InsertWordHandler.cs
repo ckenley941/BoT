@@ -3,16 +3,16 @@ using BucketOfThoughts.Services.Languages.Objects;
 
 namespace BucketOfThoughts.Api.Handlers.Words
 {
-    public class GetRandomWordHandler 
+    public class InsertWordHandler
     {
         protected readonly WordsService _service;
-        public GetRandomWordHandler(WordsService service)
+        public InsertWordHandler(WordsService service)
         {
             _service = service;
         }
-        public async Task<WordTranslationDto> HandleAsync()
+        public async Task<int> HandleAsync(InsertWordCardDto newItem)
         {
-            return await _service.GetRandomWordAsync();
+            return await _service.InsertOrUpdateWordCardAsync(newItem);
         }
     }
 }

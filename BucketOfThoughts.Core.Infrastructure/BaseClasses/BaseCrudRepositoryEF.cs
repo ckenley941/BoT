@@ -19,7 +19,7 @@ namespace BucketOfThoughts.Core.Infrastructure.BaseClasses
             _dbSet = context.Set<TEntity>();
         }
 
-        public async virtual Task<IEnumerable<TEntity>> GetAsync(
+        public async virtual Task<IQueryable<TEntity>> GetAsync(
             Expression<Func<TEntity, bool>>? filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
             string includeProperties = "")
@@ -39,11 +39,11 @@ namespace BucketOfThoughts.Core.Infrastructure.BaseClasses
 
             if (orderBy != null)
             {
-                return await orderBy(query).ToListAsync();
+                return orderBy(query);
             }
             else
             {
-                return await query.ToListAsync();
+                return query;
             }
         }
 

@@ -4,6 +4,11 @@ export function getWordById(id: number) {
     return client.get(`${apiUrl}/words/${id}`);
   }
 
+  export function getWords() {
+    return client.get(`${apiUrl}/words`);
+  }
+
+
 export function getRandomWord() {
     return client.get(`${apiUrl}/words/random`);
   }

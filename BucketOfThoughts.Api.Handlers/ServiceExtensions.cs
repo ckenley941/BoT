@@ -9,6 +9,7 @@ using BucketOfThoughts.Api.Handlers.Words;
 using BucketOfThoughts.Services.Languages.Objects;
 using BucketOfThoughts.Services.Languages;
 using BucketOfThoughts.Services.Languages.Data;
+using BucketOfThoughts.Api.Handlers.ThoughtCategories;
 
 namespace BucketOfThoughts.Api.Handlers
 {
@@ -39,17 +40,27 @@ namespace BucketOfThoughts.Api.Handlers
                  b => b.MigrationsAssembly(typeof(LanguageDbContext).Assembly.FullName)),
                ServiceLifetime.Transient);
 
+            //Thoughts
+            services.AddScoped<ThoughtCategoriesService>();
+            services.AddScoped<ICrudRepository<ThoughtCategory>, ThoughtCategoriesRepository>();
             services.AddScoped<ThoughtsService>();
             services.AddScoped<ICrudRepository<Thought>, ThoughtsRepository>();
+            services.AddScoped<GetRandomThoughtHandler>();
+            services.AddScoped<GetThoughtCategoriesHandler>();
+            services.AddScoped<GetThoughtsHandler>();
+            services.AddScoped<InsertThoughtCategoryHandler>();
+            services.AddScoped<InsertThoughtHandler>();
+
+            //Words
             services.AddScoped<WordsService>();
             services.AddScoped<ICrudRepository<Word>, WordsRepository>();
-
-            services.AddScoped<GetRandomThoughtHandler>();
-            services.AddScoped<GetThoughtsHandler>();
-            services.AddScoped<AddThoughtHandler>();
-
-
             services.AddScoped<GetRandomWordHandler>();
+            services.AddScoped<GetWordRelationshipsHandler>();
+            services.AddScoped<GetWordsHandler>();
+            services.AddScoped<GetWordTranslationsHandler>();
+            services.AddScoped<GetWordTranslationsWithContextHandler>();
+            services.AddScoped<InsertWordHandler>();
+
             services.AddDistributedMemoryCache();
 
             services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options =>
@@ -94,18 +105,34 @@ namespace BucketOfThoughts.Api.Handlers
             app.MapGet("/api/thoughts",
              async (GetThoughtsHandler handler) =>
                  await handler.HandleAsync()
-                 is IEnumerable<Thought> thoughts
+                 is IEnumerable<GetThoughtDto> thoughts
                  ? Results.Ok(thoughts)
                  : Results.NotFound()
              );
 
+            app.MapGet("/api/thoughtcategories",
+           async (GetThoughtCategoriesHandler handler) =>
+               await handler.HandleAsync()
+               is IEnumerable<ThoughtCategory> thoughtCategories
+               ? Results.Ok(thoughtCategories)
+               : Results.NotFound()
+           );
+
             app.MapPost("/api/thoughts",
-                async (AddThoughtHandler thoughtsHandler, InsertThoughtDto newThought) =>
+                async (InsertThoughtHandler handler, InsertThoughtDto newItem) =>
                 {
-                    var thought = await thoughtsHandler.HandleAsync(newThought);
+                    var thought = await handler.HandleAsync(newItem);
                     Results.Created($"/api/thoughts/{thought.ThoughtId}", thought);
                 }
                 );
+
+            app.MapPost("/api/thoughtcategory",
+               async (InsertThoughtCategoryHandler handler, ThoughtCategory newItem) =>
+               {
+                   var thoughtCategory = await handler.HandleAsync(newItem);
+                   Results.Created($"/api/thoughtcategories/{thoughtCategory.ThoughtCategoryId}", thoughtCategory);
+               }
+               );
 
             return app;
         }
@@ -119,6 +146,46 @@ namespace BucketOfThoughts.Api.Handlers
                  ? Results.Ok(randomWord)
                  : Results.NotFound()
              );
+
+            app.MapGet("/api/words",
+             async (GetWordsHandler handler) =>
+                 await handler.HandleAsync()
+                 is IEnumerable<GetWordDto> words
+                 ? Results.Ok(words)
+                 : Results.NotFound()
+             );
+
+            app.MapGet("/api/words/GetTranslations/{id}",
+            async (GetWordTranslationsHandler handler, int id) =>
+                await handler.HandleAsync(id)
+                is List<WordDto> wordTranslations
+                ? Results.Ok(wordTranslations)
+                : Results.NotFound()
+            );
+
+            app.MapGet("/api/words/GetTranslationsWithContext/{id}",
+            async (GetWordTranslationsWithContextHandler handler, int id) =>
+              await handler.HandleAsync(id)
+              is List<WordContextDto> wordTranslations
+              ? Results.Ok(wordTranslations)
+              : Results.NotFound()
+            );
+
+            app.MapGet("/api/words/GetWordRelationships/{id}",
+            async (GetWordRelationshipsHandler handler, int id) =>
+              await handler.HandleAsync(id)
+              is List<WordRelationshipDto> wordRelationships
+              ? Results.Ok(wordRelationships)
+              : Results.NotFound()
+            );
+
+            app.MapPost("/api/words",
+               async (InsertWordHandler handler, InsertWordCardDto newItem) =>
+               {
+                   var wordId = await handler.HandleAsync(newItem);
+                   Results.Created($"/api/words/wordId", newItem);
+               }
+               );
 
             return app;
         }

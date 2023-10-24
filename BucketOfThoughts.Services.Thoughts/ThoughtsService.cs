@@ -1,8 +1,7 @@
 ﻿using BucketOfThoughts.Core.Infrastructure.Interfaces;
 using BucketOfThoughts.Services.Thoughts.Data;
-using Microsoft.Extensions.Caching.Distributed;
-using BucketOfThoughts.Core.Infrastructure;
 using BucketOfThoughts.Services.Thoughts.Objects;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace BucketOfThoughts.Services.Thoughts
 {
@@ -46,36 +45,30 @@ namespace BucketOfThoughts.Services.Thoughts
             return thoughts[rand.Next(thoughts.Count)];
         }
 
-        public async Task<IEnumerable<Thought>> GetThoughtsAsync()
+        public async Task<IEnumerable<GetThoughtDto>> GetAsync()
         {
-            return await _repository.GetAsync();
-        }
-
-        public async Task<List<ThoughtCategory>> GetThoughtCategoriesAsync()
-        {
-            var thougtCategories = await _cache.GetRecordAsync<List<ThoughtCategory>>("ThoughtCategories");
-
-            if (thougtCategories == null)
+            var thoughts = (await _repository.GetAsync()).Select(x => new GetThoughtDto()
             {
-                thougtCategories = _dbContext.ThoughtCategories.ToList();
-                await _cache.SetRecordAsync("ThoughtCategories", thougtCategories);
-            }
-
-            return thougtCategories;
+                Id = x.ThoughtId,
+                Description = x.Description,
+                Category = x.ThoughtCategory.Description,
+                Details = string.Join(", ", x.ThoughtDetails.Select(y => y.Description).ToList()),
+            });
+            return thoughts;
         }
 
-        public async Task<Thought> AddThoughtAsync(InsertThoughtDto newThought)
+        public async Task<Thought> InsertAsync(InsertThoughtDto newItem)
         {
             var thought = new Thought()
             {
-                Description = newThought.Description,
-                ThoughtCategoryId = newThought.ThoughtCategoryId
+                Description = newItem.Description,
+                ThoughtCategoryId = newItem.ThoughtCategoryId
             };
 
-            if (newThought.Details?.Count > 0)
+            if (newItem.Details?.Count > 0)
             {
                 int sortOrder = 0;
-                foreach (var detail in newThought.Details)
+                foreach (var detail in newItem.Details)
                 {
                     sortOrder++;
                     thought.ThoughtDetails.Add(

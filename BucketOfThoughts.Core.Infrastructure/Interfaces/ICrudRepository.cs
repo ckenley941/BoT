@@ -9,7 +9,7 @@ namespace BucketOfThoughts.Core.Infrastructure.Interfaces
 {
     public interface ICrudRepository<TEntity> : IDisposable
     {
-        Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>>? filter = null,
+        Task<IQueryable<TEntity>> GetAsync(Expression<Func<TEntity, bool>>? filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
             string includeProperties = "");
         Task<TEntity> GetByIdAsync(int id);

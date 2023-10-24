@@ -13,7 +13,9 @@ import Toolbar from "@mui/material/Toolbar";
 import {
 AddCircleOutlineOutlined,
 SubjectOutlined,
-PsychologyAlt
+PsychologyAlt,
+Psychology,
+Language
 } from "@mui/icons-material/";
 
 export default function Layout({ children }) {
@@ -33,6 +35,16 @@ const menuItems = [{
     text: "Add Thought",
     icon: < AddCircleOutlineOutlined color = "secondary" / > ,
     path: "/add-thought",
+  },
+  {
+    text: "Organize Thoughts",
+    icon: < Psychology color = "secondary" / > ,
+    path: "/organize-thoughts",
+  },
+  {
+    text: "All Words",
+    icon: < Language color = "secondary" / > ,
+    path: "/words",
   },
 ];
 

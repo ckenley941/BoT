@@ -2,7 +2,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace BucketOfThoughts.Core.Infrastructure
+namespace BucketOfThoughts.Core.Infrastructure.Extensions
 {
     public static class DistributedCacheExtensions
     {
@@ -24,7 +24,7 @@ namespace BucketOfThoughts.Core.Infrastructure
             var jsonData = await cache.GetStringAsync(key);
             if (jsonData is null)
             {
-                return default(T);
+                return default;
             }
             return JsonSerializer.Deserialize<T>(jsonData);
         }

@@ -18,6 +18,8 @@ import WordCard from './components/word/WordCard';
 import Thought from './components/thought/Thought'
 import AddThought from './components/thought/AddThought'
 import Layout from './components/layout/Layout'
+import ThoughtsGrid from './components/thought/ThoughtsGrid';
+import WordsGrid from './components/word/WordsGrid';
 
 function Test(){
   return (
@@ -50,6 +52,10 @@ const App = () => {
         <Route exact path="/thought"  element={ <Thought/>}>
         </Route>
         <Route exact path="/add-thought"  element={ <AddThought/>}>
+        </Route>
+        <Route exact path="/organize-thoughts"  element={ <ThoughtsGrid/>}>
+        </Route>
+        <Route exact path="/words"  element={ <WordsGrid/>}>
         </Route>
         </Routes>
         </Layout>

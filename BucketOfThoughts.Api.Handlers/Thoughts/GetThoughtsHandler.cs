@@ -1,18 +1,19 @@
 ﻿using BucketOfThoughts.Services.Thoughts.Data;
 using BucketOfThoughts.Services.Thoughts;
+using BucketOfThoughts.Services.Thoughts.Objects;
 
 namespace BucketOfThoughts.Api.Handlers.Thoughts
 {
-    public class GetThoughtsHandler : BaseWordHandler
+    public class GetThoughtsHandler
     {
-        public GetThoughtsHandler(ThoughtsService service) : base(service) { }
-        public async Task<IEnumerable<Thought>> HandleAsync()
+        protected readonly ThoughtsService _service;
+        public GetThoughtsHandler(ThoughtsService service)
         {
-            //var thoughts = new List<Thought>();
-            //thoughts.Add(new Thought() { Description = "Test new Module" });
-            //thoughts.Add(new Thought() { Description = "Test new Module2" } );
-            //return thoughts.AsEnumerable();
-            return await _service.GetThoughtsAsync();
+            _service = service;
+        }
+        public async Task<IEnumerable<GetThoughtDto>> HandleAsync()
+        {
+            return await _service.GetAsync();
         }
     }
 }
