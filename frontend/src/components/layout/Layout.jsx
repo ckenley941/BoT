@@ -62,7 +62,7 @@ return (
     </div>
     <List>
       {menuItems.map((item) => (
-      <ListItem button key={item.text} onClick={()=> navigate(item.path)}
+      <ListItem key={item.text} onClick={()=> navigate(item.path)}
         className={
         location.pathname === item.path ? "active-drawer" : null
         }

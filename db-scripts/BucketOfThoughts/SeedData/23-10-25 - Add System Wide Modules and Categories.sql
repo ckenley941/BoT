@@ -78,3 +78,13 @@ BEGIN
 	SELECT 'History', @@IDENTITY, 1
 END
 GO
+
+IF NOT EXISTS (SELECT * FROM ThoughtModule WHERE Description = 'Language')
+BEGIN
+	INSERT INTO ThoughtModule (Description)
+	VALUES ('Language')
+
+	INSERT INTO ThoughtCategory (Description, ThoughtModuleId, SortOrder)
+	SELECT 'Language', @@IDENTITY, 1
+END
+GO
