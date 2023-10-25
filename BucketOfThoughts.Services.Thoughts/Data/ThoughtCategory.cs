@@ -17,11 +17,9 @@ public partial class ThoughtCategory
 
     public int? SortOrder { get; set; }
 
-    public int? ThoughtModuleId { get; set; }
+    public int ThoughtModuleId { get; set; }
 
-    public virtual ICollection<ThoughtCategoryAdditionalInfo> ThoughtCategoryAdditionalInfos { get; set; } = new List<ThoughtCategoryAdditionalInfo>();
-
-    public virtual ThoughtModule? ThoughtModule { get; set; }
+    public virtual ThoughtModule ThoughtModule { get; set; } = null!;
 
     public virtual ICollection<Thought> Thoughts { get; set; } = new List<Thought>();
 }

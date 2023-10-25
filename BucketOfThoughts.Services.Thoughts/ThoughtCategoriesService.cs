@@ -24,7 +24,8 @@ namespace BucketOfThoughts.Services.Thoughts
 
         public override async Task<ThoughtCategory> InsertAsync(ThoughtCategory newItem)
         {
-            newItem.ThoughtModuleId ??= await GetDefaultModuleId();
+            //Set default ThoughtModuleId if not supplied by user
+            newItem.ThoughtModuleId = newItem.ThoughtModuleId == 0 ? await GetDefaultModuleId() : newItem.ThoughtModuleId;
 
             await base.InsertAsync(newItem);
             await _cache.RemoveAsync(CacheKeys.ThoughtCategories);

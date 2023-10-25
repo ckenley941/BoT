@@ -13,7 +13,5 @@ public partial class ThoughtModule
 
     public string Description { get; set; } = null!;
 
-    public int? SortOrder { get; set; }
-
     public virtual ICollection<ThoughtCategory> ThoughtCategories { get; set; } = new List<ThoughtCategory>();
 }

@@ -20,8 +20,4 @@ public partial class Thought
     public virtual ThoughtCategory ThoughtCategory { get; set; } = null!;
 
     public virtual ICollection<ThoughtDetail> ThoughtDetails { get; set; } = new List<ThoughtDetail>();
-
-    public virtual ICollection<ThoughtTimeline> ThoughtTimelines { get; set; } = new List<ThoughtTimeline>();
-
-    public virtual ICollection<ThoughtWebsiteLink> ThoughtWebsiteLinks { get; set; } = new List<ThoughtWebsiteLink>();
 }
