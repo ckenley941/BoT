@@ -1,40 +1,23 @@
-﻿using BucketOfThoughts.Core.Infrastructure.Interfaces;
+﻿using BucketOfThoughts.Core.Infrastructure.BaseClasses;
+using BucketOfThoughts.Core.Infrastructure.Interfaces;
 using BucketOfThoughts.Services.Thoughts.Data;
 using BucketOfThoughts.Services.Thoughts.Objects;
 using Microsoft.Extensions.Caching.Distributed;
 
 namespace BucketOfThoughts.Services.Thoughts
 {
-    public class ThoughtsService
+    public class ThoughtsService : BaseService<Thought>
     {
-        private readonly ICrudRepository<Thought> _repository;
         private readonly ThoughtsDbContext _dbContext;
-        private readonly IDistributedCache _cache;
-        public ThoughtsService(ThoughtsDbContext dbContext, IDistributedCache cache, ICrudRepository<Thought> repository)
+        public ThoughtsService(ThoughtsDbContext dbContext, IDistributedCache cache, ICrudRepository<Thought> repository) : base (repository, cache)
         {
             _dbContext = dbContext;
-            _cache = cache;
-            _repository = repository;
         }
 
         public async Task<Thought> GetRandomThoughtAsync()
         {
             //Eventually remove from cache what has already been used so we don't repeat random thoughts or added a flag
-            //var thoughts = await _cache.GetRecordAsync<List<Thought>>("Thoughts");
-            var thoughts = new List<Thought>();
-            //if (thoughts == null)
-            //{
-            try
-            {
-                thoughts = (await _repository.GetAsync(includeProperties: "ThoughtDetails")).ToList();
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Trace.WriteLine(ex.Message);
-            }
-            //    await _cache.SetRecordAsync("Thoughts", thoughts);
-            //}
-
+            var thoughts = (await base.GetFromCacheAsync("Thoughts")).ToList();
 
             if (thoughts?.Count <= 0)
             {

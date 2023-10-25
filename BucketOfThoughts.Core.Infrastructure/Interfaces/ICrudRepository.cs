@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BucketOfThoughts.Core.Infrastructure.Objects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -7,11 +8,10 @@ using System.Threading.Tasks;
 
 namespace BucketOfThoughts.Core.Infrastructure.Interfaces
 {
-    public interface ICrudRepository<TEntity> : IDisposable
+    public interface ICrudRepository<TEntity> : IDisposable where TEntity : class
     {
-        Task<IQueryable<TEntity>> GetAsync(Expression<Func<TEntity, bool>>? filter = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
-            string includeProperties = "");
+        Task<IQueryable<TEntity>> GetAsync();
+        Task<IQueryable<TEntity>> GetAsync(GetQueryParams<TEntity> queryParams);
         Task<TEntity> GetByIdAsync(int id);
         Task InsertAsync(TEntity entity);
         void UpdateAsync(TEntity entity);

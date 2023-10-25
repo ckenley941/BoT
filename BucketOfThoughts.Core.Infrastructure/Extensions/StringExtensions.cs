@@ -19,5 +19,10 @@ namespace BucketOfThoughts.Core.Infrastructure.Extensions
             }
             return str;
         }
+
+        public static bool HasValue(this string? str)
+        {
+            return !string.IsNullOrEmpty(str);
+        }
     }
 }

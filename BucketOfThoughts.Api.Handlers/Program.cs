@@ -1,4 +1,4 @@
-using BucketOfThoughts.Api.Handlers;
+using BucketOfThoughts.Api.Handlers.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 

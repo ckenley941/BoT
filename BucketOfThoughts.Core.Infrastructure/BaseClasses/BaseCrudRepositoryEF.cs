@@ -1,4 +1,6 @@
-﻿using BucketOfThoughts.Core.Infrastructure.Interfaces;
+﻿using BucketOfThoughts.Core.Infrastructure.Extensions;
+using BucketOfThoughts.Core.Infrastructure.Interfaces;
+using BucketOfThoughts.Core.Infrastructure.Objects;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -19,27 +21,33 @@ namespace BucketOfThoughts.Core.Infrastructure.BaseClasses
             _dbSet = context.Set<TEntity>();
         }
 
-        public async virtual Task<IQueryable<TEntity>> GetAsync(
-            Expression<Func<TEntity, bool>>? filter = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
-            string includeProperties = "")
+        public async virtual Task<IQueryable<TEntity>> GetAsync()
         {
+            return await GetAsync(null);
+        }
+
+        public async virtual Task<IQueryable<TEntity>> GetAsync(GetQueryParams<TEntity>? queryParams)
+        {
+            queryParams ??= new GetQueryParams<TEntity> { };
             IQueryable<TEntity> query = _dbSet;
 
-            if (filter != null)
+            if (queryParams.Filter != null)
             {
-                query = query.Where(filter);
+                query = query.Where(queryParams.Filter);
             }
 
-            foreach (var includeProperty in includeProperties.Split
-                (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            if (queryParams.IncludeProperties.HasValue())
             {
-                query = query.Include(includeProperty);
+                foreach (var includeProperty in queryParams.IncludeProperties.Split
+                    (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProperty);
+                }
             }
 
-            if (orderBy != null)
+            if (queryParams.OrderBy != null)
             {
-                return orderBy(query);
+                return queryParams.OrderBy(query);
             }
             else
             {
