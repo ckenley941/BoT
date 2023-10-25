@@ -35,8 +35,8 @@ namespace BucketOfThoughts.Services.Thoughts
 
         public async Task<int> GetDefaultModuleId()
         {
-            int? defaultModuleId = await _cache.GetRecordAsync<int>(CacheKeys.DefaultModuleId);
-            if (defaultModuleId == null)
+            int defaultModuleId = await _cache.GetRecordAsync<int>(CacheKeys.DefaultModuleId);
+            if (defaultModuleId <= 0)
             {
                 defaultModuleId = _dbContext.ThoughtModules.FirstOrDefault(x => x.Description == "Other")?.ThoughtModuleId ?? 0;
                 if (defaultModuleId <= 0)
@@ -46,7 +46,7 @@ namespace BucketOfThoughts.Services.Thoughts
                 await _cache.SetRecordAsync(CacheKeys.DefaultModuleId, defaultModuleId);
             }
 
-            return defaultModuleId ?? 0;
+            return defaultModuleId;
         }
     }
 }
