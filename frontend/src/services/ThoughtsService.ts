@@ -15,3 +15,8 @@ export function getRandomThought() {
   export function insertThought(newThought: NewThought) {
     return client.post(`${apiUrl}/thoughts`, newThought);
   }
+
+  export function insertThoughtCategory(newThoughtCategory: NewThoughtCategory) {
+    return client.post(`${apiUrl}/thoughtcategory`, newThoughtCategory);
+  }
+

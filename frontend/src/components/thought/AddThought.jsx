@@ -15,10 +15,12 @@ import IconButton from "@mui/material/IconButton";
 import AddIcon from '@mui/icons-material/Add';
 import SaveIcon from '@mui/icons-material/Save';
 import DeleteIcon  from "@mui/icons-material/Delete";
+import ListIcon from '@mui/icons-material/List';
+import AddItemToDropdownDialog from "../controls/AddItemToDropdownDialog";
 
 import _ from 'lodash';
 
-import { getThoughtCategories, insertThought } from "../../services/ThoughtsService.ts";
+import { getThoughtCategories, insertThought, insertThoughtCategory } from "../../services/ThoughtsService.ts";
 
 export default function AddThought() 
 {
@@ -30,13 +32,12 @@ export default function AddThought()
   const [thoughtCategories, setThoughtCategories] = useState([]);
 
   useEffect(() => {
-    loadData();
+    loadCategories();
   }, []);
 
-  const loadData = async () => {
+  const loadCategories = async () => {
     getThoughtCategories().then((response) => {
       setThoughtCategories(response.data);
-      console.log(response.data);
     });
   };
 
@@ -57,10 +58,36 @@ export default function AddThought()
 
 
   const addThought = () => {
+    if (isValid()){   
     insertThought(thought).then((response) => {
-      console.log(response.data);
+      alert("Thought added");
+      setThought({ 
+        description: "",
+        thoughtCategoryId: 0,
+        details: []
+      })
     });
+  }
   };
+
+  const isValid = () => {
+    var msg = "";
+
+    if (thought.description.length <= 0){
+      msg+= "Description required. ";
+    }
+
+    if (thought.thoughtCategoryId <= 0){
+      msg += "Category required. ";
+    }
+
+    if (msg.length > 0){
+      alert(msg);
+      return false;
+    }
+    
+    return true;
+  }
 
   const addDetail = () => {
     thought.details.push("");
@@ -75,12 +102,20 @@ export default function AddThought()
     setThought(newState);
   }
 
+  const addThoughtCategory = (description) => {
+    var thoughtCategory = {
+      description: description
+    }
+    insertThoughtCategory(thoughtCategory).then(loadCategories);
+  }
+
     return ( 
       <Card variant="outlined"  sx={{ m: 5, maxWidth: 750 }}>
       <CardContent>
         <Grid>
         <TextField  sx={{ m: 1}}
           name="description"
+          value={thought.description}
           label="Thought"
           onChange={handleInputChange}
           fullWidth
@@ -89,25 +124,28 @@ export default function AddThought()
         </Grid>
     <Grid>
     <FormControl sx={{ m: 1, minWidth: 120 }}>
-        <InputLabel id="demo-simple-select-helper-label">Category</InputLabel>
+        <InputLabel id="demo-simple-select-helper-label">Category</InputLabel>        
         <Select
           name="thoughtCategoryId"
           value={thought.thoughtCategoryId}
           label="Category"
           onChange={handleInputChange}          
         >
-          <MenuItem value="0">
+          
+          {/* <MenuItem value="0">
             <em>None</em>
-          </MenuItem>
+          </MenuItem> */}
           { thoughtCategories.map((tc, i) => (
              <MenuItem key={i} value={tc.thoughtCategoryId}>{tc.description}</MenuItem>
                 ))}
         </Select>
-        <FormHelperText>Or add a new one *LATER FEATURE*</FormHelperText>
+        <AddItemToDropdownDialog isOpen={false} title="Category" saveCallback={addThoughtCategory}></AddItemToDropdownDialog>
       </FormControl>
     </Grid>     
       <IconButton color="secondary"  aria-label="Add Detail" onClick={addDetail}>
-          <AddIcon fontSize="large" />
+      <Tooltip title="Add Details">      
+      <ListIcon fontSize="large" />
+     </Tooltip>
         </IconButton>   
         { thought.details.map((t, i) => (
           <div>
@@ -118,12 +156,16 @@ export default function AddThought()
           onChange={handleDetailChange}
         />
         <IconButton name={i} color="secondary" aria-label="Delete" onClick={deleteDetail}>
-        <DeleteIcon></DeleteIcon>
+        <Tooltip title="Delete">      
+      <DeleteIcon fontSize="large" />
+     </Tooltip>
       </IconButton>   
       </div>
                 ))}
-              <IconButton color="secondary" aria-label="Save" onClick={addThought}>
-          <SaveIcon fontSize="large"></SaveIcon>
+              <IconButton color="secondary" aria-label="Save Thought" onClick={addThought}>
+              <Tooltip title="Save Thought">      
+      <SaveIcon fontSize="large" />
+     </Tooltip>
         </IconButton>   
       </CardContent>
     </Card>

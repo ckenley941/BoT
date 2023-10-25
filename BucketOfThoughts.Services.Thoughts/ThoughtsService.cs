@@ -8,10 +8,8 @@ namespace BucketOfThoughts.Services.Thoughts
 {
     public class ThoughtsService : BaseService<Thought>
     {
-        private readonly ThoughtsDbContext _dbContext;
-        public ThoughtsService(ThoughtsDbContext dbContext, IDistributedCache cache, ICrudRepository<Thought> repository) : base (repository, cache)
+        public ThoughtsService(ICrudRepository<Thought> repository, IDistributedCache cache) : base (repository, cache)
         {
-            _dbContext = dbContext;
         }
 
         public async Task<Thought> GetRandomThoughtAsync()
@@ -63,41 +61,8 @@ namespace BucketOfThoughts.Services.Thoughts
                 }
             }
 
-            await _repository.InsertAsync(thought);
-            await _repository.SaveAsync();
-
+            await base.InsertAsync(thought);
             return thought;
         }
-
-        //public async Task<Thought> AddThoughtFromImportAsync(ThoughtVm newThought)
-        //{
-        //    //Check to see if thought already exists
-        //    //var thought = await _dbContext.Thoughts.FirstOrDefaultAsync(x => x.Description == newThought.Thought);
-
-        //    var thought = new Thought()
-        //    {
-        //        Description = newThought.Thought
-        //    };
-
-        //    if (newThought.Detail?.Count > 0)
-        //    {
-        //        int sortOrder = 0;
-        //        foreach (var detail in newThought.Details)
-        //        {
-        //            sortOrder++;
-        //            thought.ThoughtDetails.Add(
-        //                new ThoughtDetail()
-        //                {
-        //                    Description = detail,
-        //                    SortOrder = sortOrder
-        //                });
-        //        }
-        //    }
-
-        //    //_dbContext.Thoughts.Add(thought);
-        //    //await _dbContext.SaveChangesAsync();
-
-        //    //return thought;
-        //}
     }
 }

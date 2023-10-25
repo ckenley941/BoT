@@ -21,7 +21,7 @@ namespace BucketOfThoughts.Core.Infrastructure.BaseClasses
             _cache = cache;
         }
 
-        protected virtual async Task<IEnumerable<TEntity>> GetFromCacheAsync(string cacheKey)
+        public virtual async Task<IEnumerable<TEntity>> GetFromCacheAsync(string cacheKey)
         {
             var data = await _cache.GetRecordAsync<IEnumerable<TEntity>>(cacheKey); 
             if (data == null)
@@ -36,6 +36,7 @@ namespace BucketOfThoughts.Core.Infrastructure.BaseClasses
         public virtual async Task<TEntity> InsertAsync(TEntity newItem)
         {
             await _repository.InsertAsync(newItem);
+            await _repository.SaveAsync();
             return newItem;
         }
 
