@@ -37,18 +37,33 @@
   width: 100%;
 }
 
+@media (max-width: 600px) {
+.drawer {
+  width: 10%;
+}
+}
+@media (min-width: 600px) {
 .drawer {
   width: 20%;
 }
-
+}
 .active-drawer {
   background: #f4f4f4 !important;
 }
 
-.appBar {
-  width:  80% !important;
-  margin-left: 20%;
-}
+@media (max-width: 600px) {
+  .appBar {
+    width:  90% !important;
+    margin-left: 10%;
+  }
+  }
+  @media (min-width: 600px) {
+    .appBar {
+      width:  80% !important;
+      margin-left: 20%;
+    }
+    }
+
 
 .toolBar {
   padding-top: 50px;

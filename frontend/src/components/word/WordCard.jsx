@@ -52,10 +52,10 @@ TabPanel.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-export default function WordCard() {
-  let isFlashCard = true;
+export default function WordCard( {data}) {
+  let isFlashCard = false;
   const [showFullCard, setShowFullCard] = useState(!isFlashCard); //in flash card mode this is false
-  const [isOpen, setIsOpen] = useState(false); //in flash card mode this is false
+  const [isOpen, setIsOpen] = useState(false);
   const [wordCard, setWordCard] = useState({    
       id: 0,
       guid: "",
@@ -77,28 +77,36 @@ export default function WordCard() {
   let wordId = 0;
   useEffect(() => {
     loadData();
-  }, []);
+  }, [data]);
 
   const loadData = async () => {
-    getRandomWord().then((response) => {
-      setWordCard(response.data);
-      wordId = response.data.id;
+    if (data != null){
+      setWordCard(data);
+      setChildRecords(data.id);
+    }
+    else{
+      getRandomWord().then((response) => {
+        setWordCard(response.data);
+        wordId = response.data.id;
 
-      console.log(response.data);
-
-      getWordTranslations(wordId).then((response) => {
-        setTranslations(response.data);
+        setChildRecords(wordId);
       });
-
-      getWordTranslationsWithContext(wordId).then((response) => {
-        setWordContexts(response.data);
-      });    
-
-      getWordRelationships(wordId).then((response) => {
-        setWordRelationships(response.data);
-      });    
-    });
+    }
   };
+
+  const setChildRecords= (wordId) =>{
+    getWordTranslations(wordId).then((response) => {
+      setTranslations(response.data);
+    });
+
+    getWordTranslationsWithContext(wordId).then((response) => {
+      setWordContexts(response.data);
+    });    
+
+    getWordRelationships(wordId).then((response) => {
+      setWordRelationships(response.data);
+    });    
+  }
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -115,14 +123,13 @@ export default function WordCard() {
   <Box sx={{ minWidth: 275 }}>
     <Card variant="outlined">
       <React.Fragment>
-        <CardContent>
-        <IconButton color="secondary" aria-label="Flash" onClick={()=> setShowFullCard(!showFullCard)}>
-            <FlashOnIcon />
-          </IconButton>
-          <IconButton color="secondary" aria-label="Refresh" onClick={refreshWord}>
+        <CardContent>       
+          {/* <IconButton color="secondary" aria-label="Refresh" onClick={refreshWord}>
             <RefreshIcon />
-          </IconButton>             
-          <Typography variant="h2">{wordCard.word}</Typography>
+          </IconButton>              */}
+          <Typography variant="h2">{wordCard.word} <IconButton color="secondary" aria-label="Flash" onClick={()=> setShowFullCard(!showFullCard)}>
+            <FlashOnIcon />
+          </IconButton></Typography>
           <Typography variant="h5" component="div">
             {  wordCard.pronunication.map((p, i, {length}) =>
             (i !== length - 1 ?
@@ -134,13 +141,13 @@ export default function WordCard() {
             )
             ))}
           </Typography>
-          {showFullCard ? 
+          {/* {showFullCard ? 
             <span>
               <Typography variant="h6">{wordCard.primaryTranslation ? wordCard.primaryTranslation.word : ""}</Typography> 
               <CustomDialog isOpen={isOpen}></CustomDialog>
             </span>
             : null
-          }
+          } */}
         </CardContent>
       </React.Fragment>
     </Card>

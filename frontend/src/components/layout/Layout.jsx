@@ -4,10 +4,14 @@ import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Drawer from "@mui/material/Drawer";
 import Typography from "@mui/material/Typography";
+import Button from '@mui/material/Button';
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
+import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import {
@@ -15,23 +19,34 @@ AddCircleOutlineOutlined,
 SubjectOutlined,
 PsychologyAlt,
 Psychology,
-Language
+Language,
+Chalet
 } from "@mui/icons-material/";
 
 export default function Layout({ children }) {
 let navigate = useNavigate();
 let location = useLocation();
 
-const menuItems = [{
+
+/*
+ {
     text: "Spanish Word",
     icon: < SubjectOutlined color = "secondary" / > ,
-    path: "/",
+    path: "/word",
   },
   {
     text: "Random Thought",
     icon: < PsychologyAlt color = "secondary" / > ,
     path: "/thought",
-  },{
+  },
+ */
+const menuItems = [
+  {
+    text: "Dashboard",
+    icon: < Chalet color = "secondary" / > ,
+    path: "/",
+  },
+  {
     text: "Add Thought",
     icon: < AddCircleOutlineOutlined color = "secondary" / > ,
     path: "/add-thought",
@@ -57,9 +72,9 @@ return (
   </AppBar>
 
   <Drawer className="drawer" variant="permanent" anchor="left" classes={{ paper: "drawer" }}>
-    <div>
+    {/* <div>
       <Typography variant="h5">Dashboard</Typography>
-    </div>
+    </div> */}
     <List>
       {menuItems.map((item) => (
       <ListItem key={item.text} onClick={()=> navigate(item.path)}
@@ -71,7 +86,24 @@ return (
         <ListItemText primary={item.text} />
       </ListItem>
       ))}
-    </List>
+    </List>    
+    <PopupState variant="popover" popupId="demo-popup-menu">
+      {(popupState) => (
+        <React.Fragment>
+          <Button variant="contained" {...bindTrigger(popupState)}>
+            Menu
+          </Button>
+          <Menu {...bindMenu(popupState)}>
+          {menuItems.map((item) => (
+            <MenuItem onClick={()=> { navigate(item.path); popupState.close();}}>
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.text} />
+            </MenuItem>
+          ))}
+          </Menu>
+        </React.Fragment>
+      )}
+    </PopupState>
   </Drawer>
   <div className="page">
     <div className="toolBar">{children}</div>

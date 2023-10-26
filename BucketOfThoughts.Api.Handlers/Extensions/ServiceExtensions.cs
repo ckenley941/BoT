@@ -1,7 +1,9 @@
 ﻿using BucketOfThoughts.Api.Handlers.Extensions;
 using BucketOfThoughts.Api.Handlers.Words;
+using BucketOfThoughts.Service.Dashboards;
 using BucketOfThoughts.Services.Languages.Data;
 using BucketOfThoughts.Services.Languages.Objects;
+using BucketOfThoughts.Services.Thoughts;
 using BucketOfThoughts.Services.Thoughts.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
@@ -23,20 +25,10 @@ namespace BucketOfThoughts.Api.Handlers.Extensions
                 builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
             }));
 
-            services.AddDbContext<ThoughtsDbContext>(
-                options =>
-                  options.UseSqlServer(configuration.GetConnectionString("BucketOfThoughtsConnection"),
-                  b => b.MigrationsAssembly(typeof(ThoughtsDbContext).Assembly.FullName)),
-                ServiceLifetime.Transient);
-
-            services.AddDbContext<LanguageDbContext>(
-               options =>
-                 options.UseSqlServer(configuration.GetConnectionString("BucketOfThoughtsConnection"),
-                 b => b.MigrationsAssembly(typeof(LanguageDbContext).Assembly.FullName)),
-               ServiceLifetime.Transient);
-
-            services.AddThoughtServices();
-            services.AddLanguageServices();
+            services.AddThoughtServices(configuration);
+            services.AddLanguageServices(configuration);
+            services.AddDashboardServices();
+          
 
             services.AddDistributedMemoryCache();
 
@@ -65,6 +57,7 @@ namespace BucketOfThoughts.Api.Handlers.Extensions
             app.MapGet("/health", () => "Health check");
             app.AddThoughtApiEndpoints();
             app.AddLanguageApiEndpoints();
+            app.AddDashoardApiEndpoints();
 
             return app;
         } 

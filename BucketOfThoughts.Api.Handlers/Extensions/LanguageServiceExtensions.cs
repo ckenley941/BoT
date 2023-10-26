@@ -1,15 +1,23 @@
 ﻿using BucketOfThoughts.Api.Handlers.Words;
+using BucketOfThoughts.Core.Infrastructure.Constants;
 using BucketOfThoughts.Core.Infrastructure.Interfaces;
 using BucketOfThoughts.Services.Languages;
 using BucketOfThoughts.Services.Languages.Data;
 using BucketOfThoughts.Services.Languages.Objects;
+using Microsoft.EntityFrameworkCore;
 
 namespace BucketOfThoughts.Api.Handlers.Extensions
 {
     public static class LanguageServiceExtensions
     {
-        public static IServiceCollection AddLanguageServices(this IServiceCollection services)
+        public static IServiceCollection AddLanguageServices(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddDbContext<LanguageDbContext>(
+             options =>
+               options.UseSqlServer(configuration.GetConnectionString(ConnectionStrings.BucketOfThoughts),
+               b => b.MigrationsAssembly(typeof(LanguageDbContext).Assembly.FullName)),
+             ServiceLifetime.Transient);
+
             services.AddScoped<WordsService>();
             services.AddScoped<ICrudRepository<Word>, WordsRepository>();
             services.AddScoped<GetRandomWordHandler>();

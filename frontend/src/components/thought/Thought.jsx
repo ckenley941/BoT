@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 
 import { getRandomThought } from "../../services/ThoughtsService.ts";
 
-export default function Thought() {
+export default function Thought({data}) {
     const [thought, setThought] = useState({
         description: "",
         thoughtDetails: []
@@ -14,12 +14,18 @@ export default function Thought() {
 
     useEffect(() => {
         loadData();
-      }, []);
+      }, [data]);
     
       const loadData = async () => {
-        getRandomThought().then((response) => {
-            setThought(response.data);
-        });
+        console.log(data);
+        if (data){
+          setThought(data);
+        }
+        else{
+          getRandomThought().then((response) => {
+              setThought(response.data);
+          });
+        }
       };
 
     return (

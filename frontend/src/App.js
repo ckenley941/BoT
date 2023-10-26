@@ -20,6 +20,7 @@ import AddThought from './components/thought/AddThought'
 import Layout from './components/layout/Layout'
 import ThoughtsGrid from './components/thought/ThoughtsGrid';
 import WordsGrid from './components/word/WordsGrid';
+import Dashboard from './components/dashboard/Dashboard';
 
 function Test(){
   return (
@@ -47,7 +48,9 @@ const App = () => {
     <Router>
       <Layout>
         <Routes>
-        <Route exact path="/" element={ <WordCard/> }>
+        <Route exact path="/" element={ <Dashboard/> }>
+        </Route>
+        <Route exact path="/word" element={ <WordCard/> }>
         </Route>
         <Route exact path="/thought"  element={ <Thought/>}>
         </Route>

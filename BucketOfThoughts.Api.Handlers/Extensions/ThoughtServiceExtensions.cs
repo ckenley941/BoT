@@ -4,13 +4,22 @@ using BucketOfThoughts.Services.Thoughts;
 using BucketOfThoughts.Services.Thoughts.Objects;
 using BucketOfThoughts.Api.Handlers.ThoughtCategories;
 using BucketOfThoughts.Api.Handlers.Thoughts;
+using Microsoft.EntityFrameworkCore;
+using BucketOfThoughts.Core.Infrastructure.Constants;
 
 namespace BucketOfThoughts.Api.Handlers.Extensions
 {
     public static class ThoughtServiceExtensions
     {
-        public static IServiceCollection AddThoughtServices(this IServiceCollection services)
+        public static IServiceCollection AddThoughtServices(this IServiceCollection services, IConfiguration configuration)
         {
+
+            services.AddDbContext<ThoughtsDbContext>(
+                options =>
+                  options.UseSqlServer(configuration.GetConnectionString(ConnectionStrings.BucketOfThoughts),
+                  b => b.MigrationsAssembly(typeof(ThoughtsDbContext).Assembly.FullName)),
+                ServiceLifetime.Transient);
+
             services.AddScoped<ThoughtCategoriesService>();
             services.AddScoped<ICrudRepository<ThoughtCategory>, ThoughtCategoriesRepository>();
             services.AddScoped<ThoughtsService>();

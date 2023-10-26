@@ -4,6 +4,10 @@ export function getRandomThought() {
     return client.get(`${apiUrl}/thoughts/random`);
   }
 
+  export function getSelectedDashboard(dashboardType: string) {
+    return client.get(`${apiUrl}/dashboards/selected?dashboardType=${dashboardType}`);
+  }
+
   export function getThoughtCategories() {
     return client.get(`${apiUrl}/thoughtcategories`);
   }
