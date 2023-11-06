@@ -87,10 +87,12 @@ return (
       </ListItem>
       ))}
     </List>    
-    <PopupState variant="popover" popupId="demo-popup-menu">
+  </Drawer>
+  <PopupState  variant="popover" popupId="demo-popup-menu">
       {(popupState) => (
         <React.Fragment>
-          <Button variant="contained" {...bindTrigger(popupState)}>
+          
+          <Button className="popover" variant="contained" {...bindTrigger(popupState)}>
             Menu
           </Button>
           <Menu {...bindMenu(popupState)}>
@@ -104,7 +106,6 @@ return (
         </React.Fragment>
       )}
     </PopupState>
-  </Drawer>
   <div className="page">
     <div className="toolBar">{children}</div>
   </div>

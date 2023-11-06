@@ -37,32 +37,35 @@
   width: 100%;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 900px) {
 .drawer {
+  display: none !important
+}
+.appBar {
+  width:  90% !important;
+  margin-left: 10%;
+}
+.popover {
+  display: show !important;
   width: 10%;
 }
 }
-@media (min-width: 600px) {
+@media (min-width: 900px) {
 .drawer {
   width: 20%;
+}
+
+.appBar {
+  width:  80% !important;
+  margin-left: 20%;
+}
+.popover {
+  display: none !important
 }
 }
 .active-drawer {
   background: #f4f4f4 !important;
 }
-
-@media (max-width: 600px) {
-  .appBar {
-    width:  90% !important;
-    margin-left: 10%;
-  }
-  }
-  @media (min-width: 600px) {
-    .appBar {
-      width:  80% !important;
-      margin-left: 20%;
-    }
-    }
 
 
 .toolBar {

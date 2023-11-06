@@ -11,7 +11,7 @@ namespace BucketOfThoughts.Api.Handlers.Thoughts
         {
             _service = service;
         }
-        public async Task<IEnumerable<GetThoughtDto>> HandleAsync()
+        public async Task<IEnumerable<ThoughtGridDto>> HandleAsync()
         {
             return await _service.GetAsync();
         }

@@ -26,9 +26,9 @@ namespace BucketOfThoughts.Services.Thoughts
             return thoughts[rand.Next(thoughts.Count)];
         }
 
-        public async Task<IEnumerable<GetThoughtDto>> GetAsync()
+        public async Task<IEnumerable<ThoughtGridDto>> GetAsync()
         {
-            var thoughts = (await _repository.GetAsync()).Select(x => new GetThoughtDto()
+            var thoughts = (await _repository.GetAsync()).Select(x => new ThoughtGridDto()
             {
                 Id = x.ThoughtId,
                 Description = x.Description,

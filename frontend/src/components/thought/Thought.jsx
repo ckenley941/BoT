@@ -9,6 +9,10 @@ import { getRandomThought } from "../../services/ThoughtsService.ts";
 export default function Thought({data}) {
     const [thought, setThought] = useState({
         description: "",
+        thoughtCategory: {
+          thoughtCategoryId: 0,
+          description: ""
+        },
         thoughtDetails: []
     });
 
@@ -32,6 +36,7 @@ export default function Thought({data}) {
         <Card variant="outlined">
         <CardContent>
         <Typography variant="h5">{thought.description }</Typography>  
+        <Typography variant="h3">{thought.thoughtCategory.description }</Typography>  
             { thought.thoughtDetails.map((t, i) => (
                 <Grid key={i}>
                   <div>{t.description}</div>
