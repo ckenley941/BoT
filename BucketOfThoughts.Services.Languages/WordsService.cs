@@ -176,7 +176,7 @@ namespace BucketOfThoughts.Services.Languages
             }
 
             word.PrimaryTranslation = await GetPrimaryTranslation(word.Id);
-
+            word.Pronunication = await _dbContext.WordPronunciations.Where(x => x.WordId == word.Id).Select(x => x.Phonetic).ToListAsync();
             return word;
         }
 

@@ -21,6 +21,7 @@ namespace BucketOfThoughts.Api.Handlers.Extensions
             services.AddScoped<WordsService>();
             services.AddScoped<ICrudRepository<Word>, WordsRepository>();
             services.AddScoped<GetRandomWordHandler>();
+            services.AddScoped<GetWordByIdHandler>();
             services.AddScoped<GetWordRelationshipsHandler>();
             services.AddScoped<GetWordsHandler>();
             services.AddScoped<GetWordTranslationsHandler>();
@@ -46,6 +47,14 @@ namespace BucketOfThoughts.Api.Handlers.Extensions
                  ? Results.Ok(words)
                  : Results.NotFound()
              );
+
+            app.MapGet("/api/words/{id}",
+           async (GetWordByIdHandler handler, int id) =>
+               await handler.HandleAsync(id)
+               is WordTranslationDto word
+               ? Results.Ok(word)
+               : Results.NotFound()
+           );
 
             app.MapGet("/api/words/GetTranslations/{id}",
             async (GetWordTranslationsHandler handler, int id) =>

@@ -1,12 +1,21 @@
 import React, { useState, useEffect } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import { DataGrid, GridToolbar  } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar   } from '@mui/x-data-grid';
 
-import { getWords } from "../../services/WordsService.ts";
+import { getWords, getWordById } from "../../services/WordsService.ts";
+import WordCard from "./WordCard.jsx";
+
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import Button from '@mui/material/Button';
 
 export default function WordsGrid() {
     const [words, setWords] = useState([]);
+    const [open, setOpen] = React.useState(false);
+    const [selectedWord, setSelectedWord] = useState({});
 
     const columns = [
         //{ field: 'id', headerName: 'ID', width: 90 },
@@ -46,8 +55,21 @@ export default function WordsGrid() {
         });
       };
 
+      const handleRowClick = (params) => {
+        getWordById(params.id).then((response) => {
+          setSelectedWord(response.data);
+          setOpen(true);
+      });
+    };
+    
+    const handleClose = () => {
+      setOpen(false);
+    };
+
+
       //https://mui.com/x/react-data-grid/
       return (
+        <div>
         <Card sx={{ height: 1200, width: '100%' }}>
             <CardContent>
           <DataGrid
@@ -61,6 +83,7 @@ export default function WordsGrid() {
                 },
               },
             }}
+            onRowClick={handleRowClick} {...words} 
             pageSizeOptions={[10]}
             checkboxSelection
             disableRowSelectionOnClick
@@ -73,5 +96,15 @@ export default function WordsGrid() {
           />
           </CardContent>
         </Card>
+         <Dialog open={open} onClose={handleClose}>
+         <DialogTitle>Word</DialogTitle>
+         <DialogContent>
+             <WordCard data={selectedWord}></WordCard>            
+         </DialogContent>
+         <DialogActions>
+           <Button onClick={handleClose}>Close</Button>
+         </DialogActions>
+       </Dialog>
+       </div>
       );
 }
