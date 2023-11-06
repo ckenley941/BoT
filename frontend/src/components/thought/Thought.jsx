@@ -9,11 +9,11 @@ import { getRandomThought } from "../../services/ThoughtsService.ts";
 export default function Thought({data}) {
     const [thought, setThought] = useState({
         description: "",
-        thoughtCategory: {
-          thoughtCategoryId: 0,
+        category: {
+          id: 0,
           description: ""
         },
-        thoughtDetails: []
+        details: []
     });
 
     useEffect(() => {
@@ -35,9 +35,9 @@ export default function Thought({data}) {
     return (
         <Card variant="outlined">
         <CardContent>
-        <Typography variant="h5">{thought.description }</Typography>  
-        {/* <Typography variant="h3">{thought.thoughtCategory.description }</Typography>   */}
-            { thought.thoughtDetails.map((t, i) => (
+        <Typography variant="h3">{thought.description }</Typography>  
+        <Typography variant="h5">Category: {thought.category.description }</Typography>  
+            { thought.details.map((t, i) => (
                 <Grid key={i}>
                   <div>{t.description}</div>
                 </Grid>

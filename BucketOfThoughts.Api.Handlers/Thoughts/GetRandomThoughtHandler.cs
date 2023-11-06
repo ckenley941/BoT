@@ -1,5 +1,6 @@
 ﻿using BucketOfThoughts.Services.Thoughts.Data;
 using BucketOfThoughts.Services.Thoughts;
+using BucketOfThoughts.Services.Thoughts.Objects;
 
 namespace BucketOfThoughts.Api.Handlers.Thoughts
 {
@@ -10,7 +11,7 @@ namespace BucketOfThoughts.Api.Handlers.Thoughts
         {
             _service = service;
         }
-        public async Task<Thought> HandleAsync()
+        public async Task<ThoughtDto> HandleAsync()
         {
             return await _service.GetRandomThoughtAsync();
         }

@@ -37,7 +37,7 @@ namespace BucketOfThoughts.Api.Handlers.Extensions
             app.MapGet("/api/thoughts/random",
               async (GetRandomThoughtHandler handler) =>
                   await handler.HandleAsync()
-                  is Thought randomThought
+                  is ThoughtDto randomThought
                   ? Results.Ok(randomThought)
                   : Results.NotFound()
               );

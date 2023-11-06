@@ -11,7 +11,7 @@ namespace BucketOfThoughts.Core.Infrastructure.Interfaces
     public interface ICrudRepository<TEntity> : IDisposable where TEntity : class
     {
         Task<IQueryable<TEntity>> GetAsync();
-        Task<IQueryable<TEntity>> GetAsync(GetQueryParams<TEntity> queryParams);
+        Task<IQueryable<TEntity>> GetAsync(GetQueryParams<TEntity>? queryParams);
         Task<TEntity> GetByIdAsync(int id);
         Task InsertAsync(TEntity entity);
         void UpdateAsync(TEntity entity);

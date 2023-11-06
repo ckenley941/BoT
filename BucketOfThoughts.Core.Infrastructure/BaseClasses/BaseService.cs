@@ -1,5 +1,6 @@
 ﻿using BucketOfThoughts.Core.Infrastructure.Extensions;
 using BucketOfThoughts.Core.Infrastructure.Interfaces;
+using BucketOfThoughts.Core.Infrastructure.Objects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ValueGeneration;
 using Microsoft.Extensions.Caching.Distributed;
@@ -23,10 +24,16 @@ namespace BucketOfThoughts.Core.Infrastructure.BaseClasses
 
         public virtual async Task<IEnumerable<TEntity>> GetFromCacheAsync(string cacheKey)
         {
+            var data = await GetFromCacheAsync(cacheKey, null);
+            return data;
+        }
+
+        public virtual async Task<IEnumerable<TEntity>> GetFromCacheAsync(string cacheKey, GetQueryParams<TEntity>? queryParams)
+        {
             var data = await _cache.GetRecordAsync<IEnumerable<TEntity>>(cacheKey); 
             if (data == null)
             {
-                data = (await _repository.GetAsync());
+                data = await _repository.GetAsync(queryParams);
                 await _cache.SetRecordAsync(cacheKey, data);
             }
 
