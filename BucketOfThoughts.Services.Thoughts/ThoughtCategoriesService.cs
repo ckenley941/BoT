@@ -5,6 +5,7 @@ using BucketOfThoughts.Services.Thoughts.Objects;
 using BucketOfThoughts.Core.Infrastructure.Extensions;
 using BucketOfThoughts.Core.Infrastructure.BaseClasses;
 using BucketOfThoughts.Core.Infrastructure.Constants;
+using Azure;
 
 namespace BucketOfThoughts.Services.Thoughts
 {
@@ -16,10 +17,25 @@ namespace BucketOfThoughts.Services.Thoughts
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<ThoughtCategory>> GetAsync()
+        public async Task<IEnumerable<ThoughtCategoryDto>> GetAsync()
         {
-            var thougtCategories = await base.GetFromCacheAsync(CacheKeys.ThoughtCategories);
-            return thougtCategories;
+            var thoughtCategories = (await base.GetFromCacheAsync(CacheKeys.ThoughtCategories));
+            var dictThoughtCategories = thoughtCategories.ToDictionary(x => x.ThoughtCategoryId, x => x.Description);
+
+            var categories = new List<ThoughtCategoryDto>();
+            thoughtCategories.ToList().ForEach(x =>
+            {
+                dictThoughtCategories.TryGetValue(x.ParentId ?? 0, out string? categoryDescription);
+                categories.Add(new ThoughtCategoryDto()
+                {
+                    Id = x.ThoughtCategoryId,
+                    Description = x.Description,
+                    SortOrder = x.SortOrder,
+                    ParentCategory = categoryDescription
+                });
+            });
+
+            return categories;
         }
 
         public override async Task<ThoughtCategory> InsertAsync(ThoughtCategory newItem)

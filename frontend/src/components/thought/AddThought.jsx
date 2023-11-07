@@ -136,7 +136,7 @@ export default function AddThought()
             <em>None</em>
           </MenuItem> */}
           { thoughtCategories.map((tc, i) => (
-             <MenuItem key={i} value={tc.thoughtCategoryId}>{tc.description}</MenuItem>
+             <MenuItem key={i} value={tc.id}>{tc.description}</MenuItem>
                 ))}
         </Select>
         <AddItemToDropdownDialog isOpen={false} title="Category" saveCallback={addThoughtCategory}></AddItemToDropdownDialog>

@@ -23,4 +23,3 @@ export function getRandomThought() {
   export function insertThoughtCategory(newThoughtCategory: NewThoughtCategory) {
     return client.post(`${apiUrl}/thoughtcategory`, newThoughtCategory);
   }
-

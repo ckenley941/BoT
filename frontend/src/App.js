@@ -21,6 +21,8 @@ import Layout from './components/layout/Layout'
 import ThoughtsGrid from './components/thought/ThoughtsGrid';
 import WordsGrid from './components/word/WordsGrid';
 import Dashboard from './components/dashboard/Dashboard';
+import Settings from './components/settings/Settings.jsx';
+import ThoughtsCategoriesGrid from './components/settings/ThoughtCategoriesGrid.jsx';
 
 function Test(){
   return (
@@ -59,6 +61,10 @@ const App = () => {
         <Route exact path="/organize-thoughts"  element={ <ThoughtsGrid/>}>
         </Route>
         <Route exact path="/words"  element={ <WordsGrid/>}>
+        </Route>
+        <Route exact path="/settings"  element={ <Settings/>}>
+        </Route>
+        <Route exact path="/settings/thought-categories"  element={ <ThoughtsCategoriesGrid/>}>
         </Route>
         </Routes>
         </Layout>

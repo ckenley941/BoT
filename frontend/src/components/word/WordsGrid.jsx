@@ -6,6 +6,8 @@ import { DataGrid, GridToolbar   } from '@mui/x-data-grid';
 import { getWords, getWordById } from "../../services/WordsService.ts";
 import WordCard from "./WordCard.jsx";
 
+import WordDialog from "./WordDialog.jsx";
+
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -15,7 +17,15 @@ import Button from '@mui/material/Button';
 export default function WordsGrid() {
     const [words, setWords] = useState([]);
     const [open, setOpen] = React.useState(false);
-    const [selectedWord, setSelectedWord] = useState({});
+    const [selectedWord, setSelectedWord] = useState({ id: 0,
+      guid: "",
+      word: "",
+      primaryTranslation: {
+        id: 0,
+        guid: "",
+        word: "",
+      },
+      pronunication:[]});
 
     const columns = [
         //{ field: 'id', headerName: 'ID', width: 90 },
@@ -47,7 +57,7 @@ export default function WordsGrid() {
 
     useEffect(() => {
         loadData();
-      }, []);
+      },[selectedWord]);
     
       const loadData = async () => {
         getWords().then((response) => {
@@ -96,7 +106,8 @@ export default function WordsGrid() {
           />
           </CardContent>
         </Card>
-         <Dialog open={open} onClose={handleClose}>
+        <WordDialog isOpen={open} selectedWord={selectedWord}></WordDialog>
+         {/* <Dialog open={open} onClose={handleClose}>
          <DialogTitle>Word</DialogTitle>
          <DialogContent>
              <WordCard data={selectedWord}></WordCard>            
@@ -104,7 +115,7 @@ export default function WordsGrid() {
          <DialogActions>
            <Button onClick={handleClose}>Close</Button>
          </DialogActions>
-       </Dialog>
+       </Dialog> */}
        </div>
       );
 }

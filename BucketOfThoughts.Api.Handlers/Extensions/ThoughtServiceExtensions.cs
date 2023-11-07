@@ -61,7 +61,7 @@ namespace BucketOfThoughts.Api.Handlers.Extensions
             app.MapGet("/api/thoughtcategories",
                 async (GetThoughtCategoriesHandler handler) =>
                    await handler.HandleAsync()
-                   is IEnumerable<ThoughtCategory> thoughtCategories
+                   is IEnumerable<ThoughtCategoryDto> thoughtCategories
                    ? Results.Ok(thoughtCategories)
                    : Results.NotFound()
                 );

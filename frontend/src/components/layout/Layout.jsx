@@ -20,7 +20,8 @@ SubjectOutlined,
 PsychologyAlt,
 Psychology,
 Language,
-Chalet
+Chalet,
+Settings
 } from "@mui/icons-material/";
 
 export default function Layout({ children }) {
@@ -60,6 +61,11 @@ const menuItems = [
     text: "All Words",
     icon: < Language color = "secondary" / > ,
     path: "/words",
+  },
+  {
+    text: "Settings",
+    icon: < Settings color = "secondary" / > ,
+    path: "/settings",
   },
 ];
 
