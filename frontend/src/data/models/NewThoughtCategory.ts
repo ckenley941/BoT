@@ -1,6 +1,6 @@
 interface NewThoughtCategory {
     description: string,
-    moduleId: number,
+    thoughtModuleId: number,
     parentId: number,
     sortOrder: number
 }

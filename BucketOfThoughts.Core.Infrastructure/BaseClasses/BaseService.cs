@@ -53,6 +53,12 @@ namespace BucketOfThoughts.Core.Infrastructure.BaseClasses
             await _repository.SaveAsync();
         }
 
+        public virtual async Task DeleteAsync(int id)
+        {
+            await _repository.DeleteAsync(id);
+            await _repository.SaveAsync();
+        }
+
         public virtual async Task DeleteAsync(TEntity deleteItem)
         {
             _repository.DeleteAsync(deleteItem);

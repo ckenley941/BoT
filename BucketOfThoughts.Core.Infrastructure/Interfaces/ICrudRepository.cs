@@ -16,7 +16,7 @@ namespace BucketOfThoughts.Core.Infrastructure.Interfaces
         Task InsertAsync(TEntity entity);
         void UpdateAsync(TEntity entity);
         void DeleteAsync(TEntity entiy);
-        Task DeleteByIdAsync(int id);
+        Task DeleteAsync(int id);
         Task SaveAsync();
     }
 }

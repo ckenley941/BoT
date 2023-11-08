@@ -72,7 +72,7 @@ namespace BucketOfThoughts.Core.Infrastructure.BaseClasses
             _context.Entry(entity).State = EntityState.Modified;
         }
 
-        public async virtual Task DeleteByIdAsync(int id)
+        public async virtual Task DeleteAsync(int id)
         {
             TEntity entity = await _dbSet.FindAsync(id);
             DeleteAsync(entity);

@@ -106,8 +106,8 @@ export default function WordsGrid() {
           />
           </CardContent>
         </Card>
-        <WordDialog isOpen={open} selectedWord={selectedWord}></WordDialog>
-         {/* <Dialog open={open} onClose={handleClose}>
+        {/* <WordDialog isOpen={open} selectedWord={selectedWord}></WordDialog> */}
+         <Dialog open={open} onClose={handleClose}>
          <DialogTitle>Word</DialogTitle>
          <DialogContent>
              <WordCard data={selectedWord}></WordCard>            
@@ -115,7 +115,7 @@ export default function WordsGrid() {
          <DialogActions>
            <Button onClick={handleClose}>Close</Button>
          </DialogActions>
-       </Dialog> */}
+       </Dialog>
        </div>
       );
 }

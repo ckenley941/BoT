@@ -1,3 +1,4 @@
+import { idID } from "@mui/material/locale";
 import { apiUrl, client } from "../data/DataStore";
 
 export function getRandomThought() {
@@ -22,4 +23,12 @@ export function getRandomThought() {
 
   export function insertThoughtCategory(newThoughtCategory: NewThoughtCategory) {
     return client.post(`${apiUrl}/thoughtcategory`, newThoughtCategory);
+  }
+
+  export function updateThoughtCategory(newThoughtCategory: NewThoughtCategory, id: number) {
+    return client.put(`${apiUrl}/thoughtcategory/${id}`, newThoughtCategory);
+  }
+
+  export function deleteThoughtCategory( id: number) {
+    return client.delete(`${apiUrl}/thoughtcategory/${id}`);
   }

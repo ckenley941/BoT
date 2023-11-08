@@ -6,15 +6,18 @@ using BucketOfThoughts.Core.Infrastructure.Extensions;
 using BucketOfThoughts.Core.Infrastructure.BaseClasses;
 using BucketOfThoughts.Core.Infrastructure.Constants;
 using Azure;
+using AutoMapper;
 
 namespace BucketOfThoughts.Services.Thoughts
 {
     public class ThoughtCategoriesService : BaseService<ThoughtCategory>
     {
         private readonly ThoughtsDbContext _dbContext;
-        public ThoughtCategoriesService(ICrudRepository<ThoughtCategory> repository, IDistributedCache cache, ThoughtsDbContext dbContext) : base (repository, cache)
+        private readonly IMapper _mapper;
+        public ThoughtCategoriesService(ICrudRepository<ThoughtCategory> repository, IDistributedCache cache, ThoughtsDbContext dbContext, IMapper mapper) : base (repository, cache)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
         }
 
         public async Task<IEnumerable<ThoughtCategoryDto>> GetAsync()
@@ -31,7 +34,9 @@ namespace BucketOfThoughts.Services.Thoughts
                     Id = x.ThoughtCategoryId,
                     Description = x.Description,
                     SortOrder = x.SortOrder,
-                    ParentCategory = categoryDescription
+                    //ParentCategory = categoryDescription,
+                    ParentId = x.ParentId,
+                    ThoughtModuleId = x.ThoughtModuleId
                 });
             });
 
@@ -49,7 +54,23 @@ namespace BucketOfThoughts.Services.Thoughts
             return newItem;
         }
 
-        public async Task<int> GetDefaultModuleId()
+        public async Task<ThoughtCategory> UpdateAsync2(ThoughtCategoryDto updateItem)
+        {
+            var dbItem = await _repository.GetByIdAsync(updateItem.Id);
+            if (dbItem == null)
+            {
+                throw new Exception("Not found."); //Make this custom not found exception
+            }
+
+            _mapper.Map(updateItem, dbItem);
+
+            await base.UpdateAsync(dbItem);
+            await _cache.RemoveAsync(CacheKeys.ThoughtCategories);
+
+            return dbItem;
+        }
+
+        private async Task<int> GetDefaultModuleId()
         {
             int defaultModuleId = await _cache.GetRecordAsync<int>(CacheKeys.DefaultModuleId);
             if (defaultModuleId <= 0)

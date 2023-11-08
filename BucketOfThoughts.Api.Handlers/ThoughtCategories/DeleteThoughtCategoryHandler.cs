@@ -12,9 +12,13 @@ namespace BucketOfThoughts.Api.Handlers.ThoughtCategories
             _service = service;
         }
 
-        public async Task HandleAsync(ThoughtCategory deleteItem)
+        public async Task HandleAsync(int id)
         {
-            await _service.DeleteAsync(deleteItem);
+            //Eventually add logic that first checks to see if any Thoughts are tied to the category
+                //If no - we're good
+                //If yes - either auto move everything to ParentId if null to Other
+                //OR give them a dropdown to choose the new category defaulting to select value based on logic above
+            await _service.DeleteAsync(id);
         }
     }
 }

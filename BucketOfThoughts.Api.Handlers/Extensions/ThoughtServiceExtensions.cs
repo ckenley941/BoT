@@ -29,6 +29,8 @@ namespace BucketOfThoughts.Api.Handlers.Extensions
             services.AddScoped<GetThoughtsHandler>();
             services.AddScoped<InsertThoughtCategoryHandler>();
             services.AddScoped<InsertThoughtHandler>();
+            services.AddScoped<UpdateThoughtCategoryHandler>();
+            services.AddScoped<DeleteThoughtCategoryHandler>();
             return services;
         }
 
@@ -74,21 +76,25 @@ namespace BucketOfThoughts.Api.Handlers.Extensions
                }
                );
 
-            //app.MapPut("/api/thoughtcategory",
-            //   async (UpdateThoughtCategoryHandler handler, ThoughtCategory updateItem) =>
-            //   {
-            //       await handler.HandleAsync(updateItem);
-            //       Results.Ok(updateItem);
-            //   }
-            //   );
+            app.MapPut("/api/thoughtcategory/{id}",
+               async (UpdateThoughtCategoryHandler handler, ThoughtCategoryDto updateItem, int id) =>
+               {
+                   if (id != updateItem.Id)
+                   {
+                       Results.BadRequest();
+                   }
+                   await handler.HandleAsync(updateItem);
+                   Results.Ok(updateItem);
+               }
+               );
 
-            //app.MapDelete("/api/thoughtcategory",
-            //   async (DeleteThoughtCategoryHandler handler, ThoughtCategory deleteItem) =>
-            //   {
-            //       await handler.HandleAsync(deleteItem);
-            //       Results.Ok();
-            //   }
-            //   );
+            app.MapDelete("/api/thoughtcategory/{id}",
+               async (DeleteThoughtCategoryHandler handler, int id) =>
+               {
+                   await handler.HandleAsync(id);
+                   Results.Ok();
+               }
+               );
 
             return app;
         }

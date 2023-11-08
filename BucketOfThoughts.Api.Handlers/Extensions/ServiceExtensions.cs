@@ -20,6 +20,8 @@ namespace BucketOfThoughts.Api.Handlers.Extensions
             // package will act as the webserver translating request and responses between the Lambda event source and ASP.NET Core.
             services.AddAWSLambdaHosting(LambdaEventSource.RestApi);
 
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             services.AddCors(p => p.AddPolicy("corsapp", builder =>
             {
                 builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
