@@ -1,4 +1,5 @@
-﻿using BucketOfThoughts.Core.Infrastructure.Extensions;
+﻿using AutoMapper;
+using BucketOfThoughts.Core.Infrastructure.Extensions;
 using BucketOfThoughts.Core.Infrastructure.Interfaces;
 using BucketOfThoughts.Core.Infrastructure.Objects;
 using Microsoft.EntityFrameworkCore;
@@ -12,14 +13,16 @@ using System.Threading.Tasks;
 
 namespace BucketOfThoughts.Core.Infrastructure.BaseClasses
 {
-    public abstract class BaseService<TEntity> where TEntity : class
+    public abstract class BaseService<TEntity, TDto> where TEntity : class where TDto : BaseDto
     {
         protected readonly ICrudRepository<TEntity> _repository;
         protected readonly IDistributedCache _cache;
-        public BaseService(ICrudRepository<TEntity> repository, IDistributedCache cache)
+        protected readonly IMapper _mapper;
+        public BaseService(ICrudRepository<TEntity> repository, IDistributedCache cache, IMapper mapper)
         {
             _repository = repository;
             _cache = cache;
+            _mapper = mapper;
         }
 
         public virtual async Task<IEnumerable<TEntity>> GetFromCacheAsync(string cacheKey)
@@ -47,10 +50,19 @@ namespace BucketOfThoughts.Core.Infrastructure.BaseClasses
             return newItem;
         }
 
-        public virtual async Task UpdateAsync(TEntity updateItem)
+        public virtual async Task<TEntity> UpdateAsync(TDto updateItem)
         {
-            _repository.UpdateAsync(updateItem);
+            var dbItem = await _repository.GetByIdAsync(updateItem.Id);
+            if (dbItem == null)
+            {
+                throw new Exception("Not found."); //Make this custom not found exception
+            }
+
+            _mapper.Map(updateItem, dbItem);
+
+            _repository.UpdateAsync(dbItem);
             await _repository.SaveAsync();
+            return dbItem;
         }
 
         public virtual async Task DeleteAsync(int id)

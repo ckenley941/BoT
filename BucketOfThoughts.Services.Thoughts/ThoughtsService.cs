@@ -1,4 +1,5 @@
-﻿using BucketOfThoughts.Core.Infrastructure.BaseClasses;
+﻿using AutoMapper;
+using BucketOfThoughts.Core.Infrastructure.BaseClasses;
 using BucketOfThoughts.Core.Infrastructure.Interfaces;
 using BucketOfThoughts.Core.Infrastructure.Objects;
 using BucketOfThoughts.Services.Thoughts.Data;
@@ -7,9 +8,9 @@ using Microsoft.Extensions.Caching.Distributed;
 
 namespace BucketOfThoughts.Services.Thoughts
 {
-    public class ThoughtsService : BaseService<Thought>
+    public class ThoughtsService : BaseService<Thought, ThoughtDto>
     {
-        public ThoughtsService(ICrudRepository<Thought> repository, IDistributedCache cache) : base (repository, cache)
+        public ThoughtsService(ICrudRepository<Thought> repository, IDistributedCache cache, IMapper mapper) : base (repository, cache, mapper)
         {
         }
 

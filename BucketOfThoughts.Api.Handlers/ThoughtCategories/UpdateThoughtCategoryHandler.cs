@@ -15,7 +15,7 @@ namespace BucketOfThoughts.Api.Handlers.ThoughtCategories
 
         public async Task HandleAsync(ThoughtCategoryDto updateItem)
         {
-            await _service.UpdateAsync2(updateItem);
+            await _service.UpdateAsync(updateItem);
         }
     }
 }

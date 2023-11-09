@@ -13,7 +13,7 @@ import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Close';
 
-import { getThoughtCategories, updateThoughtCategory, deleteThoughtCategory } from "../../services/ThoughtsService.ts";
+import { getThoughtCategories, insertThoughtCategory, updateThoughtCategory, deleteThoughtCategory } from "../../services/ThoughtsService.ts";
 
 export default function ThoughtsCategoriesGrid() {
     const [rows, setRows] = useState([]);
@@ -56,14 +56,18 @@ export default function ThoughtsCategoriesGrid() {
     };
   
     const processRowUpdate = (newRow) => {
-      const updatedRow = { ...newRow, isNew: false, thoughtCategoryId: newRow.id };
+      const updatedRow = { ...newRow, isNew: newRow.id === 0 };
       setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
-      console.log(updatedRow);
-      updateThoughtCategory(updatedRow, newRow.id);
-      // .then((response) => {
-      //   setRows(response.data);
-      // });
-      return updatedRow;
+
+      if (updatedRow.isNew){
+        insertThoughtCategory(updatedRow).then((response) => {
+          loadData();
+        })
+      }
+      else{
+        updateThoughtCategory(updatedRow, newRow.id);        
+        return updatedRow;
+      }
     };
 
     const handleProcessRowUpdateError = () => {
@@ -79,7 +83,7 @@ export default function ThoughtsCategoriesGrid() {
     
       const handleClick = () => {
         var id = 0;
-        setRows((oldRows) => [...oldRows, { id, description: '', parentCategory: '', sortOrder: 1, isNew: true }]);
+        setRows((oldRows) => [{ id, description: '', parentCategory: '', sortOrder: 1, isNew: true }, ...oldRows]);
         setRowModesModel((oldModel) => ({
           ...oldModel,
           [id]: { mode: GridRowModes.Edit, fieldToFocus: 'description' },
