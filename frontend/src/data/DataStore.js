@@ -6,7 +6,7 @@ const prodUrl = "https://nts2q9eay1.execute-api.us-west-2.amazonaws.com/Prod/";
 const devUrl = "https://localhost:57568/";
 
 export const mainUrl = prodUrl;
-export const apiUrl = mainUrl + "api";
+export const apiUrl = devUrl + "api";
 console.log(apiUrl);
 
 export const client = axios.create({
