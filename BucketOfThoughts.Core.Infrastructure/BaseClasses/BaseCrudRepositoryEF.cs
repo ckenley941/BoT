@@ -13,8 +13,8 @@ namespace BucketOfThoughts.Core.Infrastructure.BaseClasses
 {
     public abstract class BaseCrudRepositoryEF<TEntity> : ICrudRepository<TEntity> where TEntity : class
     {
-        private readonly DbContext _context;
-        private DbSet<TEntity> _dbSet;
+        protected readonly DbContext _context;
+        protected DbSet<TEntity> _dbSet;
         public BaseCrudRepositoryEF(DbContext context) 
         {
             _context = context;

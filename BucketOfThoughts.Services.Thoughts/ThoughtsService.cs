@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using AutoMapper
+    ;
 using BucketOfThoughts.Core.Infrastructure.BaseClasses;
 using BucketOfThoughts.Core.Infrastructure.Interfaces;
 using BucketOfThoughts.Core.Infrastructure.Objects;
@@ -12,6 +13,28 @@ namespace BucketOfThoughts.Services.Thoughts
     {
         public ThoughtsService(ICrudRepository<Thought> repository, IDistributedCache cache, IMapper mapper) : base (repository, cache, mapper)
         {
+        }
+
+        public async Task<ThoughtDto> GetByIdAsync(int id)
+        {
+            var thought = await _repository.GetByIdAsync(id);
+
+            return new ThoughtDto()
+            {
+                Id = thought.ThoughtId,
+                Description = thought.Description,
+                ThoughtDateTime = thought.RecordDateTime,
+                Category = new ThoughtCategoryDto()
+                {
+                    Id = thought.ThoughtCategory.ThoughtCategoryId,
+                    Description = thought.ThoughtCategory.Description
+                },
+                Details = thought.ThoughtDetails.Select(x => new ThoughtDetailDto()
+                {
+                    Id = x.ThoughtDetailId,
+                    Description = x.Description
+                }).ToList()
+            };
         }
 
         public async Task<ThoughtDto> GetRandomThoughtAsync()
@@ -37,6 +60,7 @@ namespace BucketOfThoughts.Services.Thoughts
             {
                 Id = randThought.ThoughtId,
                 Description = randThought.Description,
+                ThoughtDateTime = randThought.RecordDateTime,
                 Category = new ThoughtCategoryDto()
                 {
                     Id = randThought.ThoughtCategory.ThoughtCategoryId,

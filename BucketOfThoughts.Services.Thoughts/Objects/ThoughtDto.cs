@@ -1,4 +1,5 @@
 ﻿using BucketOfThoughts.Core.Infrastructure.BaseClasses;
+using BucketOfThoughts.Core.Infrastructure.Extensions;
 
 namespace BucketOfThoughts.Services.Thoughts.Objects
 {
@@ -6,7 +7,8 @@ namespace BucketOfThoughts.Services.Thoughts.Objects
     {
         public string Description { get; set; }
         public ThoughtCategoryDto Category { get; set; }
-        public string ThoughtSource { get; set; }
+        public DateTime ThoughtDateTime { get; set; }
+        public string ThoughtDateString => ThoughtDateTime.Date.ToFormattedDateString();
         public List<ThoughtDetailDto> Details { get; set; }
     }
 }

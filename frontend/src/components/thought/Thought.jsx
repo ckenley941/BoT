@@ -9,6 +9,7 @@ import { getRandomThought } from "../../services/ThoughtsService.ts";
 export default function Thought({data}) {
     const [thought, setThought] = useState({
         description: "",
+        thoughtDateString: "",
         category: {
           id: 0,
           description: ""
@@ -21,7 +22,6 @@ export default function Thought({data}) {
       }, [data]);
     
       const loadData = async () => {
-        console.log(data);
         if (data){
           setThought(data);
         }
@@ -36,6 +36,7 @@ export default function Thought({data}) {
         <Card variant="outlined">
         <CardContent>
         <Typography variant="h3">{thought.description }</Typography>  
+        <Typography variant="h5">{thought.thoughtDateString }</Typography>  
         <Typography variant="h5">Category: {thought.category.description }</Typography>  
             { thought.details.map((t, i) => (
                 <Grid key={i}>

@@ -17,6 +17,10 @@ export function getRandomThought() {
     return client.get(`${apiUrl}/thoughts`);
   }
 
+  export function getThoughtById(id: number) {
+    return client.get(`${apiUrl}/thoughts/${id}`);
+  }
+
   export function insertThought(newThought: NewThought) {
     return client.post(`${apiUrl}/thoughts`, newThought);
   }

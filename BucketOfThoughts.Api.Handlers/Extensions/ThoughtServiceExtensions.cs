@@ -24,11 +24,14 @@ namespace BucketOfThoughts.Api.Handlers.Extensions
             services.AddScoped<ICrudRepository<ThoughtCategory>, ThoughtCategoriesRepository>();
             services.AddScoped<ThoughtsService>();
             services.AddScoped<ICrudRepository<Thought>, ThoughtsRepository>();
+
             services.AddScoped<GetRandomThoughtHandler>();
-            services.AddScoped<GetThoughtCategoriesHandler>();
+            services.AddScoped<GetThoughtByIdHandler>();
             services.AddScoped<GetThoughtsHandler>();
-            services.AddScoped<InsertThoughtCategoryHandler>();
             services.AddScoped<InsertThoughtHandler>();
+
+            services.AddScoped<GetThoughtCategoriesHandler>();
+            services.AddScoped<InsertThoughtCategoryHandler>();
             services.AddScoped<UpdateThoughtCategoryHandler>();
             services.AddScoped<DeleteThoughtCategoryHandler>();
             return services;
@@ -49,6 +52,14 @@ namespace BucketOfThoughts.Api.Handlers.Extensions
                  await handler.HandleAsync()
                  is IEnumerable<ThoughtGridDto> thoughts
                  ? Results.Ok(thoughts)
+                 : Results.NotFound()
+             );
+
+            app.MapGet("/api/thoughts/{id}",
+             async (GetThoughtByIdHandler handler, int id) =>
+                 await handler.HandleAsync(id)
+                  is ThoughtDto thought
+                 ? Results.Ok(thought)
                  : Results.NotFound()
              );
 
