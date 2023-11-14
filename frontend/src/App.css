@@ -6,6 +6,10 @@
   padding-top: 25px;
 }
 
+.layout {
+  padding-top: 15px;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

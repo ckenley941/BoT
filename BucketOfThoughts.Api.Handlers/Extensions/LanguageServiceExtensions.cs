@@ -16,7 +16,7 @@ namespace BucketOfThoughts.Api.Handlers.Extensions
              options =>
                options.UseSqlServer(configuration.GetConnectionString(ConnectionStrings.BucketOfThoughts),
                b => b.MigrationsAssembly(typeof(LanguageDbContext).Assembly.FullName)),
-             ServiceLifetime.Transient);
+             ServiceLifetime.Scoped);
 
             services.AddScoped<WordsService>();
             services.AddScoped<ICrudRepository<Word>, WordsRepository>();
