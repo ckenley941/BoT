@@ -19,6 +19,10 @@ import DeleteIcon  from "@mui/icons-material/Delete";
 import ListIcon from '@mui/icons-material/List';
 import AddItemToDropdownDialog from "../controls/AddItemToDropdownDialog";
 
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import TabPanel from "../controls/TabPanel.jsx"
+
 import _ from 'lodash';
 
 import { getThoughtCategories, insertThought, insertThoughtCategory } from "../../services/ThoughtsService.ts";
@@ -31,6 +35,7 @@ export default function AddThought()
     details: []
   })
   const [thoughtCategories, setThoughtCategories] = useState([]);
+  const [tabValue, setTabValue] = useState(0);
 
   useEffect(() => {
     loadCategories();
@@ -110,6 +115,10 @@ export default function AddThought()
     insertThoughtCategory(thoughtCategory).then(loadCategories);
   }
 
+  const handleTabChange = (event, newValue) => {
+    setTabValue(newValue);
+  };
+  
     return ( 
       <Card variant="outlined"  sx={{ m: 5, maxWidth: 750 }}>
       <CardContent>
@@ -142,32 +151,43 @@ export default function AddThought()
         </Select>
         <AddItemToDropdownDialog isOpen={false} title="Category" saveCallback={addThoughtCategory}></AddItemToDropdownDialog>
       </FormControl>
-    </Grid>     
-      <IconButton color="secondary"  aria-label="Add Detail" onClick={addDetail}>
-      <Tooltip title="Add Details">      
-      <ListIcon fontSize="large" />
-     </Tooltip>
+    </Grid>    
+      <Tabs value={tabValue} onChange={handleTabChange} textColor="secondary" indicatorColor="secondary"
+        aria-label="secondary tabs example">
+        <Tab label="Details" />
+        <Tab label="Related Thoughts" />
+        <Tab label="Website Links" />
+      </Tabs>
+
+      <TabPanel value={tabValue} index={0}>              
+        <IconButton color="secondary"  aria-label="Add Detail" onClick={addDetail}>
+            <Tooltip title="Add Details">      
+              <ListIcon fontSize="large" />
+            </Tooltip>
         </IconButton>   
         { thought.details.map((t, i) => (
           <div>
-                      <TextField sx={{ m: 1, width:"80%"}}
-          label="Detail"
-          multiline
-          name={i}
-          onChange={handleDetailChange}
-        />
-        <IconButton name={i} color="secondary" aria-label="Delete" onClick={deleteDetail}>
-        <Tooltip title="Delete">      
-      <DeleteIcon fontSize="large" />
-     </Tooltip>
+            <TextField sx={{ m: 1, width:"80%"}} label="Detail" multiline name={i} onChange={handleDetailChange}/>
+            <IconButton name={i} color="secondary" aria-label="Delete" onClick={deleteDetail}>
+              <Tooltip title="Delete">      
+                <DeleteIcon fontSize="large" />
+              </Tooltip>
+            </IconButton>   
+          </div>
+        ))}
+      </TabPanel>
+      <TabPanel value={tabValue} index={1}>
+        Under construction
+      </TabPanel>
+      <TabPanel value={tabValue} index={2}>
+        Under construction
+      </TabPanel> 
+      
+      <IconButton color="secondary" aria-label="Save Thought" onClick={addThought}>
+        <Tooltip title="Save Thought">      
+          <SaveIcon fontSize="large" />
+        </Tooltip>
       </IconButton>   
-      </div>
-                ))}
-              <IconButton color="secondary" aria-label="Save Thought" onClick={addThought}>
-              <Tooltip title="Save Thought">      
-      <SaveIcon fontSize="large" />
-     </Tooltip>
-        </IconButton>   
       </CardContent>
     </Card>
     );

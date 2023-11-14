@@ -12,13 +12,9 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import RefreshIcon from '@mui/icons-material/Refresh';
 import FlashOnIcon from '@mui/icons-material/FlashOn';
-import AddIcon from '@mui/icons-material/Add';
 
-import PropTypes from 'prop-types';
-
-
+import TabPanel from "../controls/TabPanel.jsx";
 import WordContext from "./WordContext";
 import Word from "./Word";
 import RelatedWords from "./RelatedWords";
@@ -31,31 +27,9 @@ const bull = (
   </Box>
   );
 
-  function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-  <div role="tabpanel" hidden={value !==index} id={`full-width-tabpanel-${index}`}
-    aria-labelledby={`full-width-tab-${index}`} {...other}>
-    {value === index && (
-    <Box sx={{ p: 3 }}>
-      <div>{children}</div>
-    </Box>
-    )}
-  </div>
-  );
-  }
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
-};
-
 export default function WordCard( {data}) {
   let isFlashCard = false;
   const [showFullCard, setShowFullCard] = useState(!isFlashCard); //in flash card mode this is false
-  const [isOpen, setIsOpen] = useState(false);
   const [wordCard, setWordCard] = useState({    
       id: 0,
       guid: "",
@@ -71,7 +45,7 @@ export default function WordCard( {data}) {
   const [wordContexts, setWordContexts] = useState([]);
   const [wordRelationships, setWordRelationships] = useState([]);
 
-  const [value, setValue] = useState(0);
+  const [tabValue, setTabValue] = useState(0);
   const [isDetailedView, setIsDetailedView] = useState(false);
 
   let wordId = 0;
@@ -107,16 +81,9 @@ export default function WordCard( {data}) {
       setWordRelationships(response.data);
     });    
   }
-
+  
   const handleTabChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  const refreshWord = () => {
-    if (isFlashCard){
-      setShowFullCard(false);
-    }
-    loadData();
+    setTabValue(newValue);
   };
 
   return (
@@ -124,9 +91,6 @@ export default function WordCard( {data}) {
     <Card variant="outlined">
       <React.Fragment>
         <CardContent>       
-          {/* <IconButton color="secondary" aria-label="Refresh" onClick={refreshWord}>
-            <RefreshIcon />
-          </IconButton>              */}
           <Typography variant="h2">{wordCard.word} <IconButton color="secondary" aria-label="Flash" onClick={()=> setShowFullCard(!showFullCard)}>
             <FlashOnIcon />
           </IconButton></Typography>
@@ -150,7 +114,7 @@ export default function WordCard( {data}) {
           } */}
     {showFullCard ?
           <Box sx={{ width: '100%' }}>
-            <Tabs value={value} onChange={handleTabChange} textColor="secondary" indicatorColor="secondary"
+            <Tabs value={tabValue} onChange={handleTabChange} textColor="secondary" indicatorColor="secondary"
               aria-label="secondary tabs example">
               <Tab label="Dictionary" />
               <Tab label="Related Words" />
@@ -159,7 +123,7 @@ export default function WordCard( {data}) {
               <Tab label="Antonyms" />
             </Tabs>
 
-            <TabPanel value={value} index={0}>
+            <TabPanel value={tabValue} index={0}>
               <FormControl component="fieldset" variant="standard">
                 <FormGroup>
                   <FormControlLabel control={ <Switch checked={isDetailedView} onChange={()=>
@@ -187,16 +151,16 @@ export default function WordCard( {data}) {
               )
               }
             </TabPanel>
-            <TabPanel value={value} index={1}>
+            <TabPanel value={tabValue} index={1}>
               <RelatedWords data={wordRelationships.filter(wc=> wc.isRelated === true)}></RelatedWords>
             </TabPanel>
-            <TabPanel value={value} index={2}>
+            <TabPanel value={tabValue} index={2}>
               <RelatedWords data={wordRelationships.filter(wc=> wc.isPhrase === true)}></RelatedWords>
             </TabPanel>
-            <TabPanel value={value} index={3}>
+            <TabPanel value={tabValue} index={3}>
               <RelatedWords data={wordRelationships.filter(wc=> wc.isSynonym === true)}></RelatedWords>
             </TabPanel>
-            <TabPanel value={value} index={4}>
+            <TabPanel value={tabValue} index={4}>
               <RelatedWords data={wordRelationships.filter(wc=> wc.isAntonym === true)}></RelatedWords>
             </TabPanel>
           </Box>
