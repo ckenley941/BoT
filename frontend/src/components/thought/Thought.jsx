@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
+import Box from '@mui/material/Box';
+import FormLabel from '@mui/material/FormLabel';
 import Grid from "@mui/material/Unstable_Grid2";
 import Typography from "@mui/material/Typography";
 
@@ -35,14 +37,25 @@ export default function Thought({data}) {
     return (
         <Card variant="outlined">
         <CardContent>
-        <Typography variant="h3">{thought.description }</Typography>  
-        <Typography variant="h5">{thought.thoughtDateString }</Typography>  
-        <Typography variant="h5">Category: {thought.category.description }</Typography>  
-            { thought.details.map((t, i) => (
-                <Grid key={i}>
-                  <div>{t.description}</div>
-                </Grid>
-                ))}
+        <Grid container spacing={2}>
+          <Grid item md={3} xs={12}>            
+          <FormLabel>{thought.thoughtDateString }</FormLabel>  
+          </Grid>
+          <Grid item md={9} xs={12}>
+              <FormLabel>{thought.category.description}</FormLabel>  
+          </Grid>
+          <Grid item xs={12}>
+
+          <Typography variant="h5">{thought.description }</Typography>  
+          </Grid>
+          <Grid item xs={12}>
+          { thought.details.map((t, i) => (
+                        <Grid key={i}>
+                          <div>{t.description}</div>
+                        </Grid>
+                        ))}
+          </Grid>
+        </Grid>
         </CardContent>
       </Card>
     );

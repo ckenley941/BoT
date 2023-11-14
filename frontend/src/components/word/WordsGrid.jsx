@@ -107,7 +107,7 @@ export default function WordsGrid() {
           </CardContent>
         </Card>
         {/* <WordDialog isOpen={open} selectedWord={selectedWord}></WordDialog> */}
-         <Dialog open={open} onClose={handleClose}>
+         <Dialog open={open} onClose={handleClose} fullWidth={true} maxWidth={true}>
          <DialogTitle>Word</DialogTitle>
          <DialogContent>
              <WordCard data={selectedWord}></WordCard>            

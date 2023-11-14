@@ -97,7 +97,7 @@ export default function ThoughtsGrid() {
           />
           </CardContent>
         </Card>
-         <Dialog open={open} onClose={handleClose}>
+         <Dialog open={open} onClose={handleClose} fullWidth={true}>
          <DialogTitle>Thought</DialogTitle>
          <DialogContent>
              <Thought data={selectedRow}></Thought>            
