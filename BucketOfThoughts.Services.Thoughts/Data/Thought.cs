@@ -17,7 +17,13 @@ public partial class Thought
 
     public bool IsQuote { get; set; }
 
+    public virtual ICollection<RelatedThought> RelatedThoughtThoughtId1Navigations { get; set; } = new List<RelatedThought>();
+
+    public virtual ICollection<RelatedThought> RelatedThoughtThoughtId2Navigations { get; set; } = new List<RelatedThought>();
+
     public virtual ThoughtCategory ThoughtCategory { get; set; } = null!;
 
     public virtual ICollection<ThoughtDetail> ThoughtDetails { get; set; } = new List<ThoughtDetail>();
+
+    public virtual ICollection<ThoughtWebsiteLink> ThoughtWebsiteLinks { get; set; } = new List<ThoughtWebsiteLink>();
 }

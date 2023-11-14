@@ -4,7 +4,7 @@ import CardContent from "@mui/material/CardContent";
 import { DataGrid, GridToolbar  } from '@mui/x-data-grid';
 
 import Thought from "./Thought.jsx";
-import { getThoughts, getThoughtById } from "../../services/ThoughtsService.ts";
+import { getThoughtsGrid, getThoughtById } from "../../services/ThoughtsService.ts";
 
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -52,7 +52,7 @@ export default function ThoughtsGrid() {
       }, []);
     
       const loadData = async () => {
-        getThoughts().then((response) => {
+        getThoughtsGrid().then((response) => {
             setThoughts(response.data);
         });
       };

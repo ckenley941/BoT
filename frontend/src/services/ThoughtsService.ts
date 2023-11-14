@@ -13,8 +13,8 @@ export function getRandomThought() {
     return client.get(`${apiUrl}/thoughtcategories`);
   }
 
-  export function getThoughts() {
-    return client.get(`${apiUrl}/thoughts`);
+  export function getThoughtsGrid() {
+    return client.get(`${apiUrl}/thoughts/grid`);
   }
 
   export function getThoughtById(id: number) {

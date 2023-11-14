@@ -6,8 +6,8 @@ namespace BucketOfThoughts.Api.Handlers.Thoughts
 {
     public class GetRandomThoughtHandler
     {
-        protected readonly ThoughtsService _service;
-        public GetRandomThoughtHandler(ThoughtsService service)
+        protected readonly IThoughtsService _service;
+        public GetRandomThoughtHandler(IThoughtsService service)
         {
             _service = service;
         }

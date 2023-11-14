@@ -9,7 +9,15 @@ using Microsoft.Extensions.Caching.Distributed;
 
 namespace BucketOfThoughts.Services.Thoughts
 {
-    public class ThoughtsService : BaseService<Thought, ThoughtDto>
+    public interface IThoughtsService : ICrudService<Thought, ThoughtDto>
+    {
+        Task<ThoughtDto> GetByIdAsync(int id);
+        Task<ThoughtDto> GetRandomThoughtAsync();
+        Task<IEnumerable<ThoughtGridDto>> GetAsync();
+        Task<Thought> InsertAsync(InsertThoughtDto newItem); //Eventually use ICRudService version of insert
+    }
+
+    public class ThoughtsService : BaseService<Thought, ThoughtDto>, IThoughtsService
     {
         public ThoughtsService(ICrudRepository<Thought> repository, IDistributedCache cache, IMapper mapper) : base (repository, cache, mapper)
         {
@@ -18,32 +26,11 @@ namespace BucketOfThoughts.Services.Thoughts
         public async Task<ThoughtDto> GetByIdAsync(int id)
         {
             var thought = await _repository.GetByIdAsync(id);
-
-            return new ThoughtDto()
-            {
-                Id = thought.ThoughtId,
-                Description = thought.Description,
-                ThoughtDateTime = thought.RecordDateTime,
-                Category = new ThoughtCategoryDto()
-                {
-                    Id = thought.ThoughtCategory.ThoughtCategoryId,
-                    Description = thought.ThoughtCategory.Description
-                },
-                Details = thought.ThoughtDetails.Select(x => new ThoughtDetailDto()
-                {
-                    Id = x.ThoughtDetailId,
-                    Description = x.Description
-                }).ToList()
-            };
+            return ConvertThoughtToDto(thought);
         }
 
         public async Task<ThoughtDto> GetRandomThoughtAsync()
         {
-            var queryParams = new GetQueryParams<Thought>()
-            {
-                IncludeProperties = "ThoughtCategory,ThoughtDetails"
-            };
-
             //Eventually remove from cache what has already been used so we don't repeat random thoughts or added a flag
             var thoughts = await GetThoughtsFromCache();
 
@@ -56,22 +43,7 @@ namespace BucketOfThoughts.Services.Thoughts
 
             var randThought = thoughts[rand.Next(thoughts.Count)];
 
-            return new ThoughtDto()
-            {
-                Id = randThought.ThoughtId,
-                Description = randThought.Description,
-                ThoughtDateTime = randThought.RecordDateTime,
-                Category = new ThoughtCategoryDto()
-                {
-                    Id = randThought.ThoughtCategory.ThoughtCategoryId,
-                    Description = randThought.ThoughtCategory.Description
-                },
-                Details = randThought.ThoughtDetails.Select(x => new ThoughtDetailDto()
-                {
-                    Id = x.ThoughtDetailId,
-                    Description = x.Description
-                }).ToList()
-            };
+            return ConvertThoughtToDto(randThought);
         }
 
         public async Task<IEnumerable<ThoughtGridDto>> GetAsync()
@@ -120,6 +92,26 @@ namespace BucketOfThoughts.Services.Thoughts
                 IncludeProperties = "ThoughtCategory,ThoughtDetails"
             };
             return (await base.GetFromCacheAsync("Thoughts", queryParams)).ToList();
+        }
+
+        private static ThoughtDto ConvertThoughtToDto(Thought thought)
+        {
+            return new ThoughtDto()
+            {
+                Id = thought.ThoughtId,
+                Description = thought.Description,
+                ThoughtDateTime = thought.RecordDateTime,
+                Category = new ThoughtCategoryDto()
+                {
+                    Id = thought.ThoughtCategory.ThoughtCategoryId,
+                    Description = thought.ThoughtCategory.Description
+                },
+                Details = thought.ThoughtDetails.Select(x => new ThoughtDetailDto()
+                {
+                    Id = x.ThoughtDetailId,
+                    Description = x.Description
+                }).ToList()
+            };
         }
 
     }

@@ -15,6 +15,8 @@ public partial class ThoughtsDbContext : DbContext
     {
     }
 
+    public virtual DbSet<RelatedThought> RelatedThoughts { get; set; }
+
     public virtual DbSet<Thought> Thoughts { get; set; }
 
     public virtual DbSet<ThoughtCategory> ThoughtCategories { get; set; }
@@ -22,8 +24,30 @@ public partial class ThoughtsDbContext : DbContext
     public virtual DbSet<ThoughtDetail> ThoughtDetails { get; set; }
 
     public virtual DbSet<ThoughtModule> ThoughtModules { get; set; }
+
+    public virtual DbSet<ThoughtWebsiteLink> ThoughtWebsiteLinks { get; set; }
+
+    public virtual DbSet<WebsiteLink> WebsiteLinks { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<RelatedThought>(entity =>
+        {
+            entity.HasKey(e => e.RelatedThoughtId).HasName("PK__RelatedT__81D10C81E8058523");
+
+            entity.ToTable("RelatedThought");
+
+            entity.HasOne(d => d.ThoughtId1Navigation).WithMany(p => p.RelatedThoughtThoughtId1Navigations)
+                .HasForeignKey(d => d.ThoughtId1)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_RelatedThought_Thought1");
+
+            entity.HasOne(d => d.ThoughtId2Navigation).WithMany(p => p.RelatedThoughtThoughtId2Navigations)
+                .HasForeignKey(d => d.ThoughtId2)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_RelatedThought_Thought2");
+        });
+
         modelBuilder.Entity<Thought>(entity =>
         {
             entity.HasKey(e => e.ThoughtId).HasName("PK__Thought__0945E46BF9CB9C2F");
@@ -85,6 +109,35 @@ public partial class ThoughtsDbContext : DbContext
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
             entity.Property(e => e.ThoughtModuleGuid).HasDefaultValueSql("(newid())");
+        });
+
+        modelBuilder.Entity<ThoughtWebsiteLink>(entity =>
+        {
+            entity.HasKey(e => e.ThoughtWebsiteLinkId).HasName("PK__ThoughtW__017013A43CBDEBD1");
+
+            entity.ToTable("ThoughtWebsiteLink");
+
+            entity.HasOne(d => d.Thought).WithMany(p => p.ThoughtWebsiteLinks)
+                .HasForeignKey(d => d.ThoughtId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ThoughtWebsiteLink_Thought");
+
+            entity.HasOne(d => d.WebsiteLink).WithMany(p => p.ThoughtWebsiteLinks)
+                .HasForeignKey(d => d.WebsiteLinkId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ThoughtWebsiteLink_WebsiteLink");
+        });
+
+        modelBuilder.Entity<WebsiteLink>(entity =>
+        {
+            entity.HasKey(e => e.WebsiteLinkId).HasName("PK__WebsiteL__FE250C55782E1FBB");
+
+            entity.ToTable("WebsiteLink");
+
+            entity.Property(e => e.RecordDateTime)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.WebsiteLinkGuid).HasDefaultValueSql("(newid())");
         });
 
         OnModelCreatingPartial(modelBuilder);

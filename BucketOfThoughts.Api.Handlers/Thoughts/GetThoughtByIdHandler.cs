@@ -7,8 +7,8 @@ namespace BucketOfThoughts.Api.Handlers.Thoughts
 {
     public class GetThoughtByIdHandler
     {
-        protected readonly ThoughtsService _service;
-        public GetThoughtByIdHandler(ThoughtsService service)
+        protected readonly IThoughtsService _service;
+        public GetThoughtByIdHandler(IThoughtsService service)
         {
             _service = service;
         }

@@ -24,19 +24,18 @@ namespace BucketOfThoughts.Core.Infrastructure.BaseClasses
             _cache = cache;
             _mapper = mapper;
         }
-
-        public virtual async Task<IEnumerable<TEntity>> GetFromCacheAsync(string cacheKey)
+        public virtual async Task<IEnumerable<TEntity>> GetAsync(GetQueryParams<TEntity>? queryParams = null)
         {
-            var data = await GetFromCacheAsync(cacheKey, null);
+            var data = await _repository.GetAsync(queryParams);
             return data;
         }
 
-        public virtual async Task<IEnumerable<TEntity>> GetFromCacheAsync(string cacheKey, GetQueryParams<TEntity>? queryParams)
+        public virtual async Task<IEnumerable<TEntity>> GetFromCacheAsync(string cacheKey, GetQueryParams<TEntity>? queryParams = null)
         {
             var data = await _cache.GetRecordAsync<IEnumerable<TEntity>>(cacheKey); 
             if (data == null)
             {
-                data = await _repository.GetAsync(queryParams);
+                data = await GetAsync(queryParams);
                 await _cache.SetRecordAsync(cacheKey, data);
             }
 
