@@ -8,8 +8,9 @@ import Typography from "@mui/material/Typography";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import PropTypes from 'prop-types';
+import ThoughtsGrid from './ThoughtsGrid.jsx'
 
-import { getRandomThought } from "../../services/ThoughtsService.ts";
+import { getRandomThought, getRelatedThoughts } from "../../services/ThoughtsService.ts";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -42,6 +43,7 @@ export default function Thought({data}) {
         },
         details: []
     });
+    const [relatedThoughts, setRelatedThoughts] = useState([]);
     const [value, setValue] = useState(0);
 
     useEffect(() => {
@@ -51,13 +53,21 @@ export default function Thought({data}) {
       const loadData = async () => {
         if (data){
           setThought(data);
+          loadChildren(data.id);
         }
         else{
           getRandomThought().then((response) => {
               setThought(response.data);
+              loadChildren(response.data.id);
           });
-        }
+        }        
       };
+
+      const loadChildren = async (id) => {
+        getRelatedThoughts(id).then((response) => {
+          setRelatedThoughts(response.data);
+      });
+      }
 
       const handleTabChange = (event, newValue) => {
         setValue(newValue);
@@ -87,12 +97,20 @@ export default function Thought({data}) {
             </Tabs>
 
             <TabPanel value={value} index={0}>
-            { thought.details.map((t, i) => (
+              
+            {  thought.details.length > 0 ? 
+                thought.details.map((t, i) => (
                        <div>{t.description}</div>
-                        ))}
+                        )) :
+                <div>No details</div>}
             </TabPanel>
             <TabPanel value={value} index={1}>
-              Related Words
+              {
+                relatedThoughts.length > 0 ?   
+                <ThoughtsGrid data={relatedThoughts}></ThoughtsGrid> :
+                <div>No related thoughts</div>
+              }
+            
             </TabPanel>
             <TabPanel value={value} index={2}>
               Under construction
