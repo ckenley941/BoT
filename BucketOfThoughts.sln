@@ -22,7 +22,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BucketOfThoughts.Api.Handle
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BucketOfThoughts.Services.Languages", "BucketOfThoughts.Services.Languages\BucketOfThoughts.Services.Languages.csproj", "{880EAD2E-0427-4A47-9918-320FDD26DF33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BucketOfThoughts.Service.Dashboards", "BucketOfThoughts.Service.Dashboards\BucketOfThoughts.Service.Dashboards.csproj", "{4A527CF0-F501-42AC-9582-962076931C15}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BucketOfThoughts.Services.Dashboards", "BucketOfThoughts.Services.Dashboards\BucketOfThoughts.Services.Dashboards.csproj", "{4A527CF0-F501-42AC-9582-962076931C15}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
