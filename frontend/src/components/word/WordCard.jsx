@@ -108,7 +108,7 @@ export default function WordCard( {data}) {
     });    
   }
 
-  const handleChange = (event, newValue) => {
+  const handleTabChange = (event, newValue) => {
     setValue(newValue);
   };
 
@@ -148,14 +148,9 @@ export default function WordCard( {data}) {
             </span>
             : null
           } */}
-        </CardContent>
-      </React.Fragment>
-    </Card>
     {showFullCard ?
-      <Card>
-        <CardContent>
           <Box sx={{ width: '100%' }}>
-            <Tabs value={value} onChange={handleChange} textColor="secondary" indicatorColor="secondary"
+            <Tabs value={value} onChange={handleTabChange} textColor="secondary" indicatorColor="secondary"
               aria-label="secondary tabs example">
               <Tab label="Dictionary" />
               <Tab label="Related Words" />
@@ -205,10 +200,11 @@ export default function WordCard( {data}) {
               <RelatedWords data={wordRelationships.filter(wc=> wc.isAntonym === true)}></RelatedWords>
             </TabPanel>
           </Box>
-        </CardContent>
-      </Card>
       : null
     }
+    </CardContent>
+  </React.Fragment>
+</Card>
   </Box>
   );
   }

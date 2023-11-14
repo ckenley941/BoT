@@ -4,16 +4,16 @@ using BucketOfThoughts.Services.Thoughts.Objects;
 
 namespace BucketOfThoughts.Api.Handlers.Thoughts
 {
-    public class GetThoughtsGridHandler
+    public class GetRelatedThoughtsHandler
     {
         protected readonly IThoughtsService _service;
-        public GetThoughtsGridHandler(IThoughtsService service)
+        public GetRelatedThoughtsHandler(IThoughtsService service)
         {
             _service = service;
         }
-        public async Task<IEnumerable<ThoughtGridDto>> HandleAsync()
+        public async Task<IEnumerable<ThoughtGridDto>> HandleAsync(int id)
         {
-            return await _service.GetGridAsync();
+            return await _service.GetRelatedThoughtsGridAsync(id);
         }
     }
 }

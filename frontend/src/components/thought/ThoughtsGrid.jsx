@@ -12,7 +12,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 
-export default function ThoughtsGrid() {
+export default function ThoughtsGrid({data}) {
     const [thoughts, setThoughts] = useState([]);
     const [open, setOpen] = React.useState(false);
     const [selectedRow, setSelectedRow] = useState({ id: 0,
@@ -52,9 +52,14 @@ export default function ThoughtsGrid() {
       }, []);
     
       const loadData = async () => {
-        getThoughtsGrid().then((response) => {
-            setThoughts(response.data);
-        });
+        if (data){
+          setThoughts(data);
+        }
+        else{
+          getThoughtsGrid().then((response) => {
+              setThoughts(response.data);
+          });
+        }
       };
 
       const handleRowClick = (params) => {

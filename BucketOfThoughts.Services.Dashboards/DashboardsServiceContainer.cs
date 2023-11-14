@@ -14,7 +14,7 @@ namespace BucketOfThoughts.Service.Dashboards
         private readonly Lazy<ThoughtsService> _thoughtsService;
         public WordsService WordsService { get { return _wordsService.Value; } }
         public ThoughtsService ThoughtsService { get { return _thoughtsService.Value; } }
-        public DashboardsServiceContainer(IDistributedCache cache, IMapper mapper, LanguageDbContext languageDbContext, ICrudRepository<Thought> thoughtsRepository)
+        public DashboardsServiceContainer(IDistributedCache cache, IMapper mapper, LanguageDbContext languageDbContext, IThoughtsRepository thoughtsRepository)
         {
             _wordsService = new(() => { return new WordsService(languageDbContext); });
             _thoughtsService = new(() => { return new ThoughtsService(thoughtsRepository, cache, mapper); });

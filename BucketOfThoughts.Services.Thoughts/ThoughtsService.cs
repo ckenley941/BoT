@@ -6,6 +6,7 @@ using BucketOfThoughts.Core.Infrastructure.Objects;
 using BucketOfThoughts.Services.Thoughts.Data;
 using BucketOfThoughts.Services.Thoughts.Objects;
 using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.IdentityModel.Tokens;
 
 namespace BucketOfThoughts.Services.Thoughts
 {
@@ -13,14 +14,17 @@ namespace BucketOfThoughts.Services.Thoughts
     {
         Task<ThoughtDto> GetByIdAsync(int id);
         Task<ThoughtDto> GetRandomThoughtAsync();
-        Task<IEnumerable<ThoughtGridDto>> GetAsync();
+        Task<IEnumerable<ThoughtGridDto>> GetGridAsync();
+        Task<IEnumerable<ThoughtGridDto>> GetRelatedThoughtsGridAsync(int thoughtId);
         Task<Thought> InsertAsync(InsertThoughtDto newItem); //Eventually use ICRudService version of insert
     }
 
     public class ThoughtsService : BaseService<Thought, ThoughtDto>, IThoughtsService
     {
-        public ThoughtsService(ICrudRepository<Thought> repository, IDistributedCache cache, IMapper mapper) : base (repository, cache, mapper)
+        protected new readonly IThoughtsRepository _repository;
+        public ThoughtsService(IThoughtsRepository repository, IDistributedCache cache, IMapper mapper) : base (repository, cache, mapper)
         {
+            _repository = repository;
         }
 
         public async Task<ThoughtDto> GetByIdAsync(int id)
@@ -46,16 +50,22 @@ namespace BucketOfThoughts.Services.Thoughts
             return ConvertThoughtToDto(randThought);
         }
 
-        public async Task<IEnumerable<ThoughtGridDto>> GetAsync()
+        public async Task<IEnumerable<ThoughtGridDto>> GetGridAsync()
         {
-            var thoughts = (await GetThoughtsFromCache()).Select(x => new ThoughtGridDto()
+            var thoughts = await GetThoughtsFromCache();
+            return ConvertThoughtToGridDto(thoughts);
+        }
+
+        public async Task<IEnumerable<ThoughtGridDto>> GetRelatedThoughtsGridAsync(int thoughtId)
+        {
+            var queryParams = new GetQueryParams<Thought>()
             {
-                Id = x.ThoughtId,
-                Description = x.Description,
-                Category = x.ThoughtCategory.Description,
-                Details = string.Join(", ", x.ThoughtDetails.Select(y => y.Description).ToList()),
-            });
-            return thoughts;
+                IncludeProperties = "ThoughtCategory,ThoughtDetails,RelatedThoughtThoughtId1Navigations,RelatedThoughtThoughtId2Navigations",
+                Filter = (t) => (t.ThoughtId == thoughtId)
+            };
+
+            var relatedThoughts = _repository.GetRelatedThoughts(thoughtId);
+            return ConvertThoughtToGridDto(relatedThoughts);
         }
 
         public async Task<Thought> InsertAsync(InsertThoughtDto newItem)
@@ -112,6 +122,17 @@ namespace BucketOfThoughts.Services.Thoughts
                     Description = x.Description
                 }).ToList()
             };
+        }
+
+        private static IEnumerable<ThoughtGridDto> ConvertThoughtToGridDto(IEnumerable<Thought> thoughts)
+        {
+            return thoughts.Select(x => new ThoughtGridDto()
+            {
+                Id = x.ThoughtId,
+                Description = x.Description,
+                Category = x.ThoughtCategory.Description,
+                Details = string.Join(", ", x.ThoughtDetails.Select(y => y.Description).ToList()),
+            });
         }
 
     }

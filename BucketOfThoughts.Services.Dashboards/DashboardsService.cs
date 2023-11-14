@@ -24,7 +24,7 @@ namespace BucketOfThoughts.Service.Dashboards
                     dashboardResults.Data = (await _serviceContainer.WordsService.GetRandomWordAsync()).AsEnumerable();
                     break;
                 case "AllThoughts":
-                    dashboardResults.Data = await _serviceContainer.ThoughtsService.GetAsync();
+                    dashboardResults.Data = await _serviceContainer.ThoughtsService.GetGridAsync();
                     break;
             }
 

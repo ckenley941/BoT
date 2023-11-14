@@ -13,7 +13,7 @@ namespace BucketOfThoughts.Services.Thoughts
     public class ThoughtCategoriesService : BaseService<ThoughtCategory, ThoughtCategoryDto>
     {
         private readonly ThoughtsDbContext _dbContext;
-        public ThoughtCategoriesService(ICrudRepository<ThoughtCategory> repository, IDistributedCache cache, ThoughtsDbContext dbContext, IMapper mapper) : base (repository, cache, mapper)
+        public ThoughtCategoriesService(IThoughtCategoriesRepository repository, IDistributedCache cache, ThoughtsDbContext dbContext, IMapper mapper) : base (repository, cache, mapper)
         {
             _dbContext = dbContext;
         }
