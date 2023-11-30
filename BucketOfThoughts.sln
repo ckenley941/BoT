@@ -10,10 +10,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Dockerfile = Dockerfile
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BucketOfThoughts.FileService", "BucketOfThoughts.FileService\BucketOfThoughts.FileService.csproj", "{EBDD65FB-6103-4438-8674-6AFD8F67AA42}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BucketOfThoughts.Imports", "BucketOfThoughts.Import\BucketOfThoughts.Imports.csproj", "{29D81B8E-A91C-4407-9BAB-422319549BA9}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BucketOfThoughts.Core.Infrastructure", "BucketOfThoughts.Core.Infrastructure\BucketOfThoughts.Core.Infrastructure.csproj", "{2E86B588-AD29-48CB-BF20-115B8025E705}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BucketOfThoughts.Services.Thoughts", "BucketOfThoughts.Services.Thoughts\BucketOfThoughts.Services.Thoughts.csproj", "{85506955-5714-460D-9B1C-32935B7715B0}"

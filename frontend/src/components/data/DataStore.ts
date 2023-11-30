@@ -2,10 +2,10 @@
 //Eventually configure better
 import axios from "axios"; //https://www.npmjs.com/package//axios
 
-//const prodUrl = "";
+const prodUrl = "https://nts2q9eay1.execute-api.us-west-2.amazonaws.com/Prod";
 const devUrl = "http://localhost:5000/";
 
-export const mainUrl = devUrl;
+export const mainUrl = prodUrl;
 export const apiUrl = mainUrl + "api";
 
 export const client = axios.create({
@@ -22,4 +22,4 @@ export const client = axios.create({
 //     const token = localStorage.getItem("access_token");
 //     config.headers.Authorization = "Bearer " + token;
 //     return config;
-//   });
+//   });   
