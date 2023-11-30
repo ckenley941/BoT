@@ -52,7 +52,7 @@ namespace BucketOfThoughts.Services.Thoughts
 
         public async Task<IEnumerable<ThoughtGridDto>> GetGridAsync()
         {
-            var thoughts = await GetThoughtsFromCache();
+            var thoughts = (await GetThoughtsFromCache()).OrderByDescending(x => x.RecordDateTime);
             return ConvertThoughtToGridDto(thoughts);
         }
 

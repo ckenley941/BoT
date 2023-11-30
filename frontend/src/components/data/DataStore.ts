@@ -3,7 +3,7 @@
 import axios from "axios"; //https://www.npmjs.com/package//axios
 
 const prodUrl = "https://nts2q9eay1.execute-api.us-west-2.amazonaws.com/Prod";
-//const devUrl = "http://localhost:5000/";
+const devUrl = "http://localhost:5000/";
 
 export const mainUrl = prodUrl;
 export const apiUrl = mainUrl + "api";
