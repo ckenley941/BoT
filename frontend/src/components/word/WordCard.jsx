@@ -91,7 +91,7 @@ export default function WordCard( {data}) {
     <Card variant="outlined">
       <React.Fragment>
         <CardContent>       
-          <Typography variant="h2">{wordCard.word} <IconButton color="secondary" aria-label="Flash" onClick={()=> setShowFullCard(!showFullCard)}>
+          <Typography variant="h2">{wordCard.word} This should show up <IconButton color="secondary" aria-label="Flash" onClick={()=> setShowFullCard(!showFullCard)}>
             <FlashOnIcon />
           </IconButton></Typography>
           <Typography variant="h5" component="div">
