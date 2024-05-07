@@ -10,6 +10,14 @@
   padding-top: 15px;
 }
 
+.padLeft {
+  padding-left: 10px;
+}
+
+.thoughtDetail{
+  padding-bottom:10px;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

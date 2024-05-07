@@ -157,9 +157,10 @@ namespace BucketOfThoughts.Services.Languages
                     Word2 = x.Xref.WordId2Navigation.Description,
                     Word1Example = x.Xref.WordContexts.OrderBy(x => x.SortOrder).FirstOrDefault().WordExamples.FirstOrDefault().Translation1,
                     Word2Example = x.Xref.WordContexts.OrderBy(x => x.SortOrder).FirstOrDefault().WordExamples.FirstOrDefault().Translation2,
+                    RecordDateTime = x.Word.RecordDateTime
                 });
 
-            return spanishWords;
+            return spanishWords.OrderByDescending(x => x.RecordDateTime);
         }
 
         public async Task<WordTranslationDto> GetByIdAsync(int id)

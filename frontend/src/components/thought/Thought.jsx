@@ -79,7 +79,7 @@ export default function Thought({data}) {
               
             {  thought.details.length > 0 ? 
                 thought.details.map((t, i) => (
-                       <div>{t.description}</div>
+                       <div class="thoughtDetail">{t.description}</div>
                         )) :
                 <div>No details</div>}
             </TabPanel>

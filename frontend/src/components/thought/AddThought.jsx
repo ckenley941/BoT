@@ -32,7 +32,8 @@ export default function AddThought()
   const [thought, setThought] = useState({
     description: "",
     thoughtCategoryId: 0,
-    details: []
+    details: [],
+    websiteLinks: []
   })
   const [thoughtCategories, setThoughtCategories] = useState([]);
   const [tabValue, setTabValue] = useState(0);
@@ -62,6 +63,14 @@ export default function AddThought()
     setThought(newState);
     };
 
+    
+  const handleWebsiteLinkChange = (e) => {
+    var index = parseInt(e.target.name);
+    thought.websiteLinks[index] = e.target.value;
+    let newState = { ...thought };
+    setThought(newState);
+    };
+
 
   const addThought = () => {
     if (isValid()){   
@@ -70,7 +79,8 @@ export default function AddThought()
       setThought({ 
         description: "",
         thoughtCategoryId: 0,
-        details: []
+        details: [],
+        websiteLinks: []
       })
     });
   }
@@ -107,6 +117,14 @@ export default function AddThought()
     let newState = { ...thought };
     setThought(newState);
   }
+
+  const deleteWebsiteLink = (e) => {
+    var index = parseInt(e.currentTarget.name);
+    delete thought.websiteLinks[index];
+    let newState = { ...thought };
+    setThought(newState);
+  }
+
 
   const addThoughtCategory = (description) => {
     var thoughtCategory = {
@@ -180,7 +198,16 @@ export default function AddThought()
         Under construction
       </TabPanel>
       <TabPanel value={tabValue} index={2}>
-        Under construction
+      { thought.websiteLinks.map((t, i) => (
+          <div>
+            <TextField sx={{ m: 1, width:"80%"}} label="Link" multiline name={i} onChange={handleWebsiteLinkChange}/>
+            <IconButton name={i} color="secondary" aria-label="Delete" onClick={deleteWebsiteLink}>
+              <Tooltip title="Delete">      
+                <DeleteIcon fontSize="large" />
+              </Tooltip>
+            </IconButton>   
+          </div>
+        ))}
       </TabPanel> 
       
       <IconButton color="secondary" aria-label="Save Thought" onClick={addThought}>

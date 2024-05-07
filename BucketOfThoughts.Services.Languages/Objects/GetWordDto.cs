@@ -8,5 +8,6 @@
         public int Word2Id { get; set; }
         public string Word2 { get; set; }
         public string Word2Example { get; set; }
+        public DateTime RecordDateTime { get; set; }
     }
 }
