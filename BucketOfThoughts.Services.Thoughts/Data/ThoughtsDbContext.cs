@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using BucketOfThoughts.Core.Infrastructure.BaseClasses;
 using Microsoft.EntityFrameworkCore;
 
 namespace BucketOfThoughts.Services.Thoughts.Data;
 
-public partial class ThoughtsDbContext : DbContext
+public partial class ThoughtsDbContext : BaseDbContext<ThoughtsDbContext>
 {
     public ThoughtsDbContext()
     {

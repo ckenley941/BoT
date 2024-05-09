@@ -27,7 +27,7 @@ namespace BucketOfThoughts.Api.Handlers.Extensions
             services.AddScoped<IThoughtsRepository, ThoughtsRepository>();
             
 
-            services.AddScoped<GetRandomThoughtHandler>();
+            services.AddScoped<GetWebsiteLinksHandler>();
             services.AddScoped<GetRelatedThoughtsHandler>();
             services.AddScoped<GetThoughtByIdHandler>();
             services.AddScoped<GetThoughtsGridHandler>();
@@ -43,7 +43,7 @@ namespace BucketOfThoughts.Api.Handlers.Extensions
         public static WebApplication AddThoughtApiEndpoints(this WebApplication app)
         {
             app.MapGet("/api/thoughts/random",
-              async (GetRandomThoughtHandler handler) =>
+              async (GetWebsiteLinksHandler handler) =>
                   await handler.HandleAsync()
                   is ThoughtDto randomThought
                   ? Results.Ok(randomThought)

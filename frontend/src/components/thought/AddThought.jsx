@@ -23,9 +23,12 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import TabPanel from "../controls/TabPanel.jsx"
 
+import DetailRow from "../controls/DetailRow"
+
 import _ from 'lodash';
 
 import { getThoughtCategories, insertThought, insertThoughtCategory } from "../../services/ThoughtsService.ts";
+import { PropaneSharp } from "@mui/icons-material";
 
 export default function AddThought() 
 {
@@ -106,7 +109,13 @@ export default function AddThought()
   }
 
   const addDetail = () => {
-    thought.details.push("");
+    thought.details.unshift("");
+    let newState = { ...thought };
+    setThought(newState);
+  }
+
+  const addWebsiteLink = () => {
+    thought.websiteLinks.unshift("");
     let newState = { ...thought };
     setThought(newState);
   }
@@ -134,11 +143,12 @@ export default function AddThought()
   }
 
   const handleTabChange = (event, newValue) => {
+    console.log(thought.details);
     setTabValue(newValue);
   };
   
     return ( 
-      <Card variant="outlined"  sx={{ m: 5, maxWidth: 750 }}>
+      <Card variant="outlined"  sx={{ m: 5, maxWidth: 1250 }}>
       <CardContent>
         <Grid>
         <TextField  sx={{ m: 1}}
@@ -151,7 +161,7 @@ export default function AddThought()
         />
         </Grid>
     <Grid>
-    <FormControl sx={{ m: 1, minWidth: 120 }}>
+    <FormControl sx={{ m: 1, minWidth: 270 }}>
         <InputLabel id="demo-simple-select-helper-label">Category</InputLabel>        
         <Select
           name="thoughtCategoryId"
@@ -167,7 +177,7 @@ export default function AddThought()
              <MenuItem key={i} value={tc.id}>{tc.description}</MenuItem>
                 ))}
         </Select>
-        <AddItemToDropdownDialog isOpen={false} title="Category" saveCallback={addThoughtCategory}></AddItemToDropdownDialog>
+        {/* <AddItemToDropdownDialog isOpen={false} title="Category" saveCallback={addThoughtCategory}></AddItemToDropdownDialog> */}
       </FormControl>
     </Grid>    
       <Tabs value={tabValue} onChange={handleTabChange} textColor="secondary" indicatorColor="secondary"
@@ -177,37 +187,14 @@ export default function AddThought()
         <Tab label="Website Links" />
       </Tabs>
 
-      <TabPanel value={tabValue} index={0}>              
-        <IconButton color="secondary"  aria-label="Add Detail" onClick={addDetail}>
-            <Tooltip title="Add Details">      
-              <ListIcon fontSize="large" />
-            </Tooltip>
-        </IconButton>   
-        { thought.details.map((t, i) => (
-          <div>
-            <TextField sx={{ m: 1, width:"80%"}} label="Detail" multiline name={i} onChange={handleDetailChange}/>
-            <IconButton name={i} color="secondary" aria-label="Delete" onClick={deleteDetail}>
-              <Tooltip title="Delete">      
-                <DeleteIcon fontSize="large" />
-              </Tooltip>
-            </IconButton>   
-          </div>
-        ))}
+      <TabPanel value={tabValue} index={0}>     
+        <DetailRow title="Detail" data={thought.details} handleAdd={addDetail} handleChange={handleDetailChange} handleDelete={deleteDetail}></DetailRow>          
       </TabPanel>
       <TabPanel value={tabValue} index={1}>
         Under construction
       </TabPanel>
-      <TabPanel value={tabValue} index={2}>
-      { thought.websiteLinks.map((t, i) => (
-          <div>
-            <TextField sx={{ m: 1, width:"80%"}} label="Link" multiline name={i} onChange={handleWebsiteLinkChange}/>
-            <IconButton name={i} color="secondary" aria-label="Delete" onClick={deleteWebsiteLink}>
-              <Tooltip title="Delete">      
-                <DeleteIcon fontSize="large" />
-              </Tooltip>
-            </IconButton>   
-          </div>
-        ))}
+      <TabPanel value={tabValue} index={2}>        
+        <DetailRow title="Link" data={thought.websiteLinks} handleAdd={addWebsiteLink} handleChange={handleWebsiteLinkChange} handleDelete={deleteWebsiteLink}></DetailRow>    
       </TabPanel> 
       
       <IconButton color="secondary" aria-label="Save Thought" onClick={addThought}>

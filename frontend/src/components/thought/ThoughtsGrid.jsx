@@ -85,12 +85,12 @@ export default function ThoughtsGrid({data}) {
             initialState={{
               pagination: {
                 paginationModel: {
-                  pageSize: 5,
+                  pageSize: 25,
                 },
               },
             }}
             onRowClick={handleRowClick} {...thoughts} 
-            pageSizeOptions={[5]}
+            pageSizeOptions={[10, 25, 50]}
             checkboxSelection
             disableRowSelectionOnClick
             slots={{ toolbar: GridToolbar }}

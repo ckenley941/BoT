@@ -6,5 +6,6 @@
         public int ThoughtCategoryId { get; set; }
         public string ThoughtSource { get; set; }
         public List<string> Details { get; set; }
+        public List<string> WebsiteLinks { get; set; }
     }
 }

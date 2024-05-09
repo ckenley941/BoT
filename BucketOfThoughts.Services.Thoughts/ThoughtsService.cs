@@ -78,15 +78,33 @@ namespace BucketOfThoughts.Services.Thoughts
 
             if (newItem.Details?.Count > 0) 
             {
+                //Reverse the order since the UI puts the latest detail at the top
+                newItem.Details.Reverse();
                 int sortOrder = 0;
                 foreach (var detail in newItem.Details)
                 {
                     sortOrder++;
-                    thought.ThoughtDetails.Add(
-                        new ThoughtDetail()
+                    thought.ThoughtDetails.Add(new ()
                         {
                             Description = detail,
                             SortOrder = sortOrder
+                        });
+                }
+            }
+
+            if (newItem.WebsiteLinks?.Count > 0)
+            {
+                int sortOrder = 0;
+                foreach (var link in newItem.WebsiteLinks)
+                {
+                    sortOrder++;
+                    thought.ThoughtWebsiteLinks.Add(new ()
+                        {
+                            WebsiteLink = new ()
+                            {
+                                WebsiteUrl = link,
+                                SortOrder = sortOrder
+                            }
                         });
                 }
             }

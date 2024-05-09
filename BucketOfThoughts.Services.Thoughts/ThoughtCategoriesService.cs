@@ -58,7 +58,7 @@ namespace BucketOfThoughts.Services.Thoughts
             int defaultModuleId = await _cache.GetRecordAsync<int>(CacheKeys.DefaultModuleId);
             if (defaultModuleId <= 0)
             {
-                defaultModuleId = _dbContext.ThoughtModules.FirstOrDefault(x => x.Description == "Other")?.Id ?? 0;
+                defaultModuleId = _dbContext.ThoughtModules.FirstOrDefault(x => x.Description == "Thought")?.Id ?? 0;
                 if (defaultModuleId <= 0)
                 {
                     throw new Exception("This shouldn't happen!");

@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using BucketOfThoughts.Core.Infrastructure.Interfaces;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BucketOfThoughts.Core.Infrastructure.BaseClasses
 {
-    public abstract class BaseDbTable
+    public abstract class BaseDbTable : IDbTable
     {
         [Column(Order = 1)]
         [Key]
