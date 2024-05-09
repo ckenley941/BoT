@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using BucketOfThoughts.Core.Infrastructure.BaseClasses;
 
 namespace BucketOfThoughts.Services.Thoughts.Data;
 
-public partial class RelatedThought
+public partial class RelatedThought : BaseDbTable
 {
-    public int RelatedThoughtId { get; set; }
-
     public int ThoughtId1 { get; set; }
 
     public int ThoughtId2 { get; set; }

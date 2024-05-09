@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using BucketOfThoughts.Core.Infrastructure.BaseClasses;
 
 namespace BucketOfThoughts.Services.Thoughts.Data;
 
-public partial class WebsiteLink
+public partial class WebsiteLink : BaseModifiableDbTable
 {
-    public int WebsiteLinkId { get; set; }
-
-    public Guid WebsiteLinkGuid { get; set; }
-
-    public DateTime RecordDateTime { get; set; }
-
     public string WebsiteUrl { get; set; } = null!;
 
     public string? WebsiteDesc { get; set; }

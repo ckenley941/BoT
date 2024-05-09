@@ -1,21 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using BucketOfThoughts.Core.Infrastructure.BaseClasses;
 
 namespace BucketOfThoughts.Services.Thoughts.Data;
 
-public partial class Thought
+public partial class Thought : BaseModifiableDbTable
 {
-    public int ThoughtId { get; set; }
-
-    public Guid ThoughtGuid { get; set; }
-
-    public DateTime RecordDateTime { get; set; }
-
+    public Guid ThoughtGuid { get; set; } = Guid.NewGuid();
     public string Description { get; set; } = null!;
 
     public int ThoughtCategoryId { get; set; }
-
-    public bool IsQuote { get; set; }
 
     public virtual ICollection<RelatedThought> RelatedThoughtThoughtId1Navigations { get; set; } = new List<RelatedThought>();
 

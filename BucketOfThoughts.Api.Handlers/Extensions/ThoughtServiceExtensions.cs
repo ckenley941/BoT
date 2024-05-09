@@ -70,7 +70,7 @@ namespace BucketOfThoughts.Api.Handlers.Extensions
                 async (InsertThoughtHandler handler, InsertThoughtDto newItem) =>
                 {
                     var thought = await handler.HandleAsync(newItem);
-                    Results.Created($"/api/thoughts/{thought.ThoughtId}", thought);
+                    Results.Created($"/api/thoughts/{thought.Id}", thought);
                 }
                 );
 
@@ -94,7 +94,7 @@ namespace BucketOfThoughts.Api.Handlers.Extensions
                async (InsertThoughtCategoryHandler handler, ThoughtCategory newItem) =>
                {
                    var thoughtCategory = await handler.HandleAsync(newItem);
-                   Results.Created($"/api/thoughtcategories/{thoughtCategory.ThoughtCategoryId}", thoughtCategory);
+                   Results.Created($"/api/thoughtcategories/{thoughtCategory.Id}", thoughtCategory);
                }
                );
 

@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using BucketOfThoughts.Core.Infrastructure.BaseClasses;
 
 namespace BucketOfThoughts.Services.Thoughts.Data;
 
-public partial class ThoughtModule
+public partial class ThoughtModule : BaseDbTable
 {
-    public int ThoughtModuleId { get; set; }
-
-    public Guid ThoughtModuleGuid { get; set; }
-
-    public DateTime RecordDateTime { get; set; }
-
     public string Description { get; set; } = null!;
 
     public virtual ICollection<ThoughtCategory> ThoughtCategories { get; set; } = new List<ThoughtCategory>();

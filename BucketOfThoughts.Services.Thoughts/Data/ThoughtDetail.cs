@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using BucketOfThoughts.Core.Infrastructure.BaseClasses;
 
 namespace BucketOfThoughts.Services.Thoughts.Data;
 
-public partial class ThoughtDetail
+public partial class ThoughtDetail : BaseModifiableDbTable
 {
-    public int ThoughtDetailId { get; set; }
-
-    public Guid ThoughtDetailGuid { get; set; }
-
-    public DateTime RecordDateTime { get; set; }
-
     public string Description { get; set; } = null!;
 
     public int ThoughtId { get; set; }

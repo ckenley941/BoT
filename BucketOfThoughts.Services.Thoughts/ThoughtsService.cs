@@ -52,7 +52,7 @@ namespace BucketOfThoughts.Services.Thoughts
 
         public async Task<IEnumerable<ThoughtGridDto>> GetGridAsync()
         {
-            var thoughts = (await GetThoughtsFromCache()).OrderByDescending(x => x.RecordDateTime);
+            var thoughts = (await GetThoughtsFromCache()).OrderByDescending(x => x.CreatedDateTime);
             return ConvertThoughtToGridDto(thoughts);
         }
 
@@ -61,7 +61,7 @@ namespace BucketOfThoughts.Services.Thoughts
             var queryParams = new GetQueryParams<Thought>()
             {
                 IncludeProperties = "ThoughtCategory,ThoughtDetails,RelatedThoughtThoughtId1Navigations,RelatedThoughtThoughtId2Navigations",
-                Filter = (t) => (t.ThoughtId == thoughtId)
+                Filter = (t) => (t.Id == thoughtId)
             };
 
             var relatedThoughts = _repository.GetRelatedThoughts(thoughtId);
@@ -76,7 +76,7 @@ namespace BucketOfThoughts.Services.Thoughts
                 ThoughtCategoryId = newItem.ThoughtCategoryId
             };
 
-            if (newItem.Details?.Count > 0)
+            if (newItem.Details?.Count > 0) 
             {
                 int sortOrder = 0;
                 foreach (var detail in newItem.Details)
@@ -108,17 +108,17 @@ namespace BucketOfThoughts.Services.Thoughts
         {
             return new ThoughtDto()
             {
-                Id = thought.ThoughtId,
+                Id = thought.Id,
                 Description = thought.Description,
-                ThoughtDateTime = thought.RecordDateTime,
+                ThoughtDateTime = thought.CreatedDateTime,
                 Category = new ThoughtCategoryDto()
                 {
-                    Id = thought.ThoughtCategory.ThoughtCategoryId,
+                    Id = thought.ThoughtCategory.Id,
                     Description = thought.ThoughtCategory.Description
                 },
                 Details = thought.ThoughtDetails.Select(x => new ThoughtDetailDto()
                 {
-                    Id = x.ThoughtDetailId,
+                    Id = x.Id,
                     Description = x.Description
                 }).ToList()
             };
@@ -128,7 +128,7 @@ namespace BucketOfThoughts.Services.Thoughts
         {
             return thoughts.Select(x => new ThoughtGridDto()
             {
-                Id = x.ThoughtId,
+                Id = x.Id,
                 Description = x.Description,
                 Category = x.ThoughtCategory.Description,
                 Details = string.Join(", ", x.ThoughtDetails.Select(y => y.Description).ToList()),

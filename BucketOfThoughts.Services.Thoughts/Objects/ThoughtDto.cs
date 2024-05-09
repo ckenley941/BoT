@@ -7,7 +7,7 @@ namespace BucketOfThoughts.Services.Thoughts.Objects
     {
         public string Description { get; set; }
         public ThoughtCategoryDto Category { get; set; }
-        public DateTime ThoughtDateTime { get; set; }
+        public DateTimeOffset ThoughtDateTime { get; set; }
         public string ThoughtDateString => ThoughtDateTime.Date.ToFormattedDateString();
         public List<ThoughtDetailDto> Details { get; set; }
     }

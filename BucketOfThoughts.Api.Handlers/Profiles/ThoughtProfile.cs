@@ -9,12 +9,12 @@ namespace BucketOfThoughts.Api.Handlers.Profiles
         public ThoughtProfile()
         {
             CreateMap<Thought, ThoughtDto>()
-                .ForMember(des => des.Id, opt => opt.MapFrom(src => src.ThoughtId))
-                .ForMember(des => des.ThoughtDateTime, opt => opt.MapFrom(src => src.RecordDateTime))
+                .ForMember(des => des.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(des => des.ThoughtDateTime, opt => opt.MapFrom(src => src.CreatedDateTime))
                 .ReverseMap();
 
-            CreateMap<ThoughtCategory, ThoughtCategoryDto>().ForMember(des => des.Id, opt => opt.MapFrom(src => src.ThoughtCategoryId)).ReverseMap();
-            CreateMap<ThoughtDetail, ThoughtDetailDto>().ForMember(des => des.Id, opt => opt.MapFrom(src => src.ThoughtDetailId)).ReverseMap();
+            CreateMap<ThoughtCategory, ThoughtCategoryDto>().ForMember(des => des.Id, opt => opt.MapFrom(src => src.Id)).ReverseMap();
+            CreateMap<ThoughtDetail, ThoughtDetailDto>().ForMember(des => des.Id, opt => opt.MapFrom(src => src.Id)).ReverseMap();
         }
     }
 }

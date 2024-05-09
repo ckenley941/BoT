@@ -21,7 +21,7 @@ namespace BucketOfThoughts.Services.Thoughts
         public async Task<IEnumerable<ThoughtCategoryDto>> GetAsync()
         {
             var thoughtCategories = (await base.GetFromCacheAsync(CacheKeys.ThoughtCategories));
-            var dictThoughtCategories = thoughtCategories.ToDictionary(x => x.ThoughtCategoryId, x => x.Description);
+            var dictThoughtCategories = thoughtCategories.ToDictionary(x => x.Id, x => x.Description);
 
             var categories = new List<ThoughtCategoryDto>();
             thoughtCategories.ToList().ForEach(x =>
@@ -29,7 +29,7 @@ namespace BucketOfThoughts.Services.Thoughts
                 dictThoughtCategories.TryGetValue(x.ParentId ?? 0, out string? categoryDescription);
                 categories.Add(new ThoughtCategoryDto()
                 {
-                    Id = x.ThoughtCategoryId,
+                    Id = x.Id,
                     Description = x.Description,
                     SortOrder = x.SortOrder,
                     //ParentCategory = categoryDescription,
@@ -58,7 +58,7 @@ namespace BucketOfThoughts.Services.Thoughts
             int defaultModuleId = await _cache.GetRecordAsync<int>(CacheKeys.DefaultModuleId);
             if (defaultModuleId <= 0)
             {
-                defaultModuleId = _dbContext.ThoughtModules.FirstOrDefault(x => x.Description == "Other")?.ThoughtModuleId ?? 0;
+                defaultModuleId = _dbContext.ThoughtModules.FirstOrDefault(x => x.Description == "Other")?.Id ?? 0;
                 if (defaultModuleId <= 0)
                 {
                     throw new Exception("This shouldn't happen!");

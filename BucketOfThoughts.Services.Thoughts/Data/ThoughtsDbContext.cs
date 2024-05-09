@@ -33,9 +33,12 @@ public partial class ThoughtsDbContext : DbContext
     {
         modelBuilder.Entity<RelatedThought>(entity =>
         {
-            entity.HasKey(e => e.RelatedThoughtId).HasName("PK__RelatedT__81D10C81E8058523");
+            entity.HasKey(e => e.Id);
 
             entity.ToTable("RelatedThought");
+
+            entity.Property(e => e.CreatedDateTime)
+                .HasDefaultValueSql("(getutcdate())");
 
             entity.HasOne(d => d.ThoughtId1Navigation).WithMany(p => p.RelatedThoughtThoughtId1Navigations)
                 .HasForeignKey(d => d.ThoughtId1)
@@ -50,14 +53,15 @@ public partial class ThoughtsDbContext : DbContext
 
         modelBuilder.Entity<Thought>(entity =>
         {
-            entity.HasKey(e => e.ThoughtId).HasName("PK__Thought__0945E46BF9CB9C2F");
+            entity.HasKey(e => e.Id);
 
             entity.ToTable("Thought");
 
-            entity.Property(e => e.RecordDateTime)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
-            entity.Property(e => e.ThoughtGuid).HasDefaultValueSql("(newid())");
+            entity.Property(e => e.CreatedDateTime)
+                .HasDefaultValueSql("(getutcdate())");
+
+            entity.Property(e => e.ThoughtGuid)
+                .HasDefaultValueSql("(newid())");
 
             entity.HasOne(d => d.ThoughtCategory).WithMany(p => p.Thoughts)
                 .HasForeignKey(d => d.ThoughtCategoryId)
@@ -67,14 +71,12 @@ public partial class ThoughtsDbContext : DbContext
 
         modelBuilder.Entity<ThoughtCategory>(entity =>
         {
-            entity.HasKey(e => e.ThoughtCategoryId).HasName("PK__ThoughtC__B82763E00CD22898");
+            entity.HasKey(e => e.Id);
 
             entity.ToTable("ThoughtCategory");
 
-            entity.Property(e => e.RecordDateTime)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
-            entity.Property(e => e.ThoughtCategoryGuid).HasDefaultValueSql("(newid())");
+            entity.Property(e => e.CreatedDateTime)
+                .HasDefaultValueSql("(getutcdate())");
 
             entity.HasOne(d => d.ThoughtModule).WithMany(p => p.ThoughtCategories)
                 .HasForeignKey(d => d.ThoughtModuleId)
@@ -84,14 +86,12 @@ public partial class ThoughtsDbContext : DbContext
 
         modelBuilder.Entity<ThoughtDetail>(entity =>
         {
-            entity.HasKey(e => e.ThoughtDetailId).HasName("PK__ThoughtD__F3E2F8286C662AA8");
+            entity.HasKey(e => e.Id);
 
             entity.ToTable("ThoughtDetail");
 
-            entity.Property(e => e.RecordDateTime)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
-            entity.Property(e => e.ThoughtDetailGuid).HasDefaultValueSql("(newid())");
+            entity.Property(e => e.CreatedDateTime)
+                .HasDefaultValueSql("(getutcdate())");
 
             entity.HasOne(d => d.Thought).WithMany(p => p.ThoughtDetails)
                 .HasForeignKey(d => d.ThoughtId)
@@ -101,19 +101,17 @@ public partial class ThoughtsDbContext : DbContext
 
         modelBuilder.Entity<ThoughtModule>(entity =>
         {
-            entity.HasKey(e => e.ThoughtModuleId).HasName("PK__ThoughtM__38FE9FD688EF962A");
+            entity.HasKey(e => e.Id);
 
             entity.ToTable("ThoughtModule");
 
-            entity.Property(e => e.RecordDateTime)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
-            entity.Property(e => e.ThoughtModuleGuid).HasDefaultValueSql("(newid())");
+            entity.Property(e => e.CreatedDateTime)
+                .HasDefaultValueSql("(getutcdate())");
         });
 
         modelBuilder.Entity<ThoughtWebsiteLink>(entity =>
         {
-            entity.HasKey(e => e.ThoughtWebsiteLinkId).HasName("PK__ThoughtW__017013A43CBDEBD1");
+            entity.HasKey(e => new { e.ThoughtId, e.WebsiteLinkId });
 
             entity.ToTable("ThoughtWebsiteLink");
 
@@ -130,14 +128,12 @@ public partial class ThoughtsDbContext : DbContext
 
         modelBuilder.Entity<WebsiteLink>(entity =>
         {
-            entity.HasKey(e => e.WebsiteLinkId).HasName("PK__WebsiteL__FE250C55782E1FBB");
+            entity.HasKey(e => e.Id);
 
             entity.ToTable("WebsiteLink");
 
-            entity.Property(e => e.RecordDateTime)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
-            entity.Property(e => e.WebsiteLinkGuid).HasDefaultValueSql("(newid())");
+            entity.Property(e => e.CreatedDateTime)
+                .HasDefaultValueSql("(getutcdate())");
         });
 
         OnModelCreatingPartial(modelBuilder);

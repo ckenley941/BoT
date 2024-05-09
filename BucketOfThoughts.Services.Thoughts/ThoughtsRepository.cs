@@ -21,16 +21,16 @@ namespace BucketOfThoughts.Services.Thoughts
 
         public override async Task<Thought> GetByIdAsync(int id)
         {
-            return await _dbSet.Include(x => x.ThoughtCategory).Include(x => x.ThoughtDetails).SingleOrDefaultAsync(x => x.ThoughtId == id);
+            return await _dbSet.Include(x => x.ThoughtCategory).Include(x => x.ThoughtDetails).SingleOrDefaultAsync(x => x.Id == id);
         }
 
         public IEnumerable<Thought>? GetRelatedThoughts(int thoughtId)
         {
             var relatedThought1 = _context.RelatedThoughts.Where(x => x.ThoughtId1 == thoughtId)
-                .Join(_context.Thoughts.Include(x => x.ThoughtDetails).Include(x => x.ThoughtCategory), rt => rt.ThoughtId2, t => t.ThoughtId, (rt, t) => t);
+                .Join(_context.Thoughts.Include(x => x.ThoughtDetails).Include(x => x.ThoughtCategory), rt => rt.ThoughtId2, t => t.Id, (rt, t) => t);
 
             var relatedThought2 = _context.RelatedThoughts.Where(x => x.ThoughtId2 == thoughtId)
-                .Join(_context.Thoughts.Include(x => x.ThoughtDetails).Include(x => x.ThoughtCategory), rt => rt.ThoughtId1, t => t.ThoughtId, (rt, t) => t);
+                .Join(_context.Thoughts.Include(x => x.ThoughtDetails).Include(x => x.ThoughtCategory), rt => rt.ThoughtId1, t => t.Id, (rt, t) => t);
 
             return relatedThought1.Union(relatedThought2).AsEnumerable();
         }
