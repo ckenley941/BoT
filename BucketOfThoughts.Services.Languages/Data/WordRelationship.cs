@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using BucketOfThoughts.Core.Infrastructure.BaseClasses;
 
 namespace BucketOfThoughts.Services.Languages.Data;
 
-public partial class WordRelationship
+public partial class WordRelationship : BaseModifiableDbTable
 {
-    public int WordRelationshipId { get; set; }
-
-    public DateTime CreatedDateTime { get; set; }
-
     public int WordId1 { get; set; }
 
     public int WordId2 { get; set; }

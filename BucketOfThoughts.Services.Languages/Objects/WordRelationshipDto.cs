@@ -3,7 +3,7 @@
     public class WordRelationshipDto : WordTranslationDto
     {
         public WordRelationshipDto() : base() { }
-        public WordRelationshipDto(int id, Guid? guid, string word) : base(id, guid, word)
+        public WordRelationshipDto(int id, string word) : base(id, word)
         {
         }
         public bool IsRelated { get; set; }

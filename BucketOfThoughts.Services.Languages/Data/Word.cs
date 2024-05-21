@@ -1,18 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using BucketOfThoughts.Core.Infrastructure.BaseClasses;
 
 namespace BucketOfThoughts.Services.Languages.Data;
 
-public partial class Word
+public partial class Word : BaseModifiableDbTable
 {
-    public int WordId { get; set; }
-
-    public Guid WordGuid { get; set; }
-
-    public DateTime RecordDateTime { get; set; }
-
-    public DateTime CreatedDateTime { get; set; }
-
     public string Description { get; set; } = null!;
 
     public int LanguageId { get; set; }

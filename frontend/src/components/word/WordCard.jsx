@@ -32,11 +32,9 @@ export default function WordCard( {data}) {
   const [showFullCard, setShowFullCard] = useState(!isFlashCard); //in flash card mode this is false
   const [wordCard, setWordCard] = useState({    
       id: 0,
-      guid: "",
       word: "",
       primaryTranslation: {
         id: 0,
-        guid: "",
         word: "",
       },
       pronunication:[]

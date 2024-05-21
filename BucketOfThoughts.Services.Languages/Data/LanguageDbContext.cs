@@ -29,26 +29,22 @@ public partial class LanguageDbContext : DbContext
     {
         modelBuilder.Entity<Word>(entity =>
         {
-            entity.HasKey(e => e.WordId).HasName("PK__Word__3D7832E5997AB028");
+            entity.HasKey(e => e.Id);
 
             entity.ToTable("Word");
 
             entity.HasIndex(e => e.LanguageId, "IDX_Language");
 
             entity.Property(e => e.CreatedDateTime).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.RecordDateTime).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.WordGuid).HasDefaultValueSql("(newid())");
         });
 
         modelBuilder.Entity<WordContext>(entity =>
         {
-            entity.HasKey(e => e.WordContextId).HasName("PK__WordCont__ADD52A42F2C4E002");
+            entity.HasKey(e => e.Id);
 
             entity.ToTable("WordContext");
 
             entity.Property(e => e.CreatedDateTime).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.RecordDateTime).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.WordContextGuid).HasDefaultValueSql("(newid())");
 
             entity.HasOne(d => d.WordXref).WithMany(p => p.WordContexts)
                 .HasForeignKey(d => d.WordXrefId)
@@ -58,13 +54,11 @@ public partial class LanguageDbContext : DbContext
 
         modelBuilder.Entity<WordExample>(entity =>
         {
-            entity.HasKey(e => e.WordExampleId).HasName("PK__WordExam__56A9A3F923BA9246");
+            entity.HasKey(e => e.Id);
 
             entity.ToTable("WordExample");
 
             entity.Property(e => e.CreatedDateTime).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.RecordDateTime).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.WordExampleGuid).HasDefaultValueSql("(newid())");
 
             entity.HasOne(d => d.WordContext).WithMany(p => p.WordExamples)
                 .HasForeignKey(d => d.WordContextId)
@@ -74,7 +68,7 @@ public partial class LanguageDbContext : DbContext
 
         modelBuilder.Entity<WordPronunciation>(entity =>
         {
-            entity.HasKey(e => e.WordPronunciationId).HasName("PK__WordPron__644F09DFF5A54F85");
+            entity.HasKey(e => e.Id);
 
             entity.ToTable("WordPronunciation");
 
@@ -89,7 +83,7 @@ public partial class LanguageDbContext : DbContext
 
         modelBuilder.Entity<WordRelationship>(entity =>
         {
-            entity.HasKey(e => e.WordRelationshipId).HasName("PK__WordRelationship__19EF1379B03C8E1C");
+            entity.HasKey(e => e.Id);
 
             entity.ToTable("WordRelationship");
 
@@ -108,7 +102,7 @@ public partial class LanguageDbContext : DbContext
 
         modelBuilder.Entity<WordXref>(entity =>
         {
-            entity.HasKey(e => e.WordXrefId).HasName("PK__WordXref__19EF1379B03C8E1C");
+            entity.HasKey(e => e.Id);
 
             entity.ToTable("WordXref");
 

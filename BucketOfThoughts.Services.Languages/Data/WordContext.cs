@@ -1,15 +1,9 @@
-﻿namespace BucketOfThoughts.Services.Languages.Data;
+﻿using BucketOfThoughts.Core.Infrastructure.BaseClasses;
 
-public partial class WordContext
+namespace BucketOfThoughts.Services.Languages.Data;
+
+public partial class WordContext : BaseModifiableDbTable
 {
-    public int WordContextId { get; set; }
-
-    public Guid WordContextGuid { get; set; }
-
-    public DateTime RecordDateTime { get; set; }
-
-    public DateTime CreatedDateTime { get; set; }
-
     public int WordXrefId { get; set; }
 
     public string ContextDesc { get; set; } = null!;

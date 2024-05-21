@@ -16,11 +16,9 @@ export default function ThoughtsGrid({data}) {
     const [thoughts, setThoughts] = useState([]);
     const [open, setOpen] = React.useState(false);
     const [selectedRow, setSelectedRow] = useState({ id: 0,
-      guid: "",
       word: "",
       primaryTranslation: {
         id: 0,
-        guid: "",
         word: "",
       },
       pronunication:[]});

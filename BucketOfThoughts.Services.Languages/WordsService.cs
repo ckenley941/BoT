@@ -18,20 +18,20 @@ namespace BucketOfThoughts.Services.Languages
             var word = await InsertWordIfNotExistsAsync(insertedWord.PrimaryWord, 2);
             if (insertedWord.Pronunication.Any())
             {
-                await InsertPronunicationIfNotExistsAsync(word.WordId, insertedWord.Pronunication);
+                await InsertPronunicationIfNotExistsAsync(word.Id, insertedWord.Pronunication);
             }
 
             foreach (var wordDict in insertedWord.WordDictionary)
             {
                 var word2 = await InsertWordIfNotExistsAsync(wordDict.Word, 1);
 
-                var xref = await _dbContext.WordXrefs.FirstOrDefaultAsync(x => x.WordId1 == word.WordId && x.WordId2 == word2.WordId);
+                var xref = await _dbContext.WordXrefs.FirstOrDefaultAsync(x => x.WordId1 == word.Id && x.WordId2 == word2.Id);
                 if (xref == null)
                 {
                     xref = new WordXref()
                     {
-                        WordId1 = word.WordId,
-                        WordId2 = word2.WordId,
+                        WordId1 = word.Id,
+                        WordId2 = word2.Id,
                         IsPrimaryTranslation = wordDict.IsPrimaryTranslation,
                         SortOrder = wordDict.SortOrder
                     };
@@ -42,7 +42,7 @@ namespace BucketOfThoughts.Services.Languages
 
                 foreach (var wc in wordDict.WordContexts)
                 {
-                    await InsertContextIfNotExistsAsync(wc, xref.WordXrefId);
+                    await InsertContextIfNotExistsAsync(wc, xref.Id);
                 }
 
                 //Come back to word relationships
@@ -64,7 +64,7 @@ namespace BucketOfThoughts.Services.Languages
                 //}
             }
 
-            return word.WordId;
+            return word.Id;
         }
 
         public async Task<Word> InsertWordIfNotExistsAsync(string primaryWord, int languageId)
@@ -125,7 +125,7 @@ namespace BucketOfThoughts.Services.Languages
 
                 if (wc.Examples.Any())
                 {
-                    var existingExamples = _dbContext.WordExamples.Where(x => x.WordContextId == wordContext.WordContextId).AsEnumerable();
+                    var existingExamples = _dbContext.WordExamples.Where(x => x.WordContextId == wordContext.Id).AsEnumerable();
                     foreach (var example in wc.Examples)
                     {
                         if (!existingExamples.Any(x => x.Translation1 == example.Translation1 && x.Translation2 == example.Translation2))
@@ -134,7 +134,7 @@ namespace BucketOfThoughts.Services.Languages
                             {
                                 Translation1 = example.Translation1,
                                 Translation2 = example.Translation2,
-                                WordContextId = wordContext.WordContextId
+                                WordContextId = wordContext.Id
                             });
                         }
                     }
@@ -148,16 +148,16 @@ namespace BucketOfThoughts.Services.Languages
         public async Task<IEnumerable<GetWordDto>> GetAsync()
         {
             var spanishWords = _dbContext.Words.Where(x => x.LanguageId == 2)
-                .Join(_dbContext.WordXrefs.Where(x => x.IsPrimaryTranslation == true), w => w.WordId, wx => wx.WordId1, (w, wx) => new { Word = w, Xref = wx })
+                .Join(_dbContext.WordXrefs.Where(x => x.IsPrimaryTranslation == true), w => w.Id, wx => wx.WordId1, (w, wx) => new { Word = w, Xref = wx })
                 .Select(x => new GetWordDto()
                 {
-                    Word1Id = x.Word.WordId,
+                    Word1Id = x.Word.Id,
                     Word1 = x.Word.Description,
                     Word2Id = x.Xref.WordId2,
                     Word2 = x.Xref.WordId2Navigation.Description,
                     Word1Example = x.Xref.WordContexts.OrderBy(x => x.SortOrder).FirstOrDefault().WordExamples.FirstOrDefault().Translation1,
                     Word2Example = x.Xref.WordContexts.OrderBy(x => x.SortOrder).FirstOrDefault().WordExamples.FirstOrDefault().Translation2,
-                    RecordDateTime = x.Word.RecordDateTime
+                    RecordDateTime = x.Word.ModifiedDateTime
                 });
 
             return spanishWords.OrderByDescending(x => x.RecordDateTime);
@@ -167,8 +167,8 @@ namespace BucketOfThoughts.Services.Languages
         {
             var word =
                await _dbContext.Words
-               .Where(x => x.WordId == id)
-               .Select(x => new WordTranslationDto(x.WordId, x.WordGuid, x.Description))
+               .Where(x => x.Id == id)
+               .Select(x => new WordTranslationDto(x.Id,  x.Description))
                .FirstOrDefaultAsync();
 
             if (word == null)
@@ -186,7 +186,7 @@ namespace BucketOfThoughts.Services.Languages
             var word =
                await _dbContext.Words
                .Where(x => x.Description == description)
-               .Select(x => new WordTranslationDto(x.WordId, x.WordGuid, x.Description))
+               .Select(x => new WordTranslationDto(x.Id, x.Description))
                .FirstOrDefaultAsync();
 
             if (word == null)
@@ -211,7 +211,7 @@ namespace BucketOfThoughts.Services.Languages
             }
 
             var randomWord = spanishWords[rnd.Next(spanishWords.Count())];
-            var word = new WordTranslationDto(randomWord.WordId, randomWord.WordGuid, randomWord.Description);
+            var word = new WordTranslationDto(randomWord.Id, randomWord.Description);
             word.PrimaryTranslation = await GetPrimaryTranslation(word.Id);
 
             word.Pronunication = await _dbContext.WordPronunciations.Where(x => x.WordId == word.Id).Select(x => x.Phonetic).ToListAsync();
@@ -223,7 +223,7 @@ namespace BucketOfThoughts.Services.Languages
         {
             var wordTranslations =
                await JoinXrefSelectWord2(x => x.WordId1 == id)
-               .Select(ew => new WordDto(ew.WordId, ew.WordGuid, ew.Description))
+               .Select(ew => new WordDto(ew.Id, ew.Description))
                .ToListAsync();
 
             return wordTranslations;
@@ -233,17 +233,16 @@ namespace BucketOfThoughts.Services.Languages
         {
             var wordContexts = await
                 _dbContext.WordXrefs.Where(x => x.WordId1 == id)
-                .Join(_dbContext.WordContexts, xref => xref.WordXrefId, wc => wc.WordXrefId, (xref, wc) => new { xref.WordId2, Context = wc })
-                .Join(_dbContext.Words, wc => wc.WordId2, w => w.WordId, (wc, w) => new
+                .Join(_dbContext.WordContexts, xref => xref.Id, wc => wc.WordXrefId, (xref, wc) => new { xref.WordId2, Context = wc })
+                .Join(_dbContext.Words, wc => wc.WordId2, w => w.Id, (wc, w) => new
                 {
                     wc.Context,
                     Word = new WordDto()
                     {
-                        Id = w.WordId,
-                        Guid = w.WordGuid,
+                        Id = w.Id,
                         Word = w.Description,
                         Examples = wc.Context.WordExamples.Select(x =>
-                        new WordExampleDto(x.WordExampleId, x.Translation1, x.Translation2)).ToList()
+                        new WordExampleDto(x.Id, x.Translation1, x.Translation2)).ToList()
                     }
                 })
                 .GroupBy(x => x.Context.ContextDesc)
@@ -263,16 +262,15 @@ namespace BucketOfThoughts.Services.Languages
         {
             var words =
                 await _dbContext.WordRelationships.Where(x => x.WordId1 == id)
-                .Join(_dbContext.Words, wr => wr.WordId2, w => w.WordId, (wr, w) => new { WordRelationship = wr, Word = w })
+                .Join(_dbContext.Words, wr => wr.WordId2, w => w.Id, (wr, w) => new { WordRelationship = wr, Word = w })
                 .Union
                 (
                     _dbContext.WordRelationships.Where(x => x.WordId2 == id)
-                    .Join(_dbContext.Words, wr => wr.WordId1, w => w.WordId, (wr, w) => new { WordRelationship = wr, Word = w })
+                    .Join(_dbContext.Words, wr => wr.WordId1, w => w.Id, (wr, w) => new { WordRelationship = wr, Word = w })
                 )
                 .Select(w => new WordRelationshipDto
                 {
-                    Id = w.Word.WordId,
-                    Guid = w.Word.WordGuid,
+                    Id = w.Word.Id,
                     Word = w.Word.Description,
                     IsRelated = w.WordRelationship.IsRelated,
                     IsPhrase = w.WordRelationship.IsPhrase,
@@ -284,14 +282,14 @@ namespace BucketOfThoughts.Services.Languages
             var wordIds = words.Select(x => x.Id).ToList();
 
             var wordXrefs = _dbContext.WordXrefs.Where(x => wordIds.Contains(x.WordId1) && x.IsPrimaryTranslation == true)
-                .Join(_dbContext.Words, xref => xref.WordId2, w => w.WordId, (xref, w) => new
+                .Join(_dbContext.Words, xref => xref.WordId2, w => w.Id, (xref, w) => new
                 {
                     WordId = xref.WordId1,
                     TranslationWord = w
                 })
                 .Union(
                     _dbContext.WordXrefs.Where(x => wordIds.Contains(x.WordId2) && x.IsPrimaryTranslation == true)
-                    .Join(_dbContext.Words, xref => xref.WordId1, w => w.WordId, (xref, w) => new
+                    .Join(_dbContext.Words, xref => xref.WordId1, w => w.Id, (xref, w) => new
                     {
                         WordId = xref.WordId2,
                         TranslationWord = w
@@ -303,7 +301,7 @@ namespace BucketOfThoughts.Services.Languages
                 var primaryTranslation = wordXrefs.FirstOrDefault(x => x.WordId == word.Id);
                 if (primaryTranslation != null)
                 {
-                    word.PrimaryTranslation = new WordDto(primaryTranslation.TranslationWord.WordId, primaryTranslation.TranslationWord.WordGuid, primaryTranslation.TranslationWord.Description);
+                    word.PrimaryTranslation = new WordDto(primaryTranslation.TranslationWord.Id, primaryTranslation.TranslationWord.Description);
                 }
             }
 
@@ -313,7 +311,7 @@ namespace BucketOfThoughts.Services.Languages
         private async Task<WordDto> GetPrimaryTranslation(int wordId)
         {
             return await JoinXrefSelectWord2(x => x.WordId1 == wordId)
-               .Select(x => new WordDto(x.WordId, x.WordGuid, x.Description))
+               .Select(x => new WordDto(x.Id,x.Description))
                .FirstOrDefaultAsync() ?? new WordDto();
         }
 
@@ -325,7 +323,7 @@ namespace BucketOfThoughts.Services.Languages
                 wordXrefs = wordXrefs.Where(filter);
             }
             return wordXrefs
-                .Join(_dbContext.Words, xref => xref.WordId2, w => w.WordId, (xref, w) => new { Word = w, xref.SortOrder })
+                .Join(_dbContext.Words, xref => xref.WordId2, w => w.Id, (xref, w) => new { Word = w, xref.SortOrder })
                 .OrderBy(x => x.SortOrder)
                 .Select(x => x.Word);
         }

@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using BucketOfThoughts.Core.Infrastructure.BaseClasses;
 
 namespace BucketOfThoughts.Services.Languages.Data;
 
-public partial class WordPronunciation
+public partial class WordPronunciation : BaseDbTable
 {
-    public int WordPronunciationId { get; set; }
-
-    public DateTime CreatedDateTime { get; set; }
-
     public int WordId { get; set; }
 
     public string Phonetic { get; set; } = null!;

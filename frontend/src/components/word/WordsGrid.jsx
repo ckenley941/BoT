@@ -18,11 +18,9 @@ export default function WordsGrid() {
     const [words, setWords] = useState([]);
     const [open, setOpen] = React.useState(false);
     const [selectedWord, setSelectedWord] = useState({ id: 0,
-      guid: "",
       word: "",
       primaryTranslation: {
         id: 0,
-        guid: "",
         word: "",
       },
       pronunication:[]});
