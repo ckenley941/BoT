@@ -13,14 +13,6 @@ import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 export default function DetailRow(props) {
-  console.log(props.jsonData.keys);
-  console.log(props.jsonData.values);
-  const [selectedTextType, setSelectedTextType] = useState("Text");
-
-  const handleInputChange = (e) => {
-    setSelectedTextType(e.target.value);
-  };
-
   return (
     <Grid container>
       <Grid.Row>
@@ -30,11 +22,11 @@ export default function DetailRow(props) {
               row
               aria-labelledby="text-type-radio-buttons-group-label"
               name="textType"
-              value={selectedTextType}
-              onChange={handleInputChange}
+              value={props.selectedTextType}
+              onChange={props.handleTextTypeChange}
             >
               <FormControlLabel value="Text" control={<Radio />} label="Text" />
-              <FormControlLabel value="Json" control={<Radio />} label="JSON" />
+              <FormControlLabel value="Json" control={<Radio />} label="JSON" disabled={props.jsonData === undefined} />
               <FormControlLabel
                 value="Html"
                 disabled
@@ -46,9 +38,9 @@ export default function DetailRow(props) {
           <IconButton
             color="secondary"
             aria-label="Add"
-            onClick={selectedTextType === "Text" ? props.handleAdd : props.handleAddColumn}
+            onClick={props.selectedTextType === "Text" ? props.handleAddDetail : props.handleAddColumn}
           >
-            <Tooltip title={`Add ${selectedTextType === "Text" ? "Detail" : "Column"}`}>
+            <Tooltip title={`Add ${props.selectedTextType === "Text" ? "Detail" : "Column"}`}>
               <AddIcon fontSize="medium" />
             </Tooltip>
           </IconButton>
@@ -57,7 +49,7 @@ export default function DetailRow(props) {
          
         </Grid.Col>
       </Grid.Row>
-      {selectedTextType === "Text" ? (
+      {props.selectedTextType === "Text" ? (
         <>
           {props.textData.map((t, i) => (
             <Grid.Row>
@@ -67,7 +59,7 @@ export default function DetailRow(props) {
                   label={props.title}
                   multiline
                   name={i}
-                  onChange={props.handleAdd}
+                  onChange={props.handleInputChange}
                   value={t}
                 />
                 <IconButton
@@ -87,7 +79,7 @@ export default function DetailRow(props) {
       ) : (
         <>
           <Grid.Row>
-            {props.jsonData.keys.map((t, i) => (
+            {props.jsonData && props.jsonData.keys.map((t, i) => (
               <Grid.Col md={2} width={12} className="mb-2">
                 <TextField
                   label={`Column ${i + 1}`}
@@ -107,7 +99,7 @@ export default function DetailRow(props) {
               <AddIcon fontSize="medium" />
             </Tooltip>
           </IconButton>
-          {props.jsonData.values.map((v, rowIdx) => (          
+          {props.jsonData && props.jsonData.values.map((v, rowIdx) => (          
             <Grid.Row className="mb-2">
               {props.jsonData.keys.map((t, colIdx) => (
                 <Grid.Col md={2} width={12} className="mb-2">

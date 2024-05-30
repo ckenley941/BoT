@@ -15,7 +15,7 @@ namespace BucketOfThoughts.Core.Infrastructure.Extensions
                 SlidingExpiration = unusedExpireTime
             };
 
-            var jsonData = JsonSerializer.Serialize(data, new JsonSerializerOptions() { ReferenceHandler = ReferenceHandler.IgnoreCycles });
+            var jsonData = JsonSerializer.Serialize(data, new JsonSerializerOptions() { ReferenceHandler = ReferenceHandler.IgnoreCycles});
             await cache.SetStringAsync(key, jsonData, options);
         }
 

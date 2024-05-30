@@ -1,12 +1,12 @@
 ﻿using AutoMapper
     ;
 using BucketOfThoughts.Core.Infrastructure.BaseClasses;
+using BucketOfThoughts.Core.Infrastructure.Enums;
 using BucketOfThoughts.Core.Infrastructure.Interfaces;
 using BucketOfThoughts.Core.Infrastructure.Objects;
 using BucketOfThoughts.Services.Thoughts.Data;
 using BucketOfThoughts.Services.Thoughts.Objects;
 using Microsoft.Extensions.Caching.Distributed;
-using Microsoft.IdentityModel.Tokens;
 
 namespace BucketOfThoughts.Services.Thoughts
 {
@@ -76,23 +76,41 @@ namespace BucketOfThoughts.Services.Thoughts
                 ThoughtCategoryId = newItem.ThoughtCategoryId
             };
 
-            if (newItem.Details?.Count > 0) 
+            if (newItem.TextType == TextTypes.Text.ToString())
             {
-                //Reverse the order since the UI puts the latest detail at the top
-                newItem.Details.Reverse();
-                int sortOrder = 0;
-                foreach (var detail in newItem.Details)
+                if (newItem.Details.Any())
                 {
-                    sortOrder++;
-                    thought.ThoughtDetails.Add(new ()
+                    //Reverse the order since the UI puts the latest detail at the top
+                    newItem.Details.Reverse();
+                    int sortOrder = 0;
+                    foreach (var detail in newItem.Details)
+                    {
+                        sortOrder++;
+                        thought.ThoughtDetails.Add(new()
                         {
                             Description = detail,
                             SortOrder = sortOrder
                         });
+                    }
                 }
             }
 
-            if (newItem.WebsiteLinks?.Count > 0)
+            else if (newItem.TextType == TextTypes.Json.ToString())
+            {
+                var i = 0;
+                newItem.JsonDetails.Keys.ForEach((k) =>
+                {
+                    i++;
+                    newItem.JsonDetails.Json = newItem.JsonDetails.Json.Replace($"Column{i}", k);
+                });
+                thought.ThoughtDetails.Add(new()
+                {
+                    Description = newItem.JsonDetails.Json,
+                    SortOrder = 1
+                });
+            }
+
+            if (newItem.WebsiteLinks.Any())
             {
                 int sortOrder = 0;
                 foreach (var link in newItem.WebsiteLinks)

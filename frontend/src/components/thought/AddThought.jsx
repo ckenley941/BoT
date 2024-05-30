@@ -32,8 +32,9 @@ export default function AddThought() {
     details: new Array(""),
     jsonDetails: { keys: new Array(""), values: [{ Column1: ""}]},
     websiteLinks: new Array(""),
+    textType: "Text"
   });
-  const [thoughtCategories, setThoughtCategories] = useState([]);
+  const [thoughtCategories, setThoughtCategories] = useState([]);  
   const [tabValue, setTabValue] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -85,20 +86,26 @@ export default function AddThought() {
   };
 
   const addThought = () => {
-    console.log(thought.jsonDetails);
+    
     if (isValid()) {
-      thought.details = removeEmptyRows(thought.details);
-      thought.websiteLinks = removeEmptyRows(thought.websiteLinks);
-      const thought = {...thought};
-      // insertThought(thought).then((response) => {
-      //   alert("Thought added");
-      //   setThought({
-      //     description: "",
-      //     thoughtCategoryId: 0,
-      //     details: [],
-      //     websiteLinks: [],
-      //   });
-      // });
+      thought.jsonDetails.json = JSON.stringify(thought.jsonDetails.values);
+      
+      // thought.details = removeEmptyRows(thought.details);
+      // thought.websiteLinks = removeEmptyRows(thought.websiteLinks);
+      var newThought = {
+        ...thought,
+        details: removeEmptyRows(thought.details),
+        websiteLinks: removeEmptyRows(thought.websiteLinks),
+      }
+      insertThought(newThought).then((response) => {
+        alert("Thought added");
+        setThought({
+          description: "",
+          thoughtCategoryId: 0,
+          details: [],
+          websiteLinks: [],
+        });
+      });
     }
   };
 
@@ -217,7 +224,6 @@ export default function AddThought() {
                 </MenuItem>
               ))}
             </Select>
-            <FormHelperText>Required</FormHelperText>
           </FormControl>
         </Grid>
         <Grid xs={12}>
@@ -239,12 +245,14 @@ export default function AddThought() {
               title="Detail"
               textData={thought.details}
               jsonData={thought.jsonDetails}
-              handleAdd={addDetail}
-              handleAddColumn={addColumn}
-              handleAddRow={addRow}
-              handleChange={handleDetailChange}
+              selectedTextType={thought.textType}
+              handleTextTypeChange={handleInputChange}
+              handleInputChange={handleDetailChange}
               handleJsonColumnChange={handleJsonColumnChange}
               handleJsonRowChange={handleJsonRowChange}
+              handleAddDetail={addDetail}
+              handleAddColumn={addColumn}
+              handleAddRow={addRow}
               handleDelete={deleteDetail}
             ></DetailRow>
           </TabPanel>
@@ -255,12 +263,13 @@ export default function AddThought() {
             <DetailRow
               title="Link"
               textData={thought.websiteLinks}
+              selectedTextType={"Text"}
               handleAdd={addWebsiteLink}
-              handleChange={handleWebsiteLinkChange}
+              handleInputChange={handleWebsiteLinkChange}
               handleDelete={deleteWebsiteLink}
             ></DetailRow>
           </TabPanel>
-
+        <div className="ml-3">
           <IconButton
             color="secondary"
             aria-label="Save Thought"
@@ -269,7 +278,7 @@ export default function AddThought() {
             <Tooltip title="Save Thought">
               <SaveIcon fontSize="large" />
             </Tooltip>
-          </IconButton>
+          </IconButton></div>
         </Grid>
     </Grid>
   );
