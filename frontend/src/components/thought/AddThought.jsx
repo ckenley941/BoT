@@ -29,8 +29,9 @@ export default function AddThought() {
   const [thought, setThought] = useState({
     description: "",
     thoughtCategoryId: 0,
-    details: [],
-    websiteLinks: [],
+    details: new Array(""),
+    jsonDetails: { keys: new Array(""), values: [{ Column1: ""}]},
+    websiteLinks: new Array(""),
   });
   const [thoughtCategories, setThoughtCategories] = useState([]);
   const [tabValue, setTabValue] = useState(0);
@@ -61,6 +62,21 @@ export default function AddThought() {
     setThought(newState);
   };
 
+  const handleJsonColumnChange = (e) => {
+    var index = parseInt(e.target.name);
+    thought.jsonDetails.keys[index] = e.target.value;
+    let newState = { ...thought };
+    setThought(newState);
+  };
+
+  const handleJsonRowChange = (e) => {
+    var colIndex = parseInt(e.target.name.split("|")[0]) + 1;
+    var rowIndex = parseInt(e.target.name.split("|")[1]);
+    thought.jsonDetails.values[rowIndex][`Column${colIndex}`] = e.target.value;
+    let newState = { ...thought };
+    setThought(newState);
+  };
+
   const handleWebsiteLinkChange = (e) => {
     var index = parseInt(e.target.name);
     thought.websiteLinks[index] = e.target.value;
@@ -69,16 +85,20 @@ export default function AddThought() {
   };
 
   const addThought = () => {
+    console.log(thought.jsonDetails);
     if (isValid()) {
-      insertThought(thought).then((response) => {
-        alert("Thought added");
-        setThought({
-          description: "",
-          thoughtCategoryId: 0,
-          details: [],
-          websiteLinks: [],
-        });
-      });
+      thought.details = removeEmptyRows(thought.details);
+      thought.websiteLinks = removeEmptyRows(thought.websiteLinks);
+      const thought = {...thought};
+      // insertThought(thought).then((response) => {
+      //   alert("Thought added");
+      //   setThought({
+      //     description: "",
+      //     thoughtCategoryId: 0,
+      //     details: [],
+      //     websiteLinks: [],
+      //   });
+      // });
     }
   };
 
@@ -101,8 +121,32 @@ export default function AddThought() {
     return true;
   };
 
+  const removeEmptyRows = (rows) => {
+    return _.filter( rows, r => r !== "" );
+  }
+
   const addDetail = () => {
     thought.details.unshift("");
+    let newState = { ...thought };
+    setThought(newState);
+  };
+
+  const addColumn = () => {
+    thought.jsonDetails.keys.push("");
+    console.log(thought.jsonDetails.values);
+    thought.jsonDetails.values.forEach(v => {
+      v[`Column${thought.jsonDetails.keys.length}`] = "";
+    });
+    let newState = { ...thought };
+    setThought(newState);
+  };
+
+  const addRow = () => {
+    var newRow = {};
+    thought.jsonDetails.keys.forEach((k, i) => {
+      newRow[`Column${i}`] = "";
+    });
+    thought.jsonDetails.values.push({});
     let newState = { ...thought };
     setThought(newState);
   };
@@ -135,7 +179,6 @@ export default function AddThought() {
   };
 
   const handleTabChange = (event, newValue) => {
-    console.log(thought.details);
     setTabValue(newValue);
   };
 
@@ -194,9 +237,14 @@ export default function AddThought() {
           <TabPanel value={tabValue} index={0}>
             <DetailRow
               title="Detail"
-              data={thought.details}
+              textData={thought.details}
+              jsonData={thought.jsonDetails}
               handleAdd={addDetail}
+              handleAddColumn={addColumn}
+              handleAddRow={addRow}
               handleChange={handleDetailChange}
+              handleJsonColumnChange={handleJsonColumnChange}
+              handleJsonRowChange={handleJsonRowChange}
               handleDelete={deleteDetail}
             ></DetailRow>
           </TabPanel>
@@ -206,7 +254,7 @@ export default function AddThought() {
           <TabPanel value={tabValue} index={2}>
             <DetailRow
               title="Link"
-              data={thought.websiteLinks}
+              textData={thought.websiteLinks}
               handleAdd={addWebsiteLink}
               handleChange={handleWebsiteLinkChange}
               handleDelete={deleteWebsiteLink}

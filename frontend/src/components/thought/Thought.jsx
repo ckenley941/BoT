@@ -56,17 +56,17 @@ export default function Thought({data}) {
         <Card variant="outlined">
         <CardContent>
         <Grid container spacing={2}>
-          <Grid item md={3} xs={12}>            
+          <Grid md={3} xs={12}>            
           <FormLabel>{thought.thoughtDateString }</FormLabel>  
           </Grid>
-          <Grid item md={9} xs={12}>
+          <Grid md={9} xs={12}>
               <FormLabel>{thought.category.description}</FormLabel>  
           </Grid>
-          <Grid item xs={12}>
+          <Grid xs={12}>
 
           <Typography variant="h5">{thought.description }</Typography>  
           </Grid>
-          <Grid item xs={12}>
+          <Grid xs={12}>
 
           <Tabs value={tabValue} onChange={handleTabChange} textColor="secondary" indicatorColor="secondary"
               aria-label="secondary tabs example">
@@ -88,8 +88,7 @@ export default function Thought({data}) {
                 relatedThoughts.length > 0 ?   
                 <ThoughtsGrid data={relatedThoughts}></ThoughtsGrid> :
                 <div>No related thoughts</div>
-              }
-            
+              }            
             </TabPanel>
             <TabPanel value={tabValue} index={2}>
               Under construction
