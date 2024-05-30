@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
+import React, { useState, useEffect } from "react"
+
+import Grid from "@mui/material/Unstable_Grid2";
 import { DataGrid, GridToolbar   } from '@mui/x-data-grid';
 
 import { getWords, getWordById } from "../../services/WordsService.ts";
@@ -77,9 +77,7 @@ export default function WordsGrid() {
 
       //https://mui.com/x/react-data-grid/
       return (
-        <div>
-        <Card sx={{ height: 1200, width: '100%' }}>
-            <CardContent>
+        <Grid> 
           <DataGrid
             getRowId={(row) => row.word1Id}
             rows={words}
@@ -102,8 +100,6 @@ export default function WordsGrid() {
               },
             }}
           />
-          </CardContent>
-        </Card>
         {/* <WordDialog isOpen={open} selectedWord={selectedWord}></WordDialog> */}
          <Dialog open={open} onClose={handleClose} fullWidth={true} maxWidth={true}>
          <DialogTitle>Word</DialogTitle>
@@ -114,6 +110,6 @@ export default function WordsGrid() {
            <Button onClick={handleClose}>Close</Button>
          </DialogActions>
        </Dialog>
-       </div>
+       </Grid>
       );
 }

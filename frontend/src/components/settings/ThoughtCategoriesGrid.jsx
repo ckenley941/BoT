@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import { DataGrid, GridToolbar,   GridRowModes,
+import Grid from "@mui/material/Unstable_Grid2";
+import { DataGrid, GridRowModes,
   GridToolbarContainer,
   GridActionsCellItem,
   GridRowEditStopReasons,  } from '@mui/x-data-grid';
 
-  import Button from '@mui/material/Button';
-  import AddIcon from '@mui/icons-material/Add';
+import Button from '@mui/material/Button';
+import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import SaveIcon from '@mui/icons-material/Save';
@@ -200,8 +199,7 @@ export default function ThoughtsCategoriesGrid() {
 
       //https://mui.com/x/react-data-grid/
       return (
-        <Card sx={{ height: 800, width: '100%' }}>
-            <CardContent>
+      <Grid>
           <DataGrid
            // getRowId={(row) => row.thoughtCategoryId}
             rows={rows}
@@ -235,7 +233,6 @@ export default function ThoughtsCategoriesGrid() {
             //   },
             // }}
           />
-          </CardContent>
-        </Card>
+          </Grid>
       );
 }

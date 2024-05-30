@@ -1,15 +1,15 @@
 import Link from '@mui/material/Link';
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
+import Grid from "@mui/material/Unstable_Grid2";
 
 export default function Settings() 
 {
     return (
-        <Card variant="outlined"  sx={{ m: 5, maxWidth: 750 }}>
-        <CardContent>
-        <Link href="/settings/thought-categories">Thought Categories</Link>
-      </CardContent>
-      </Card>
+      <Grid container spacing={2} className="m-2">
+        <Grid xs={4}>
+            <Link href="/settings/thought-categories">Thought Categories</Link>
+          </Grid>
+      </Grid>
     );
 }
+
 

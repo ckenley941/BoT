@@ -6,11 +6,11 @@ import Grid from "@mui/material/Unstable_Grid2";
 import Typography from "@mui/material/Typography";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+
 import ThoughtsGrid from './ThoughtsGrid.jsx'
 import TabPanel from "../controls/TabPanel.jsx"
 
 import { getRandomThought, getRelatedThoughts } from "../../services/ThoughtsService.ts";
-
 
 export default function Thought({data}) {
     const [thought, setThought] = useState({

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
+import Grid from "@mui/material/Unstable_Grid2";
 import { DataGrid, GridToolbar  } from '@mui/x-data-grid';
 
 import Thought from "./Thought.jsx";
@@ -73,9 +72,7 @@ export default function ThoughtsGrid({data}) {
 
       //https://mui.com/x/react-data-grid/
       return (
-        <div>
-        <Card sx={{ height: 800, width: '100%' }}>
-            <CardContent>
+        <Grid>
           <DataGrid
             //getRowId={(row) => row.thoughtId}
             rows={thoughts}
@@ -98,8 +95,6 @@ export default function ThoughtsGrid({data}) {
               },
             }}
           />
-          </CardContent>
-        </Card>
          <Dialog open={open} onClose={handleClose} fullWidth={true}>
          <DialogTitle>Thought</DialogTitle>
          <DialogContent>
@@ -109,6 +104,6 @@ export default function ThoughtsGrid({data}) {
            <Button onClick={handleClose}>Close</Button>
          </DialogActions>
        </Dialog>
-       </div>
+       </Grid>
       );
 }
