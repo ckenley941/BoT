@@ -1,12 +1,5 @@
-﻿using BucketOfThoughts.Api.Handlers.Words;
-using BucketOfThoughts.Core.Infrastructure.Constants;
-using BucketOfThoughts.Core.Infrastructure.Interfaces;
-using BucketOfThoughts.Services.Languages.Data;
-using BucketOfThoughts.Services.Languages.Objects;
-using BucketOfThoughts.Services.Languages;
-using Microsoft.EntityFrameworkCore;
+﻿using BucketOfThoughts.Api.Handlers.Dashboards;
 using BucketOfThoughts.Service.Dashboards;
-using BucketOfThoughts.Api.Handlers.Dashboards;
 using BucketOfThoughts.Service.Dashboards.Objects;
 
 namespace BucketOfThoughts.Api.Handlers.Extensions

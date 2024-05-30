@@ -1,5 +1,4 @@
-﻿using BucketOfThoughts.Services.Thoughts.Data;
-using BucketOfThoughts.Services.Thoughts;
+﻿using BucketOfThoughts.Services.Thoughts;
 using BucketOfThoughts.Services.Thoughts.Objects;
 
 namespace BucketOfThoughts.Api.Handlers.Thoughts

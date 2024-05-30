@@ -1,11 +1,10 @@
-﻿using BucketOfThoughts.Core.Infrastructure.Interfaces;
-using BucketOfThoughts.Services.Thoughts.Data;
-using BucketOfThoughts.Services.Thoughts;
-using BucketOfThoughts.Services.Thoughts.Objects;
-using BucketOfThoughts.Api.Handlers.ThoughtCategories;
+﻿using BucketOfThoughts.Api.Handlers.ThoughtCategories;
 using BucketOfThoughts.Api.Handlers.Thoughts;
-using Microsoft.EntityFrameworkCore;
 using BucketOfThoughts.Core.Infrastructure.Constants;
+using BucketOfThoughts.Services.Thoughts;
+using BucketOfThoughts.Services.Thoughts.Data;
+using BucketOfThoughts.Services.Thoughts.Objects;
+using Microsoft.EntityFrameworkCore;
 
 namespace BucketOfThoughts.Api.Handlers.Extensions
 {

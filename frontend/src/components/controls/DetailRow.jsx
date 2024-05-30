@@ -26,7 +26,7 @@ export default function DetailRow(props) {
               onChange={props.handleTextTypeChange}
             >
               <FormControlLabel value="Text" control={<Radio />} label="Text" />
-              <FormControlLabel value="Json" control={<Radio />} label="JSON" disabled={props.jsonData === undefined} />
+              <FormControlLabel value="Json" control={<Radio />} label="Table" disabled={props.jsonData === undefined} />
               <FormControlLabel
                 value="Html"
                 disabled

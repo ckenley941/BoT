@@ -6,6 +6,7 @@ using BucketOfThoughts.Core.Infrastructure.Interfaces;
 using BucketOfThoughts.Core.Infrastructure.Objects;
 using BucketOfThoughts.Services.Thoughts.Data;
 using BucketOfThoughts.Services.Thoughts.Objects;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Caching.Distributed;
 
 namespace BucketOfThoughts.Services.Thoughts
@@ -30,7 +31,8 @@ namespace BucketOfThoughts.Services.Thoughts
         public async Task<ThoughtDto> GetByIdAsync(int id)
         {
             var thought = await _repository.GetByIdAsync(id);
-            return ConvertThoughtToDto(thought);
+            var thought1 = _mapper.Map<ThoughtDto>(thought);
+            return _mapper.Map<ThoughtDto>(thought);
         }
 
         public async Task<ThoughtDto> GetRandomThoughtAsync()
@@ -47,13 +49,13 @@ namespace BucketOfThoughts.Services.Thoughts
 
             var randThought = thoughts[rand.Next(thoughts.Count)];
 
-            return ConvertThoughtToDto(randThought);
+            return _mapper.Map<ThoughtDto>(randThought);
         }
 
         public async Task<IEnumerable<ThoughtGridDto>> GetGridAsync()
         {
             var thoughts = (await GetThoughtsFromCache()).OrderByDescending(x => x.CreatedDateTime);
-            return ConvertThoughtToGridDto(thoughts);
+            return _mapper.Map<IEnumerable<ThoughtGridDto>>(thoughts);
         }
 
         public async Task<IEnumerable<ThoughtGridDto>> GetRelatedThoughtsGridAsync(int thoughtId)
@@ -65,7 +67,7 @@ namespace BucketOfThoughts.Services.Thoughts
             };
 
             var relatedThoughts = _repository.GetRelatedThoughts(thoughtId);
-            return ConvertThoughtToGridDto(relatedThoughts);
+            return _mapper.Map<IEnumerable<ThoughtGridDto>>(relatedThoughts);
         }
 
         public async Task<Thought> InsertAsync(InsertThoughtDto newItem)
@@ -138,38 +140,6 @@ namespace BucketOfThoughts.Services.Thoughts
                 IncludeProperties = "ThoughtCategory,ThoughtDetails"
             };
             return (await base.GetFromCacheAsync("Thoughts", queryParams)).ToList();
-        }
-
-        private static ThoughtDto ConvertThoughtToDto(Thought thought)
-        {
-            return new ThoughtDto()
-            {
-                Id = thought.Id,
-                Description = thought.Description,
-                ThoughtDateTime = thought.CreatedDateTime,
-                Category = new ThoughtCategoryDto()
-                {
-                    Id = thought.ThoughtCategory.Id,
-                    Description = thought.ThoughtCategory.Description
-                },
-                Details = thought.ThoughtDetails.Select(x => new ThoughtDetailDto()
-                {
-                    Id = x.Id,
-                    Description = x.Description
-                }).ToList()
-            };
-        }
-
-        private static IEnumerable<ThoughtGridDto> ConvertThoughtToGridDto(IEnumerable<Thought> thoughts)
-        {
-            return thoughts.Select(x => new ThoughtGridDto()
-            {
-                Id = x.Id,
-                Description = x.Description,
-                Category = x.ThoughtCategory.Description,
-                Details = string.Join(", ", x.ThoughtDetails.Select(y => y.Description).ToList()),
-            });
-        }
-
+        }        
     }
 }
