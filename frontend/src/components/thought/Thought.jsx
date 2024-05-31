@@ -10,9 +10,11 @@ import Tab from '@mui/material/Tab';
 import ThoughtsGrid from './ThoughtsGrid.jsx'
 import TabPanel from "../controls/TabPanel.jsx"
 
-import { getRandomThought, getRelatedThoughts } from "../../services/ThoughtsService.ts";
+import { getRandomThought, getRelatedThoughts, getThoughtById } from "../../services/ThoughtsService.ts";
+import JsonDataGrid from "../controls/JsonDataGrid.jsx";
 
-export default function Thought({data}) {
+export default function Thought(props) {
+  
     const [thought, setThought] = useState({
         description: "",
         thoughtDateString: "",
@@ -27,13 +29,19 @@ export default function Thought({data}) {
 
     useEffect(() => {
         loadData();
-      }, [data]);
+      }, [ props.data]);
     
       const loadData = async () => {
-        if (data){
-          setThought(data);
-          loadChildren(data.id);
+        if ( props.data){
+          setThought(props.data);
+          loadChildren(props.data.id);
         }
+        // else if (props.match.params.id > 0){
+        //   getThoughtById(props.match.params.id > 0).then((response) => {
+        //     setThought(response.data);
+        //     loadChildren(response.data.id);
+        //   });
+        // }
         else{
           getRandomThought().then((response) => {
               setThought(response.data);
@@ -76,12 +84,15 @@ export default function Thought({data}) {
             </Tabs>
 
             <TabPanel value={tabValue} index={0}>
-              
-            {  thought.details.length > 0 ? 
+              {thought.textType === "Json" ? (<div>
+                  <JsonDataGrid jsonString={thought.details[1].description} columns={thought.details[0].description}></JsonDataGrid>
+              </div>) : <>
+              {  thought.details.length > 0 ? 
                 thought.details.map((t, i) => (
                        <div class="thoughtDetail">{t.description}</div>
                         )) :
                 <div>No details</div>}
+                </>}
             </TabPanel>
             <TabPanel value={tabValue} index={1}>
               {

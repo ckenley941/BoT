@@ -7,7 +7,7 @@ namespace BucketOfThoughts.Services.Thoughts.Objects
         public string Description { get; set; } = string.Empty;
         public int ThoughtCategoryId { get; set; } = 0;
         public string ThoughtSource { get; set; } = string.Empty;
-        public string TextType { get; set; } = TextTypes.Text.ToString();
+        public string TextType { get; set; } = TextTypes.PlainText.ToString();
         public List<string> Details { get; set; } = new List<string>();
         public JsonDetail JsonDetails { get; set; } = new JsonDetail();
         public List<string> WebsiteLinks { get; set; } = new List<string>();

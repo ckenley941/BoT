@@ -62,6 +62,10 @@ public partial class ThoughtsDbContext : BaseDbContext<ThoughtsDbContext>
             entity.Property(e => e.ThoughtGuid)
                 .HasDefaultValueSql("(newid())");
 
+            entity.Property(e => e.TextType)
+               .HasDefaultValueSql("'PlainText'")
+               .HasMaxLength(25);
+
             entity.HasOne(d => d.ThoughtCategory).WithMany(p => p.Thoughts)
                 .HasForeignKey(d => d.ThoughtCategoryId)
                 .OnDelete(DeleteBehavior.ClientSetNull)

@@ -2,7 +2,7 @@
 {
     public enum TextTypes
     {
-        Text,
+        PlainText,
         Json,
         Html
     }

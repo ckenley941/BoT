@@ -25,7 +25,7 @@ export default function DetailRow(props) {
               value={props.selectedTextType}
               onChange={props.handleTextTypeChange}
             >
-              <FormControlLabel value="Text" control={<Radio />} label="Text" />
+              <FormControlLabel value="PlainText" control={<Radio />} label="Plain Text" />
               <FormControlLabel value="Json" control={<Radio />} label="Table" disabled={props.jsonData === undefined} />
               <FormControlLabel
                 value="Html"
@@ -38,9 +38,9 @@ export default function DetailRow(props) {
           <IconButton
             color="secondary"
             aria-label="Add"
-            onClick={props.selectedTextType === "Text" ? props.handleAddDetail : props.handleAddColumn}
+            onClick={props.selectedTextType === "PlainText" ? props.handleAddDetail : props.handleAddColumn}
           >
-            <Tooltip title={`Add ${props.selectedTextType === "Text" ? "Detail" : "Column"}`}>
+            <Tooltip title={`Add ${props.selectedTextType === "PlainText" ? "Detail" : "Column"}`}>
               <AddIcon fontSize="medium" />
             </Tooltip>
           </IconButton>
@@ -49,7 +49,7 @@ export default function DetailRow(props) {
          
         </Grid.Col>
       </Grid.Row>
-      {props.selectedTextType === "Text" ? (
+      {props.selectedTextType === "PlainText" ? (
         <>
           {props.textData.map((t, i) => (
             <Grid.Row>

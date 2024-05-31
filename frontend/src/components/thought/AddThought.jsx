@@ -32,7 +32,7 @@ export default function AddThought() {
     details: new Array(""),
     jsonDetails: { keys: new Array(""), values: [{ Column1: ""}]},
     websiteLinks: new Array(""),
-    textType: "Text"
+    textType: "PlainText"
   });
   const [thoughtCategories, setThoughtCategories] = useState([]);  
   const [tabValue, setTabValue] = useState(0);
@@ -89,9 +89,6 @@ export default function AddThought() {
     
     if (isValid()) {
       thought.jsonDetails.json = JSON.stringify(thought.jsonDetails.values);
-      
-      // thought.details = removeEmptyRows(thought.details);
-      // thought.websiteLinks = removeEmptyRows(thought.websiteLinks);
       var newThought = {
         ...thought,
         details: removeEmptyRows(thought.details),
@@ -263,7 +260,7 @@ export default function AddThought() {
             <DetailRow
               title="Link"
               textData={thought.websiteLinks}
-              selectedTextType={"Text"}
+              selectedTextType={"PlainText"}
               handleAdd={addWebsiteLink}
               handleInputChange={handleWebsiteLinkChange}
               handleDelete={deleteWebsiteLink}

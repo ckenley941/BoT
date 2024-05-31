@@ -80,7 +80,7 @@ export default function ThoughtsGrid({data}) {
             initialState={{
               pagination: {
                 paginationModel: {
-                  pageSize: 25,
+                  pageSize: 10,
                 },
               },
             }}

@@ -8,6 +8,9 @@ using BucketOfThoughts.Services.Thoughts.Data;
 using BucketOfThoughts.Services.Thoughts.Objects;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Caching.Distributed;
+using Newtonsoft.Json;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text.Json.Nodes;
 
 namespace BucketOfThoughts.Services.Thoughts
 {
@@ -31,7 +34,7 @@ namespace BucketOfThoughts.Services.Thoughts
         public async Task<ThoughtDto> GetByIdAsync(int id)
         {
             var thought = await _repository.GetByIdAsync(id);
-            var thought1 = _mapper.Map<ThoughtDto>(thought);
+            var thoughtDto = _mapper.Map<ThoughtDto>(thought);
             return _mapper.Map<ThoughtDto>(thought);
         }
 
@@ -75,10 +78,11 @@ namespace BucketOfThoughts.Services.Thoughts
             var thought = new Thought()
             {
                 Description = newItem.Description,
-                ThoughtCategoryId = newItem.ThoughtCategoryId
+                ThoughtCategoryId = newItem.ThoughtCategoryId,
+                TextType = newItem.TextType
             };
 
-            if (newItem.TextType == TextTypes.Text.ToString())
+            if (newItem.TextType == TextTypes.PlainText.ToString())
             {
                 if (newItem.Details.Any())
                 {
@@ -107,8 +111,13 @@ namespace BucketOfThoughts.Services.Thoughts
                 });
                 thought.ThoughtDetails.Add(new()
                 {
-                    Description = newItem.JsonDetails.Json,
+                    Description = string.Join("|", newItem.JsonDetails.Keys),
                     SortOrder = 1
+                });
+                thought.ThoughtDetails.Add(new()
+                {
+                    Description = newItem.JsonDetails.Json,
+                    SortOrder = 2
                 });
             }
 
