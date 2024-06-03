@@ -91,7 +91,7 @@ export default function WordCard( {data}) {
     <Card variant="outlined">
       <React.Fragment>
         <CardContent>       
-          <Typography variant="h2">{wordCard.word} <IconButton color="secondary" aria-label="Flash" onClick={()=> setShowFullCard(!showFullCard)}>
+          <Typography variant="h2">{wordCard.word} <IconButton color="secondary" aria-label="Toggle" onClick={()=> setShowFullCard(!showFullCard)}>
           <Tooltip title={showFullCard ? "Hide Card" : "Show Card"}>
           {showFullCard ? ( <ToggleOnIcon />) : ( <ToggleOffIcon />)}
            

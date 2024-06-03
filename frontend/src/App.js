@@ -12,12 +12,12 @@ import Dashboard from './components/dashboard/Dashboard';
 import Settings from './components/settings/Settings.jsx';
 import ThoughtsCategoriesGrid from './components/settings/ThoughtCategoriesGrid.jsx';
 import AddOutdoorsActivity from './components/outdoors/AddOutdoorsActivity.jsx'
-// import { LocalizationProvider } from '@mui/x-date-pickers';
-// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
 const App = () => {
   return (
-    // <LocalizationProvider dateAdapter={AdapterDayjs}>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
     <Router>
       <Layout className="layout">
         <Routes>
@@ -42,7 +42,7 @@ const App = () => {
         </Routes>
         </Layout>
       </Router>
-      // </LocalizationProvider>
+      </LocalizationProvider>
   );
 }
 
