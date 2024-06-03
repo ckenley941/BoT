@@ -12,7 +12,9 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import FlashOnIcon from '@mui/icons-material/FlashOn';
+import ToggleOffIcon from '@mui/icons-material/ToggleOff';
+import ToggleOnIcon from '@mui/icons-material/ToggleOn';
+import Tooltip from "@mui/material/Tooltip";
 
 import TabPanel from "../controls/TabPanel.jsx";
 import WordContext from "./WordContext";
@@ -90,7 +92,10 @@ export default function WordCard( {data}) {
       <React.Fragment>
         <CardContent>       
           <Typography variant="h2">{wordCard.word} <IconButton color="secondary" aria-label="Flash" onClick={()=> setShowFullCard(!showFullCard)}>
-            <FlashOnIcon />
+          <Tooltip title={showFullCard ? "Hide Card" : "Show Card"}>
+          {showFullCard ? ( <ToggleOnIcon />) : ( <ToggleOffIcon />)}
+           
+          </Tooltip>
           </IconButton></Typography>
           <Typography variant="h5" component="div">
             {  wordCard.pronunication.map((p, i, {length}) =>

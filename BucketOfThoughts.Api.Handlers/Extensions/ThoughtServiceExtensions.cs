@@ -1,6 +1,8 @@
-﻿using BucketOfThoughts.Api.Handlers.ThoughtCategories;
+﻿using BucketOfThoughts.Api.Handlers.Outdoors;
+using BucketOfThoughts.Api.Handlers.ThoughtCategories;
 using BucketOfThoughts.Api.Handlers.Thoughts;
 using BucketOfThoughts.Core.Infrastructure.Constants;
+using BucketOfThoughts.Core.Infrastructure.Enums;
 using BucketOfThoughts.Services.Thoughts;
 using BucketOfThoughts.Services.Thoughts.Data;
 using BucketOfThoughts.Services.Thoughts.Objects;
@@ -36,6 +38,10 @@ namespace BucketOfThoughts.Api.Handlers.Extensions
             services.AddScoped<InsertThoughtCategoryHandler>();
             services.AddScoped<UpdateThoughtCategoryHandler>();
             services.AddScoped<DeleteThoughtCategoryHandler>();
+
+
+            services.AddScoped<GetOutdoorActivitiesHandler>();
+
             return services;
         }
 
@@ -116,6 +122,14 @@ namespace BucketOfThoughts.Api.Handlers.Extensions
                    Results.Ok();
                }
                );
+
+            app.MapGet("/api/outdoorsactivities",
+                (GetOutdoorActivitiesHandler handler) =>
+                 handler.Handle()
+                 is IEnumerable<string> outdoorActivities
+                 ? Results.Ok(outdoorActivities)
+                 : Results.NotFound()
+              );
 
             return app;
         }

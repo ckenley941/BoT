@@ -5,7 +5,6 @@ import Select from "@mui/material/Select";
 import Grid from "@mui/material/Unstable_Grid2";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import FormHelperText from "@mui/material/FormHelperText";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import Tabs from "@mui/material/Tabs";
@@ -28,7 +27,7 @@ import {
 export default function AddThought() {
   const [thought, setThought] = useState({
     description: "",
-    thoughtCategoryId: 0,
+    thoughtCategoryId: 1,
     details: new Array(""),
     jsonDetails: { keys: new Array(""), values: [{ Column1: ""}]},
     websiteLinks: new Array(""),
@@ -86,9 +85,10 @@ export default function AddThought() {
   };
 
   const addThought = () => {
-    
     if (isValid()) {
-      thought.jsonDetails.json = JSON.stringify(thought.jsonDetails.values);
+      if (thought.textType === "Json"){
+        thought.jsonDetails.json = JSON.stringify(thought.jsonDetails.values);
+      }
       var newThought = {
         ...thought,
         details: removeEmptyRows(thought.details),
@@ -111,10 +111,6 @@ export default function AddThought() {
 
     if (thought.description.length <= 0) {
       msg += "Description required. ";
-    }
-
-    if (thought.thoughtCategoryId <= 0) {
-      msg += "Category required. ";
     }
 
     if (msg.length > 0) {
@@ -188,20 +184,10 @@ export default function AddThought() {
 
   return (
     <Grid container spacing={2} className="m-2">
-        <Grid xs={10}>
-          <TextField
-            name="description"
-            value={thought.description}
-            label="Thought"
-            onChange={handleInputChange}
-            fullWidth
-            multiline
-          />
-        </Grid>
-        <Grid xs={4}>
+       <Grid xs={4}>
           <FormControl fullWidth>
             <InputLabel id="thought-category-select-label">
-              Category *
+              Category
             </InputLabel>
             <Select
               labelId="thought-category-select-label"
@@ -212,9 +198,6 @@ export default function AddThought() {
               value={thought.thoughtCategoryId}
               onChange={handleInputChange}
             >
-              <MenuItem value="0">
-                <em>None</em>
-              </MenuItem>
               {thoughtCategories.map((tc, i) => (
                 <MenuItem key={i} value={tc.id}>
                   {tc.description}
@@ -222,6 +205,16 @@ export default function AddThought() {
               ))}
             </Select>
           </FormControl>
+        </Grid>
+        <Grid xs={10}>
+          <TextField
+            name="description"
+            value={thought.description}
+            label="Thought"
+            onChange={handleInputChange}
+            fullWidth
+            multiline
+          />
         </Grid>
         <Grid xs={12}>
           {/* <AddItemToDropdownDialog isOpen={false} title="Category" saveCallback={addThoughtCategory}></AddItemToDropdownDialog> */}

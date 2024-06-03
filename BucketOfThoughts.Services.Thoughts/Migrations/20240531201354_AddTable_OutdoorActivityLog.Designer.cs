@@ -4,6 +4,7 @@ using BucketOfThoughts.Services.Thoughts.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BucketOfThoughts.Services.Thoughts.Migrations
 {
     [DbContext(typeof(ThoughtsDbContext))]
-    partial class ThoughtsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240531201354_AddTable_OutdoorActivityLog")]
+    partial class AddTable_OutdoorActivityLog
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

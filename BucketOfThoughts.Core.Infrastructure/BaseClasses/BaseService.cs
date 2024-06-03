@@ -2,14 +2,7 @@
 using BucketOfThoughts.Core.Infrastructure.Extensions;
 using BucketOfThoughts.Core.Infrastructure.Interfaces;
 using BucketOfThoughts.Core.Infrastructure.Objects;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ValueGeneration;
 using Microsoft.Extensions.Caching.Distributed;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BucketOfThoughts.Core.Infrastructure.BaseClasses
 {

@@ -11,9 +11,13 @@ import WordsGrid from './components/word/WordsGrid';
 import Dashboard from './components/dashboard/Dashboard';
 import Settings from './components/settings/Settings.jsx';
 import ThoughtsCategoriesGrid from './components/settings/ThoughtCategoriesGrid.jsx';
+import AddOutdoorsActivity from './components/outdoors/AddOutdoorsActivity.jsx'
+// import { LocalizationProvider } from '@mui/x-date-pickers';
+// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
 const App = () => {
   return (
+    // <LocalizationProvider dateAdapter={AdapterDayjs}>
     <Router>
       <Layout className="layout">
         <Routes>
@@ -21,13 +25,15 @@ const App = () => {
         </Route>
         <Route exact path="/word" element={ <WordCard/> }>
         </Route>
+        <Route exact path="/words"  element={ <WordsGrid/>}>
+        </Route>
         <Route exact path="/thought"  element={ <Thought/>}>
         </Route>
         <Route exact path="/add-thought"  element={ <AddThought/>}>
         </Route>
         <Route exact path="/organize-thoughts"  element={ <ThoughtsGrid/>}>
         </Route>
-        <Route exact path="/words"  element={ <WordsGrid/>}>
+        <Route exact path="/add-outdoors-activity"  element={ <AddOutdoorsActivity/>}>
         </Route>
         <Route exact path="/settings"  element={ <Settings/>}>
         </Route>
@@ -36,6 +42,7 @@ const App = () => {
         </Routes>
         </Layout>
       </Router>
+      // </LocalizationProvider>
   );
 }
 

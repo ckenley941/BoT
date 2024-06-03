@@ -1,4 +1,3 @@
-import { idID } from "@mui/material/locale";
 import { apiUrl, client } from "../data/DataStore";
 
 export function getRandomThought() {
@@ -25,15 +24,15 @@ export function getRandomThought() {
     return client.get(`${apiUrl}/thoughts/related/${id}`);
   }
 
-  export function insertThought(newThought: NewThought) {
+  export function insertThought(newThought) {
     return client.post(`${apiUrl}/thoughts`, newThought);
   }
 
-  export function insertThoughtCategory(newThoughtCategory: NewThoughtCategory) {
+  export function insertThoughtCategory(newThoughtCategory) {
     return client.post(`${apiUrl}/thoughtcategory`, newThoughtCategory);
   }
 
-  export function updateThoughtCategory(newThoughtCategory: NewThoughtCategory, id: number) {
+  export function updateThoughtCategory(newThoughtCategory, id: number) {
     return client.put(`${apiUrl}/thoughtcategory/${id}`, newThoughtCategory);
   }
 

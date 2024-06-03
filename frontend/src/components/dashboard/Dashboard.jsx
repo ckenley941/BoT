@@ -5,6 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
+import Tooltip from "@mui/material/Tooltip";
 
 import RefreshIcon from "@mui/icons-material/Refresh";
 import IconButton from "@mui/material/IconButton";
@@ -96,8 +97,10 @@ export default function Dashboard() {
         <></>
       )}
       <Grid xs={4}>
-        <IconButton color="secondary" aria-label="Refresh" onClick={refresh}>
-          <RefreshIcon />
+        <IconButton color="secondary" aria-label="Refresh" onClick={refresh}>          
+          <Tooltip title="Refresh">
+            <RefreshIcon />
+          </Tooltip>
         </IconButton>
       </Grid>
       <Grid xs={12}>

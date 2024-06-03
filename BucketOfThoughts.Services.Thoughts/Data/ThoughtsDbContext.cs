@@ -1,5 +1,6 @@
 ﻿using BucketOfThoughts.Core.Infrastructure.BaseClasses;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BucketOfThoughts.Services.Thoughts.Data;
 
@@ -13,6 +14,7 @@ public partial class ThoughtsDbContext : BaseDbContext<ThoughtsDbContext>
         : base(options)
     {
     }
+    public virtual DbSet<OutdoorActivityLog> OutdoorActivityLogs { get; set; }
 
     public virtual DbSet<RelatedThought> RelatedThoughts { get; set; }
 
@@ -30,6 +32,19 @@ public partial class ThoughtsDbContext : BaseDbContext<ThoughtsDbContext>
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<OutdoorActivityLog>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+
+            entity.ToTable("OutdoorActivityLog");
+
+            entity.Property(e => e.ActivityName)
+               .HasMaxLength(100);
+
+            entity.Property(e => e.CreatedDateTime)
+                .HasDefaultValueSql("(getutcdate())");
+        });
+
         modelBuilder.Entity<RelatedThought>(entity =>
         {
             entity.HasKey(e => e.Id);
@@ -142,5 +157,26 @@ public partial class ThoughtsDbContext : BaseDbContext<ThoughtsDbContext>
         OnModelCreatingPartial(modelBuilder);
     }
 
+    protected override void ConfigureConventions(ModelConfigurationBuilder builder)
+    {
+        builder.Properties<DateOnly>()
+               .HaveConversion<DateOnlyConverter>()
+               .HaveColumnType("date");
+    }
+
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+}
+
+/// <summary>
+/// Converts <see cref="DateOnly" /> to <see cref="DateTime"/> and vice versa.
+/// </summary>
+public class DateOnlyConverter : ValueConverter<DateOnly, DateTime>
+{
+    /// <summary>
+    /// Creates a new instance of this converter.
+    /// </summary>
+    public DateOnlyConverter() : base(
+        d => d.ToDateTime(TimeOnly.MinValue),
+        d => DateOnly.FromDateTime(d))
+    { }
 }

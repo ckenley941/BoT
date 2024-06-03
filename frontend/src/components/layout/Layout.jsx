@@ -23,6 +23,7 @@ Language,
 Chalet,
 Settings
 } from "@mui/icons-material/";
+import HikingIcon from '@mui/icons-material/Hiking';
 
 export default function Layout({ children }) {
 let navigate = useNavigate();
@@ -58,10 +59,16 @@ const menuItems = [
     path: "/organize-thoughts",
   },
   {
+    text: "Add Outdoors Activity",
+    icon: < HikingIcon color = "secondary" / > ,
+    path: "/add-outdoors-activity",
+  },
+  {
     text: "All Words",
     icon: < Language color = "secondary" / > ,
     path: "/words",
   },
+
   {
     text: "Settings",
     icon: < Settings color = "secondary" / > ,
