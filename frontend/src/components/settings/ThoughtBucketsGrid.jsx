@@ -12,9 +12,9 @@ import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Close';
 
-import { getThoughtCategories, insertThoughtCategory, updateThoughtCategory, deleteThoughtCategory } from "../../services/ThoughtsService.ts";
+import { getThoughtBuckets, insertThoughtBucket, updateThoughtBucket, deleteThoughtBucket } from "../../services/ThoughtsService.ts";
 
-export default function ThoughtsCategoriesGrid() {
+export default function ThoughtBucketsGrid() {
     const [rows, setRows] = useState([]);
 
     const [rowModesModel, setRowModesModel] = React.useState({});
@@ -35,7 +35,7 @@ export default function ThoughtsCategoriesGrid() {
   
     const handleDeleteClick = (id) => () => {
       if (window.confirm("Are you sure you want to delete this row?")){
-        deleteThoughtCategory(id).then(() => {
+        deleteThoughtBucket(id).then(() => {
           setRows(rows.filter((row) => row.id !== id));
         });
    
@@ -59,12 +59,12 @@ export default function ThoughtsCategoriesGrid() {
       setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
 
       if (updatedRow.isNew){
-        insertThoughtCategory(updatedRow).then((response) => {
+        insertThoughtBucket(updatedRow).then((response) => {
           loadData();
         })
       }
       else{
-        updateThoughtCategory(updatedRow, newRow.id);        
+        updateThoughtBucket(updatedRow, newRow.id);        
         return updatedRow;
       }
     };
@@ -82,7 +82,7 @@ export default function ThoughtsCategoriesGrid() {
     
       const handleClick = () => {
         var id = 0;
-        setRows((oldRows) => [{ id, description: '', parentCategory: '', sortOrder: 1, isNew: true }, ...oldRows]);
+        setRows((oldRows) => [{ id, description: '', parentBucket: '', sortOrder: 1, isNew: true }, ...oldRows]);
         setRowModesModel((oldModel) => ({
           ...oldModel,
           [id]: { mode: GridRowModes.Edit, fieldToFocus: 'description' },
@@ -108,7 +108,7 @@ export default function ThoughtsCategoriesGrid() {
         },
         {
           field: 'parentId',
-          headerName: 'Parent Category',
+          headerName: 'Parent Bucket',
           width: 150,
           editable: true,
           type: "singleSelect",
@@ -192,7 +192,7 @@ export default function ThoughtsCategoriesGrid() {
       }, []);
     
       const loadData = async () => {
-        getThoughtCategories().then((response) => {
+        getThoughtBuckets().then((response) => {
           setRows(response.data);
         });
       };
@@ -201,7 +201,7 @@ export default function ThoughtsCategoriesGrid() {
       return (
       <Grid>
           <DataGrid
-           // getRowId={(row) => row.thoughtCategoryId}
+           // getRowId={(row) => row.thoughtBucketId}
             rows={rows}
             columns={columns}
             editMode="row"

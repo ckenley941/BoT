@@ -1,5 +1,5 @@
 ﻿using BucketOfThoughts.Api.Handlers.Outdoors;
-using BucketOfThoughts.Api.Handlers.ThoughtCategories;
+using BucketOfThoughts.Api.Handlers.ThoughtBuckets;
 using BucketOfThoughts.Api.Handlers.Thoughts;
 using BucketOfThoughts.Core.Infrastructure.Constants;
 using BucketOfThoughts.Core.Infrastructure.Enums;
@@ -21,8 +21,8 @@ namespace BucketOfThoughts.Api.Handlers.Extensions
                   b => b.MigrationsAssembly(typeof(ThoughtsDbContext).Assembly.FullName)),
                 ServiceLifetime.Scoped);
 
-            services.AddScoped<ThoughtCategoriesService>();
-            services.AddScoped<IThoughtCategoriesRepository, ThoughtCategoriesRepository>();
+            services.AddScoped<ThoughtBucketsService>();
+            services.AddScoped<IThoughtBucketsRepository, ThoughtBucketsRepository>();
             services.AddScoped<IThoughtsService, ThoughtsService>();
             //services.AddScoped<ICrudRepository<Thought>, ThoughtsRepository>();
             services.AddScoped<IThoughtsRepository, ThoughtsRepository>();
@@ -34,10 +34,10 @@ namespace BucketOfThoughts.Api.Handlers.Extensions
             services.AddScoped<GetThoughtsGridHandler>();
             services.AddScoped<InsertThoughtHandler>();
 
-            services.AddScoped<GetThoughtCategoriesHandler>();
-            services.AddScoped<InsertThoughtCategoryHandler>();
-            services.AddScoped<UpdateThoughtCategoryHandler>();
-            services.AddScoped<DeleteThoughtCategoryHandler>();
+            services.AddScoped<GetThoughtBucketsHandler>();
+            services.AddScoped<InsertThoughtBucketHandler>();
+            services.AddScoped<UpdateThoughtBucketHandler>();
+            services.AddScoped<DeleteThoughtBucketHandler>();
 
 
             services.AddScoped<GetOutdoorActivitiesHandler>();
@@ -87,24 +87,24 @@ namespace BucketOfThoughts.Api.Handlers.Extensions
                  : Results.NotFound()
              );
 
-            app.MapGet("/api/thoughtcategories",
-                async (GetThoughtCategoriesHandler handler) =>
+            app.MapGet("/api/thoughtbuckets",
+                async (GetThoughtBucketsHandler handler) =>
                    await handler.HandleAsync()
-                   is IEnumerable<ThoughtCategoryDto> thoughtCategories
-                   ? Results.Ok(thoughtCategories)
+                   is IEnumerable<ThoughtBucketDto> thoughtBuckets
+                   ? Results.Ok(thoughtBuckets)
                    : Results.NotFound()
                 );
 
-            app.MapPost("/api/thoughtcategory",
-               async (InsertThoughtCategoryHandler handler, ThoughtCategory newItem) =>
+            app.MapPost("/api/thoughtbucket",
+               async (InsertThoughtBucketHandler handler, ThoughtBucket newItem) =>
                {
-                   var thoughtCategory = await handler.HandleAsync(newItem);
-                   Results.Created($"/api/thoughtcategories/{thoughtCategory.Id}", thoughtCategory);
+                   var thoughtBucket = await handler.HandleAsync(newItem);
+                   Results.Created($"/api/thoughtbuckets/{thoughtBucket.Id}", thoughtBucket);
                }
                );
 
-            app.MapPut("/api/thoughtcategory/{id}",
-               async (UpdateThoughtCategoryHandler handler, ThoughtCategoryDto updateItem, int id) =>
+            app.MapPut("/api/thoughtbucket/{id}",
+               async (UpdateThoughtBucketHandler handler, ThoughtBucketDto updateItem, int id) =>
                {
                    if (id != updateItem.Id)
                    {
@@ -115,8 +115,8 @@ namespace BucketOfThoughts.Api.Handlers.Extensions
                }
                );
 
-            app.MapDelete("/api/thoughtcategory/{id}",
-               async (DeleteThoughtCategoryHandler handler, int id) =>
+            app.MapDelete("/api/thoughtbucket/{id}",
+               async (DeleteThoughtBucketHandler handler, int id) =>
                {
                    await handler.HandleAsync(id);
                    Results.Ok();

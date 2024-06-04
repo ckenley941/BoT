@@ -20,7 +20,7 @@ public partial class ThoughtsDbContext : BaseDbContext<ThoughtsDbContext>
 
     public virtual DbSet<Thought> Thoughts { get; set; }
 
-    public virtual DbSet<ThoughtCategory> ThoughtCategories { get; set; }
+    public virtual DbSet<ThoughtBucket> ThoughtBuckets { get; set; }
 
     public virtual DbSet<ThoughtDetail> ThoughtDetails { get; set; }
 
@@ -81,25 +81,29 @@ public partial class ThoughtsDbContext : BaseDbContext<ThoughtsDbContext>
                .HasDefaultValueSql("'PlainText'")
                .HasMaxLength(25);
 
-            entity.HasOne(d => d.ThoughtCategory).WithMany(p => p.Thoughts)
-                .HasForeignKey(d => d.ThoughtCategoryId)
+            entity.HasOne(d => d.ThoughtBucket).WithMany(p => p.Thoughts)
+                .HasForeignKey(d => d.ThoughtBucketId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Thought_ThoughtCategory");
+                .HasConstraintName("FK_Thought_ThoughtBucket");
         });
 
-        modelBuilder.Entity<ThoughtCategory>(entity =>
+        modelBuilder.Entity<ThoughtBucket>(entity =>
         {
             entity.HasKey(e => e.Id);
 
-            entity.ToTable("ThoughtCategory");
+            entity.ToTable("ThoughtBucket");
 
             entity.Property(e => e.CreatedDateTime)
                 .HasDefaultValueSql("(getutcdate())");
 
-            entity.HasOne(d => d.ThoughtModule).WithMany(p => p.ThoughtCategories)
+            entity.Property(e => e.ShowOnDashboard)
+               .HasDefaultValue(true);
+
+
+            entity.HasOne(d => d.ThoughtModule).WithMany(p => p.ThoughtBuckets)
                 .HasForeignKey(d => d.ThoughtModuleId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_ThoughtCategory_ThoughtModule");
+                .HasConstraintName("FK_ThoughtBucket_ThoughtModule");
         });
 
         modelBuilder.Entity<ThoughtDetail>(entity =>

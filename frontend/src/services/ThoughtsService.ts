@@ -8,8 +8,8 @@ export function getRandomThought() {
     return client.get(`${apiUrl}/dashboards/selected?dashboardType=${dashboardType}`);
   }
 
-  export function getThoughtCategories() {
-    return client.get(`${apiUrl}/thoughtcategories`);
+  export function getThoughtBuckets() {
+    return client.get(`${apiUrl}/thoughtbuckets`);
   }
 
   export function getThoughtsGrid() {
@@ -28,14 +28,14 @@ export function getRandomThought() {
     return client.post(`${apiUrl}/thoughts`, newThought);
   }
 
-  export function insertThoughtCategory(newThoughtCategory) {
-    return client.post(`${apiUrl}/thoughtcategory`, newThoughtCategory);
+  export function insertThoughtBucket(newThoughtBucket) {
+    return client.post(`${apiUrl}/thoughtbucket`, newThoughtBucket);
   }
 
-  export function updateThoughtCategory(newThoughtCategory, id: number) {
-    return client.put(`${apiUrl}/thoughtcategory/${id}`, newThoughtCategory);
+  export function updateThoughtBucket(newThoughtBucket, id: number) {
+    return client.put(`${apiUrl}/thoughtbucket/${id}`, newThoughtBucket);
   }
 
-  export function deleteThoughtCategory( id: number) {
-    return client.delete(`${apiUrl}/thoughtcategory/${id}`);
+  export function deleteThoughtBucket( id: number) {
+    return client.delete(`${apiUrl}/thoughtbucket/${id}`);
   }

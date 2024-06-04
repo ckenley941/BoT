@@ -2,7 +2,7 @@
 
 namespace BucketOfThoughts.Services.Thoughts.Data;
 
-public partial class ThoughtCategory : BaseModifiableDbTable
+public partial class ThoughtBucket : BaseModifiableDbTable
 {
     public int ThoughtModuleId { get; set; }
     public virtual ThoughtModule ThoughtModule { get; set; } = null!;
@@ -11,5 +11,6 @@ public partial class ThoughtCategory : BaseModifiableDbTable
     public int? ParentId { get; set; }
 
     public int? SortOrder { get; set; }
+    public bool ShowOnDashboard { get; set; } = true;
     public virtual ICollection<Thought> Thoughts { get; set; } = new List<Thought>();
 }

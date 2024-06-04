@@ -10,7 +10,7 @@ import ThoughtsGrid from './components/thought/ThoughtsGrid';
 import WordsGrid from './components/word/WordsGrid';
 import Dashboard from './components/dashboard/Dashboard';
 import Settings from './components/settings/Settings.jsx';
-import ThoughtsCategoriesGrid from './components/settings/ThoughtCategoriesGrid.jsx';
+import ThoughtBucketsGrid from './components/settings/ThoughtBucketsGrid.jsx';
 import AddOutdoorsActivity from './components/outdoors/AddOutdoorsActivity.jsx'
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
@@ -37,7 +37,7 @@ const App = () => {
         </Route>
         <Route exact path="/settings"  element={ <Settings/>}>
         </Route>
-        <Route exact path="/settings/thought-categories"  element={ <ThoughtsCategoriesGrid/>}>
+        <Route exact path="/settings/thought-buckets"  element={ <ThoughtBucketsGrid/>}>
         </Route>
         </Routes>
         </Layout>

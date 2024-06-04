@@ -2,7 +2,7 @@
 
 namespace BucketOfThoughts.Services.Thoughts.Objects
 {
-    public class ThoughtCategoryDto : BaseDto
+    public class ThoughtBucketDto : BaseDto
     {
         public string Description { get; set; } = string.Empty;
         public int? ParentId { get; set; }

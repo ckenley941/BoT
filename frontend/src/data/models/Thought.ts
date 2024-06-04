@@ -1,6 +1,6 @@
 interface Thought {
     id: number,
     description: string,
-    thoughtCategory: ThoughtCategory,
+    thoughtBucket: ThoughtBucket,
     details: ThoughtDetail []
 }

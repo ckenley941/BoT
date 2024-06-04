@@ -1,6 +1,6 @@
 interface NewThought {
     description: string,
-    thoughtCategoryId: number,
+    thoughtBucketId: number,
     thoughtSource: string,
     details: string []
 }

@@ -4,6 +4,7 @@ using BucketOfThoughts.Services.Thoughts.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BucketOfThoughts.Services.Thoughts.Migrations
 {
     [DbContext(typeof(ThoughtsDbContext))]
-    partial class ThoughtsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240604211239_AddTable_ThoughtBucket")]
+    partial class AddTable_ThoughtBucket
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -129,6 +132,9 @@ namespace BucketOfThoughts.Services.Thoughts.Migrations
                     b.Property<int>("ThoughtBucketId")
                         .HasColumnType("int");
 
+                    b.Property<int>("ThoughtCategoryId")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("ThoughtGuid")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
@@ -137,6 +143,8 @@ namespace BucketOfThoughts.Services.Thoughts.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ThoughtBucketId");
+
+                    b.HasIndex("ThoughtCategoryId");
 
                     b.ToTable("Thought", (string)null);
                 });
@@ -183,6 +191,45 @@ namespace BucketOfThoughts.Services.Thoughts.Migrations
                     b.HasIndex("ThoughtModuleId");
 
                     b.ToTable("ThoughtBucket", (string)null);
+                });
+
+            modelBuilder.Entity("BucketOfThoughts.Services.Thoughts.Data.ThoughtCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnOrder(1);
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTimeOffset>("CreatedDateTime")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetimeoffset")
+                        .HasColumnOrder(2)
+                        .HasDefaultValueSql("(getutcdate())");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("ModifiedDateTime")
+                        .HasColumnType("datetimeoffset")
+                        .HasColumnOrder(3);
+
+                    b.Property<int?>("ParentId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SortOrder")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ThoughtModuleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ThoughtModuleId");
+
+                    b.ToTable("ThoughtCategory", (string)null);
                 });
 
             modelBuilder.Entity("BucketOfThoughts.Services.Thoughts.Data.ThoughtDetail", b =>
@@ -321,7 +368,15 @@ namespace BucketOfThoughts.Services.Thoughts.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_Thought_ThoughtBucket");
 
+                    b.HasOne("BucketOfThoughts.Services.Thoughts.Data.ThoughtCategory", "ThoughtCategory")
+                        .WithMany("Thoughts")
+                        .HasForeignKey("ThoughtCategoryId")
+                        .IsRequired()
+                        .HasConstraintName("FK_Thought_ThoughtCategory");
+
                     b.Navigation("ThoughtBucket");
+
+                    b.Navigation("ThoughtCategory");
                 });
 
             modelBuilder.Entity("BucketOfThoughts.Services.Thoughts.Data.ThoughtBucket", b =>
@@ -331,6 +386,17 @@ namespace BucketOfThoughts.Services.Thoughts.Migrations
                         .HasForeignKey("ThoughtModuleId")
                         .IsRequired()
                         .HasConstraintName("FK_ThoughtBucket_ThoughtModule");
+
+                    b.Navigation("ThoughtModule");
+                });
+
+            modelBuilder.Entity("BucketOfThoughts.Services.Thoughts.Data.ThoughtCategory", b =>
+                {
+                    b.HasOne("BucketOfThoughts.Services.Thoughts.Data.ThoughtModule", "ThoughtModule")
+                        .WithMany("ThoughtCategories")
+                        .HasForeignKey("ThoughtModuleId")
+                        .IsRequired()
+                        .HasConstraintName("FK_ThoughtCategory_ThoughtModule");
 
                     b.Navigation("ThoughtModule");
                 });
@@ -381,9 +447,16 @@ namespace BucketOfThoughts.Services.Thoughts.Migrations
                     b.Navigation("Thoughts");
                 });
 
+            modelBuilder.Entity("BucketOfThoughts.Services.Thoughts.Data.ThoughtCategory", b =>
+                {
+                    b.Navigation("Thoughts");
+                });
+
             modelBuilder.Entity("BucketOfThoughts.Services.Thoughts.Data.ThoughtModule", b =>
                 {
                     b.Navigation("ThoughtBuckets");
+
+                    b.Navigation("ThoughtCategories");
                 });
 
             modelBuilder.Entity("BucketOfThoughts.Services.Thoughts.Data.WebsiteLink", b =>

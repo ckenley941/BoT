@@ -13,28 +13,28 @@ import IconButton from "@mui/material/IconButton";
 import SelectedDashboard from "./SelectedDashboard.jsx";
 
 import { getSelectedDashboard } from "../../services/ThoughtsService.ts";
-import { getThoughtCategories } from "../../services/ThoughtsService.ts";
+import { getThoughtBuckets } from "../../services/ThoughtsService.ts";
 
 export default function Dashboard() {
   const [currentlySelectedDashboard, setCurrentlySelectedDashboard] =
     useState("RandomThought");
   const [data, setData] = useState(null);
-  const [showCategories, setShowCategories] = useState(true); //setting to true for now while defaulting to RandomThought
-  const [thoughtCategories, setThoughtCategories] = useState([]);
+  const [showBuckets, setShowBuckets] = useState(true); //setting to true for now while defaulting to RandomThought
+  const [thoughtBuckets, setThoughtBuckets] = useState([]);
 
   useEffect(() => {
-    loadCategories();
+    loadBuckets();
   }, []);
 
-  const loadCategories = async () => {
-    getThoughtCategories().then((response) => {
-      setThoughtCategories(response.data);
+  const loadBuckets = async () => {
+    getThoughtBuckets().then((response) => {
+      setThoughtBuckets(response.data);
     });
   };
 
   const handleInputChange = (e) => {
     setData(null);
-    setShowCategories(e.target.value === "RandomThought");
+    setShowBuckets(e.target.value === "RandomThought");
     setCurrentlySelectedDashboard(e.target.value);
   };
 
@@ -67,17 +67,17 @@ export default function Dashboard() {
           </Select>
         </FormControl>
       </Grid>
-      {showCategories ? (
+      {showBuckets ? (
         <Grid xs={4}>
           <FormControl fullWidth>
-            <InputLabel id="dashboard-category-select-label">
-              Category
+            <InputLabel id="dashboard-bucket-select-label">
+              Bucket
             </InputLabel>
             <Select
-              labelId="dashboard-category-select-label"
-              id="dashboard-category-select"
-              name="category"
-              label="Category"
+              labelId="dashboard-bucket-select-label"
+              id="dashboard-bucket-select"
+              name="bucket"
+              label="Bucket"
               maxWidth
               value={currentlySelectedDashboard}
               onChange={handleInputChange}
@@ -85,7 +85,7 @@ export default function Dashboard() {
               <MenuItem value="0">
                 <em>None</em>
               </MenuItem>
-              {thoughtCategories.map((tc, i) => (
+              {thoughtBuckets.map((tc, i) => (
                 <MenuItem key={i} value={tc.id}>
                   {tc.description}
                 </MenuItem>

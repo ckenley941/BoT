@@ -62,7 +62,7 @@ export default function AddOutdoorsActivity() {
       //   alert("Thought added");
       //   setThought({
       //     description: "",
-      //     thoughtCategoryId: 0,
+      //     thoughtBucketId: 0,
       //     details: [],
       //     websiteLinks: [],
       //   });
@@ -72,20 +72,6 @@ export default function AddOutdoorsActivity() {
 
   const isValid = () => {
     var msg = "";
-
-    //   if (thought.description.length <= 0) {
-    //     msg += "Description required. ";
-    //   }
-
-    //   if (thought.thoughtCategoryId <= 0) {
-    //     msg += "Category required. ";
-    //   }
-
-    //   if (msg.length > 0) {
-    //     alert(msg);
-    //     return false;
-    //   }
-
     return true;
   };
 

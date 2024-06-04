@@ -3,15 +3,15 @@ using BucketOfThoughts.Services.Thoughts.Data;
 
 namespace BucketOfThoughts.Api.Handlers.Thoughts
 {
-    public class InsertThoughtCategoryHandler 
+    public class InsertThoughtBucketHandler 
     {
-        protected readonly ThoughtCategoriesService _service;
-        public InsertThoughtCategoryHandler(ThoughtCategoriesService service)
+        protected readonly ThoughtBucketsService _service;
+        public InsertThoughtBucketHandler(ThoughtBucketsService service)
         {
             _service = service;
         }
 
-        public async Task<ThoughtCategory> HandleAsync(ThoughtCategory newItem)
+        public async Task<ThoughtBucket> HandleAsync(ThoughtBucket newItem)
         {
             return await _service.InsertAsync(newItem);
         }

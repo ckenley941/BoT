@@ -5,6 +5,6 @@
         public const string Key = "cached";
 
         public const string DefaultModuleId = $"{Key}DefaultModuleId";
-        public const string ThoughtCategories = $"{Key}ThoughtCategories";
+        public const string ThoughtBuckets = $"{Key}ThoughtBuckets";
     }
 }

@@ -65,7 +65,7 @@ namespace BucketOfThoughts.Services.Thoughts
         {
             var queryParams = new GetQueryParams<Thought>()
             {
-                IncludeProperties = "ThoughtCategory,ThoughtDetails,RelatedThoughtThoughtId1Navigations,RelatedThoughtThoughtId2Navigations",
+                IncludeProperties = "ThoughtBucket,ThoughtDetails,RelatedThoughtThoughtId1Navigations,RelatedThoughtThoughtId2Navigations",
                 Filter = (t) => (t.Id == thoughtId)
             };
 
@@ -78,7 +78,7 @@ namespace BucketOfThoughts.Services.Thoughts
             var thought = new Thought()
             {
                 Description = newItem.Description,
-                ThoughtCategoryId = newItem.ThoughtCategoryId,
+                ThoughtBucketId = newItem.ThoughtBucketId,
                 TextType = newItem.TextType
             };
 
@@ -146,7 +146,7 @@ namespace BucketOfThoughts.Services.Thoughts
         {
             var queryParams = new GetQueryParams<Thought>()
             {
-                IncludeProperties = "ThoughtCategory,ThoughtDetails"
+                IncludeProperties = "ThoughtBucket,ThoughtDetails"
             };
             return (await base.GetFromCacheAsync("Thoughts", queryParams)).ToList();
         }        

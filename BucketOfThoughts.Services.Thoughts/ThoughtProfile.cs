@@ -10,15 +10,15 @@ namespace BucketOfThoughts.Services.Thoughts
         {
             CreateMap<Thought, ThoughtDto>()
                 .ForMember(dest => dest.ThoughtDateTime, opt => opt.MapFrom(src => src.CreatedDateTime))
-                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.ThoughtCategory))
+                .ForMember(dest => dest.Bucket, opt => opt.MapFrom(src => src.ThoughtBucket))
                 .ForMember(dest => dest.Details, opt => opt.MapFrom(src => src.ThoughtDetails))
                 .ReverseMap();
 
             CreateMap<Thought, ThoughtGridDto>()
-                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.ThoughtCategory.Description))
+                .ForMember(dest => dest.Bucket, opt => opt.MapFrom(src => src.ThoughtBucket.Description))
                 .ForMember(dest => dest.Details, opt => opt.MapFrom(src => string.Join(", ", src.ThoughtDetails.Select(y => y.Description).ToList())));
 
-            CreateMap<ThoughtCategory, ThoughtCategoryDto>().ReverseMap();
+            CreateMap<ThoughtBucket, ThoughtBucketDto>().ReverseMap();
             CreateMap<ThoughtDetail, ThoughtDetailDto>().ReverseMap();
         }
     }

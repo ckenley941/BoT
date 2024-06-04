@@ -18,7 +18,7 @@ export default function Thought(props) {
     const [thought, setThought] = useState({
         description: "",
         thoughtDateString: "",
-        category: {
+        bucket: {
           id: 0,
           description: ""
         },
@@ -68,7 +68,7 @@ export default function Thought(props) {
           <FormLabel>{thought.thoughtDateString }</FormLabel>  
           </Grid>
           <Grid md={9} xs={12}>
-              <FormLabel>{thought.category.description}</FormLabel>  
+              <FormLabel>{thought.bucket.description}</FormLabel>  
           </Grid>
           <Grid xs={12}>
 

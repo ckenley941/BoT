@@ -1,4 +1,4 @@
-interface ThoughtCategory {
+interface ThoughtBucket {
     id: number,
     description: string
 }

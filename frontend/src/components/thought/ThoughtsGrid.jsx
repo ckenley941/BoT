@@ -31,8 +31,8 @@ export default function ThoughtsGrid({data}) {
           editable: false,
         },
         {
-          field: 'category',
-          headerName: 'Category',
+          field: 'bucket',
+          headerName: 'Bucket',
           width: 150,
           editable: false,
         },

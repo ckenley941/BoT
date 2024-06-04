@@ -1,38 +1,36 @@
-﻿using BucketOfThoughts.Core.Infrastructure.Interfaces;
-using BucketOfThoughts.Services.Thoughts.Data;
-using Microsoft.Extensions.Caching.Distributed;
-using BucketOfThoughts.Services.Thoughts.Objects;
-using BucketOfThoughts.Core.Infrastructure.Extensions;
+﻿using AutoMapper;
 using BucketOfThoughts.Core.Infrastructure.BaseClasses;
 using BucketOfThoughts.Core.Infrastructure.Constants;
-using Azure;
-using AutoMapper;
+using BucketOfThoughts.Core.Infrastructure.Extensions;
+using BucketOfThoughts.Services.Thoughts.Data;
+using BucketOfThoughts.Services.Thoughts.Objects;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace BucketOfThoughts.Services.Thoughts
 {
-    public class ThoughtCategoriesService : BaseService<ThoughtCategory, ThoughtCategoryDto>
+    public class ThoughtBucketsService : BaseService<ThoughtBucket, ThoughtBucketDto>
     {
         private readonly ThoughtsDbContext _dbContext;
-        public ThoughtCategoriesService(IThoughtCategoriesRepository repository, IDistributedCache cache, ThoughtsDbContext dbContext, IMapper mapper) : base (repository, cache, mapper)
+        public ThoughtBucketsService(IThoughtBucketsRepository repository, IDistributedCache cache, ThoughtsDbContext dbContext, IMapper mapper) : base (repository, cache, mapper)
         {
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<ThoughtCategoryDto>> GetAsync()
+        public async Task<IEnumerable<ThoughtBucketDto>> GetAsync()
         {
-            var thoughtCategories = (await base.GetFromCacheAsync(CacheKeys.ThoughtCategories));
-            var dictThoughtCategories = thoughtCategories.ToDictionary(x => x.Id, x => x.Description);
+            var thoughtBuckets = (await base.GetFromCacheAsync(CacheKeys.ThoughtBuckets));
+            var dictThoughtBuckets = thoughtBuckets.ToDictionary(x => x.Id, x => x.Description);
 
-            var categories = new List<ThoughtCategoryDto>();
-            thoughtCategories.ToList().ForEach(x =>
+            var categories = new List<ThoughtBucketDto>();
+            thoughtBuckets.ToList().ForEach(x =>
             {
-                dictThoughtCategories.TryGetValue(x.ParentId ?? 0, out string? categoryDescription);
-                categories.Add(new ThoughtCategoryDto()
+                dictThoughtBuckets.TryGetValue(x.ParentId ?? 0, out string? bucketDescription);
+                categories.Add(new ThoughtBucketDto()
                 {
                     Id = x.Id,
                     Description = x.Description,
                     SortOrder = x.SortOrder,
-                    //ParentCategory = categoryDescription,
+                    //ParentBucket = bucketDescription,
                     ParentId = x.ParentId,
                     ThoughtModuleId = x.ThoughtModuleId
                 });
@@ -41,13 +39,13 @@ namespace BucketOfThoughts.Services.Thoughts
             return categories;
         }
 
-        public override async Task<ThoughtCategory> InsertAsync(ThoughtCategory newItem)
+        public override async Task<ThoughtBucket> InsertAsync(ThoughtBucket newItem)
         {
             //Set default ThoughtModuleId if not supplied by user
             newItem.ThoughtModuleId = newItem.ThoughtModuleId == 0 ? await GetDefaultModuleId() : newItem.ThoughtModuleId;
 
             await base.InsertAsync(newItem);
-            await _cache.RemoveAsync(CacheKeys.ThoughtCategories);
+            await _cache.RemoveAsync(CacheKeys.ThoughtBuckets);
 
             return newItem;
         }

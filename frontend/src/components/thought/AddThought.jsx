@@ -19,31 +19,30 @@ import TextField from "@mui/material/TextField";
 import DetailRow from "../controls/DetailRow";
 
 import {
-  getThoughtCategories,
+  getThoughtBuckets,
   insertThought,
-  insertThoughtCategory,
 } from "../../services/ThoughtsService.ts";
 
 export default function AddThought() {
   const [thought, setThought] = useState({
     description: "",
-    thoughtCategoryId: 1,
+    thoughtBucketId: 1,
     details: new Array(""),
     jsonDetails: { keys: new Array(""), values: [{ Column1: ""}]},
     websiteLinks: new Array(""),
     textType: "PlainText"
   });
-  const [thoughtCategories, setThoughtCategories] = useState([]);  
+  const [thoughtBuckets, setThoughtBuckets] = useState([]);  
   const [tabValue, setTabValue] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    loadCategories();
+    loadBuckets();
   }, []);
 
-  const loadCategories = async () => {
-    getThoughtCategories().then((response) => {
-      setThoughtCategories(response.data);
+  const loadBuckets = async () => {
+    getThoughtBuckets().then((response) => {
+      setThoughtBuckets(response.data);
       setIsLoading(false);
     });
   };
@@ -98,7 +97,7 @@ export default function AddThought() {
         alert("Thought added");
         setThought({
           description: "",
-          thoughtCategoryId: 0,
+          thoughtBucketId: 0,
           details: [],
           websiteLinks: [],
         });
@@ -133,7 +132,6 @@ export default function AddThought() {
 
   const addColumn = () => {
     thought.jsonDetails.keys.push("");
-    console.log(thought.jsonDetails.values);
     thought.jsonDetails.values.forEach(v => {
       v[`Column${thought.jsonDetails.keys.length}`] = "";
     });
@@ -171,12 +169,12 @@ export default function AddThought() {
     setThought(newState);
   };
 
-  const addThoughtCategory = (description) => {
-    var thoughtCategory = {
-      description: description,
-    };
-    insertThoughtCategory(thoughtCategory).then(loadCategories);
-  };
+  // const addThoughtBucket = (description) => {
+  //   var thoughtBucket = {
+  //     description: description,
+  //   };
+  //   insertThoughtBuckety(thoughtBucket).then(loadBuckets);
+  // };
 
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
@@ -186,19 +184,19 @@ export default function AddThought() {
     <Grid container spacing={2} className="m-2">
        <Grid xs={4}>
           <FormControl fullWidth>
-            <InputLabel id="thought-category-select-label">
-              Category
+            <InputLabel id="thought-bucket-select-label">
+              Bucket
             </InputLabel>
             <Select
-              labelId="thought-category-select-label"
-              id="thought-category-select"
-              name="thoughtCategoryId"
-              label="Category"
+              labelId="thought-bucket-select-label"
+              id="thought-bucket-select"
+              name="thoughtBucketId"
+              label="Bucket"
               maxWidth
-              value={thought.thoughtCategoryId}
+              value={thought.thoughtBucketId}
               onChange={handleInputChange}
             >
-              {thoughtCategories.map((tc, i) => (
+              {thoughtBuckets.map((tc, i) => (
                 <MenuItem key={i} value={tc.id}>
                   {tc.description}
                 </MenuItem>
@@ -217,7 +215,7 @@ export default function AddThought() {
           />
         </Grid>
         <Grid xs={12}>
-          {/* <AddItemToDropdownDialog isOpen={false} title="Category" saveCallback={addThoughtCategory}></AddItemToDropdownDialog> */}
+          {/* <AddItemToDropdownDialog isOpen={false} title="Bucket" saveCallback={addThoughtBucket}></AddItemToDropdownDialog> */}
           <Tabs
             value={tabValue}
             onChange={handleTabChange}

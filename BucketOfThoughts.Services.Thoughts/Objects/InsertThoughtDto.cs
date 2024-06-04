@@ -5,7 +5,7 @@ namespace BucketOfThoughts.Services.Thoughts.Objects
     public class InsertThoughtDto
     {
         public string Description { get; set; } = string.Empty;
-        public int ThoughtCategoryId { get; set; } = 0;
+        public int ThoughtBucketId { get; set; } = 0;
         public string ThoughtSource { get; set; } = string.Empty;
         public string TextType { get; set; } = TextTypes.PlainText.ToString();
         public List<string> Details { get; set; } = new List<string>();

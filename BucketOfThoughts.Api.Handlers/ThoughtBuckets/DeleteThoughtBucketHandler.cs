@@ -1,11 +1,11 @@
 ﻿using BucketOfThoughts.Services.Thoughts;
 
-namespace BucketOfThoughts.Api.Handlers.ThoughtCategories
+namespace BucketOfThoughts.Api.Handlers.ThoughtBuckets
 {
-    public class DeleteThoughtCategoryHandler
+    public class DeleteThoughtBucketHandler
     {
-        protected readonly ThoughtCategoriesService _service;
-        public DeleteThoughtCategoryHandler(ThoughtCategoriesService service)
+        protected readonly ThoughtBucketsService _service;
+        public DeleteThoughtBucketHandler(ThoughtBucketsService service)
         {
             _service = service;
         }
