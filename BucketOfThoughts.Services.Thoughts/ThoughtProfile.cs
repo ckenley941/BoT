@@ -20,6 +20,21 @@ namespace BucketOfThoughts.Services.Thoughts
 
             CreateMap<ThoughtBucket, ThoughtBucketDto>().ReverseMap();
             CreateMap<ThoughtDetail, ThoughtDetailDto>().ReverseMap();
+
+            CreateMap<OutdoorActivityLogDto, OutdoorActivityLog>()
+                .ForMember(dest => dest.ActivityTime, opt => opt.MapFrom(src => new TimeSpan(src.ActivityTimeHours ?? 0, src.ActivityTimeMinutes ?? 0, 0) { }));
+
+            CreateMap<OutdoorActivityLog, OutdoorActivityLogDto>()
+                .ForMember(dest => dest.ActivityTimeHours, opt => 
+                {
+                    opt.PreCondition(src => (src.ActivityTime.HasValue));
+                    opt.MapFrom(src => src.ActivityTime.Value.Hours);
+                })
+                .ForMember(dest => dest.ActivityTimeMinutes, opt =>
+                {
+                    opt.PreCondition(src => (src.ActivityTime.HasValue));
+                    opt.MapFrom(src => src.ActivityTime.Value.Minutes);
+                });
         }
     }
 }

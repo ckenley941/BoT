@@ -21,10 +21,16 @@ export default function Dashboard() {
   const [data, setData] = useState(null);
   const [showBuckets, setShowBuckets] = useState(true); //setting to true for now while defaulting to RandomThought
   const [thoughtBuckets, setThoughtBuckets] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     loadBuckets();
   }, []);
+
+  useEffect(() => {
+    loadData();
+  }, [currentlySelectedDashboard]);
+
 
   const loadBuckets = async () => {
     getThoughtBuckets().then((response) => {
@@ -33,14 +39,16 @@ export default function Dashboard() {
   };
 
   const handleInputChange = (e) => {
-    setData(null);
+    //setData(null);
     setShowBuckets(e.target.value === "RandomThought");
     setCurrentlySelectedDashboard(e.target.value);
   };
 
-  const refresh = () => {
+  const loadData = () => {
+    setIsLoading(true);
     getSelectedDashboard(currentlySelectedDashboard).then((response) => {
       setData(response.data.data[0]);
+      setIsLoading(false);
     });
   };
 
@@ -63,6 +71,9 @@ export default function Dashboard() {
             </MenuItem>
             <MenuItem key={"RandomWord"} value={"RandomWord"}>
               Random Word
+            </MenuItem>
+            <MenuItem key={"RandomOutdoorActivity"} value={"RandomOutdoorActivity"}>
+              Random Outdoor Activity
             </MenuItem>
           </Select>
         </FormControl>
@@ -97,18 +108,19 @@ export default function Dashboard() {
         <></>
       )}
       <Grid xs={4}>
-        <IconButton color="secondary" aria-label="Refresh" onClick={refresh}>          
+        <IconButton color="secondary" aria-label="Refresh" onClick={loadData}>          
           <Tooltip title="Refresh">
             <RefreshIcon />
           </Tooltip>
         </IconButton>
       </Grid>
+      {!isLoading && (
       <Grid xs={12}>
         <SelectedDashboard
           selected={currentlySelectedDashboard}
           data={data}
         ></SelectedDashboard>
-      </Grid>
+      </Grid>)}
     </Grid>
   );
 }

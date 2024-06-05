@@ -59,12 +59,12 @@ const menuItems = [
     path: "/organize-thoughts",
   },
   {
-    text: "Add Outdoors Activity",
+    text: "Outdoor Life",
     icon: < HikingIcon color = "secondary" / > ,
-    path: "/add-outdoors-activity",
+    path: "/outdoor-activity-logs",
   },
   {
-    text: "All Words",
+    text: "Spanish Words",
     icon: < Language color = "secondary" / > ,
     path: "/words",
   },

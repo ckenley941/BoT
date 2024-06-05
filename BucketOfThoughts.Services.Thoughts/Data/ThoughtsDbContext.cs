@@ -39,6 +39,9 @@ public partial class ThoughtsDbContext : BaseDbContext<ThoughtsDbContext>
             entity.ToTable("OutdoorActivityLog");
 
             entity.Property(e => e.ActivityName)
+               .HasMaxLength(250);
+
+            entity.Property(e => e.ActivityType)
                .HasMaxLength(100);
 
             entity.Property(e => e.CreatedDateTime)

@@ -26,7 +26,9 @@ namespace BucketOfThoughts.Api.Handlers.Extensions
             services.AddScoped<IThoughtsService, ThoughtsService>();
             //services.AddScoped<ICrudRepository<Thought>, ThoughtsRepository>();
             services.AddScoped<IThoughtsRepository, ThoughtsRepository>();
-            
+            services.AddScoped<IOutdoorActivityLogRepository, OutdoorActivityLogRepository>();
+            services.AddScoped<OutdoorActivityLogService>();
+
 
             services.AddScoped<GetWebsiteLinksHandler>();
             services.AddScoped<GetRelatedThoughtsHandler>();
@@ -39,8 +41,9 @@ namespace BucketOfThoughts.Api.Handlers.Extensions
             services.AddScoped<UpdateThoughtBucketHandler>();
             services.AddScoped<DeleteThoughtBucketHandler>();
 
-
-            services.AddScoped<GetOutdoorActivitiesHandler>();
+            services.AddScoped<GetOutdoorActivityTypesHandler>();
+            services.AddScoped<GetOutdoorActivityLogsHandler>();
+            services.AddScoped<InsertOutdoorActivityLogHandler>();
 
             return services;
         }
@@ -50,24 +53,24 @@ namespace BucketOfThoughts.Api.Handlers.Extensions
             app.MapGet("/api/thoughts/random",
               async (GetWebsiteLinksHandler handler) =>
                   await handler.HandleAsync()
-                  is ThoughtDto randomThought
-                  ? Results.Ok(randomThought)
+                  is ThoughtDto item
+                  ? Results.Ok(item)
                   : Results.NotFound()
               );
 
             app.MapGet("/api/thoughts/grid",
              async (GetThoughtsGridHandler handler) =>
                  await handler.HandleAsync()
-                 is IEnumerable<ThoughtGridDto> thoughts
-                 ? Results.Ok(thoughts)
+                 is IEnumerable<ThoughtGridDto> data
+                 ? Results.Ok(data)
                  : Results.NotFound()
              );
 
             app.MapGet("/api/thoughts/{id}",
              async (GetThoughtByIdHandler handler, int id) =>
                  await handler.HandleAsync(id)
-                  is ThoughtDto thought
-                 ? Results.Ok(thought)
+                  is ThoughtDto item
+                 ? Results.Ok(item)
                  : Results.NotFound()
              );
 
@@ -82,21 +85,21 @@ namespace BucketOfThoughts.Api.Handlers.Extensions
             app.MapGet("/api/thoughts/related/{id}",
              async (GetRelatedThoughtsHandler handler, int id) =>
                 await handler.HandleAsync(id)
-                 is IEnumerable<ThoughtGridDto> thoughts
-                 ? Results.Ok(thoughts)
+                 is IEnumerable<ThoughtGridDto> data
+                 ? Results.Ok(data)
                  : Results.NotFound()
              );
 
             app.MapGet("/api/thoughtbuckets",
                 async (GetThoughtBucketsHandler handler) =>
                    await handler.HandleAsync()
-                   is IEnumerable<ThoughtBucketDto> thoughtBuckets
-                   ? Results.Ok(thoughtBuckets)
+                   is IEnumerable<ThoughtBucketDto> data
+                   ? Results.Ok(data)
                    : Results.NotFound()
                 );
 
             app.MapPost("/api/thoughtbucket",
-               async (InsertThoughtBucketHandler handler, ThoughtBucket newItem) =>
+               async (InsertThoughtBucketHandler handler, ThoughtBucketDto newItem) =>
                {
                    var thoughtBucket = await handler.HandleAsync(newItem);
                    Results.Created($"/api/thoughtbuckets/{thoughtBucket.Id}", thoughtBucket);
@@ -123,13 +126,29 @@ namespace BucketOfThoughts.Api.Handlers.Extensions
                }
                );
 
-            app.MapGet("/api/outdoorsactivities",
-                (GetOutdoorActivitiesHandler handler) =>
+            app.MapGet("/api/outdooractivitytypes",
+                (GetOutdoorActivityTypesHandler handler) =>
                  handler.Handle()
-                 is IEnumerable<string> outdoorActivities
-                 ? Results.Ok(outdoorActivities)
+                 is IEnumerable<string> data
+                 ? Results.Ok(data)
                  : Results.NotFound()
               );
+
+            app.MapGet("/api/outdooractivitylogs",
+              async (GetOutdoorActivityLogsHandler handler) =>
+                await handler.HandleAsync()
+                 is IEnumerable<OutdoorActivityLogDto> data
+                 ? Results.Ok(data)
+                 : Results.NotFound()
+             );
+
+            app.MapPost("/api/outdooractivitylog",
+              async (InsertOutdoorActivityLogHandler handler, OutdoorActivityLogDto newItem) =>
+              {
+                  var outdoorActivityLog = await handler.HandleAsync(newItem);
+                  Results.Created($"/api/outdooractivitylog/{outdoorActivityLog.Id}", outdoorActivityLog);
+              }
+            );
 
             return app;
         }

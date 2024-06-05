@@ -23,6 +23,9 @@ namespace BucketOfThoughts.Service.Dashboards
                 case "RandomWord":
                     dashboardResults.Data = (await _serviceContainer.WordsService.GetRandomWordAsync()).AsEnumerable();
                     break;
+                case "RandomOutdoorActivity":
+                    dashboardResults.Data = (await _serviceContainer.OutdoorActivityLogService.GetRandomOutdoorActivityAsync()).AsEnumerable();
+                    break;
                 case "AllThoughts":
                     dashboardResults.Data = await _serviceContainer.ThoughtsService.GetGridAsync();
                     break;

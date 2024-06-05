@@ -39,15 +39,15 @@ namespace BucketOfThoughts.Services.Thoughts
             return categories;
         }
 
-        public override async Task<ThoughtBucket> InsertAsync(ThoughtBucket newItem)
+        public override async Task<ThoughtBucket> InsertAsync(ThoughtBucketDto newItem)
         {
             //Set default ThoughtModuleId if not supplied by user
             newItem.ThoughtModuleId = newItem.ThoughtModuleId == 0 ? await GetDefaultModuleId() : newItem.ThoughtModuleId;
 
-            await base.InsertAsync(newItem);
+            var itemToAdd = await base.InsertAsync(newItem);
             await _cache.RemoveAsync(CacheKeys.ThoughtBuckets);
 
-            return newItem;
+            return itemToAdd;
         }
 
 

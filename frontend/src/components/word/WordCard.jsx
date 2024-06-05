@@ -29,7 +29,7 @@ const bull = (
   </Box>
   );
 
-export default function WordCard( {data}) {
+export default function WordCard(props) {
   let isFlashCard = false;
   const [showFullCard, setShowFullCard] = useState(!isFlashCard); //in flash card mode this is false
   const [wordCard, setWordCard] = useState({    
@@ -51,20 +51,20 @@ export default function WordCard( {data}) {
   let wordId = 0;
   useEffect(() => {
     loadData();
-  }, [data]);
+  }, [props.data]);
 
   const loadData = async () => {
-    if (data != null){
-      setWordCard(data);
-      setChildRecords(data.id);
+    if (props.data != null){
+      setWordCard(props.data);
+      setChildRecords(props.data.id);
     }
     else{
-      getRandomWord().then((response) => {
-        setWordCard(response.data);
-        wordId = response.data.id;
+      // getRandomWord().then((response) => {
+      //   setWordCard(response.data);
+      //   wordId = response.data.id;
 
-        setChildRecords(wordId);
-      });
+      //   setChildRecords(wordId);
+      // });
     }
   };
 

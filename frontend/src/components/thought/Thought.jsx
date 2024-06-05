@@ -43,10 +43,10 @@ export default function Thought(props) {
         //   });
         // }
         else{
-          getRandomThought().then((response) => {
-              setThought(response.data);
-              loadChildren(response.data.id);
-          });
+          // getRandomThought().then((response) => {
+          //     setThought(response.data);
+          //     loadChildren(response.data.id);
+          // });
         }        
       };
 

@@ -138,7 +138,8 @@ namespace BucketOfThoughts.Services.Thoughts
                 }
             }
 
-            await base.InsertAsync(thought);
+            await _repository.InsertAsync(thought);
+            await _repository.SaveAsync();
             return thought;
         }
 
@@ -149,6 +150,11 @@ namespace BucketOfThoughts.Services.Thoughts
                 IncludeProperties = "ThoughtBucket,ThoughtDetails"
             };
             return (await base.GetFromCacheAsync("Thoughts", queryParams)).ToList();
-        }        
+        }
+
+        public Task<Thought> InsertAsync(Thought newItem)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

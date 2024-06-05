@@ -1,4 +1,5 @@
-﻿using BucketOfThoughts.Services.Thoughts;
+﻿using BucketOfThoughts.Core.Infrastructure.Exceptions;
+using BucketOfThoughts.Services.Thoughts;
 using System.Text.Json.Serialization;
 
 namespace BucketOfThoughts.Api.Handlers.Extensions
@@ -45,6 +46,8 @@ namespace BucketOfThoughts.Api.Handlers.Extensions
             app.MapControllers();
 
             app.AddMinimumApiEndpoints();
+
+            app.UseMiddleware<ApiExceptionHandlerMiddleware>();
 
             app.UseCors("corsapp");
             return app;

@@ -2,11 +2,11 @@
 
 namespace BucketOfThoughts.Api.Handlers.Outdoors
 {
-    public class GetOutdoorActivitiesHandler
+    public class GetOutdoorActivityTypesHandler
     {
         public IEnumerable<string> Handle()
         {
-            return Enum.GetValues(typeof(OutdoorActivities)).Cast<OutdoorActivities>().Select(t => t.ToString()).ToList();
+            return Enum.GetValues(typeof(OutdoorActivityTypes)).Cast<OutdoorActivityTypes>().Select(t => t.ToString()).ToList();
         }
     }
 }

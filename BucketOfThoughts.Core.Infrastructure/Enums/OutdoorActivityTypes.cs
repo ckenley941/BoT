@@ -1,10 +1,11 @@
 ﻿namespace BucketOfThoughts.Core.Infrastructure.Enums
 {
-    public enum OutdoorActivities
+    public enum OutdoorActivityTypes
     {
-        Hiking,
+        Backpacking,
         Biking,
-        Camping,
+        Camping,        
+        Hiking,
         Skiing
     }
 }

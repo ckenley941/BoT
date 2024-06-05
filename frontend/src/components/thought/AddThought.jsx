@@ -182,7 +182,7 @@ export default function AddThought() {
 
   return (
     <Grid container spacing={2} className="m-2">
-       <Grid xs={4}>
+       <Grid xs={12}>
           <FormControl fullWidth>
             <InputLabel id="thought-bucket-select-label">
               Bucket

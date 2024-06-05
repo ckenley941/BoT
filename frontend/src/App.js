@@ -11,7 +11,8 @@ import WordsGrid from './components/word/WordsGrid';
 import Dashboard from './components/dashboard/Dashboard';
 import Settings from './components/settings/Settings.jsx';
 import ThoughtBucketsGrid from './components/settings/ThoughtBucketsGrid.jsx';
-import AddOutdoorsActivity from './components/outdoors/AddOutdoorsActivity.jsx'
+import AddOutdoorActivity from './components/outdoors/AddOutdoorActivity.jsx'
+import OutdoorActivityGrid from './components/outdoors/OutdoorActivityGrid.jsx'
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
@@ -33,7 +34,9 @@ const App = () => {
         </Route>
         <Route exact path="/organize-thoughts"  element={ <ThoughtsGrid/>}>
         </Route>
-        <Route exact path="/add-outdoors-activity"  element={ <AddOutdoorsActivity/>}>
+        <Route exact path="/add-outdoor-activity"  element={ <AddOutdoorActivity/>}>
+        </Route>
+        <Route exact path="/outdoor-activity-logs"  element={ <OutdoorActivityGrid/>}>
         </Route>
         <Route exact path="/settings"  element={ <Settings/>}>
         </Route>

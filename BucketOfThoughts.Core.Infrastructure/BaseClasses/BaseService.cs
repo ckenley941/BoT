@@ -22,6 +22,12 @@ namespace BucketOfThoughts.Core.Infrastructure.BaseClasses
             var data = await _repository.GetAsync(queryParams);
             return data;
         }
+        public virtual async Task<IEnumerable<TDto>> GetDtoAsync(GetQueryParams<TEntity>? queryParams = null)
+        {
+            var data = await _repository.GetAsync(queryParams);
+            var dtoData = _mapper.Map<IEnumerable<TDto>>(data);
+            return dtoData;
+        }
 
         public virtual async Task<IEnumerable<TEntity>> GetFromCacheAsync(string cacheKey, GetQueryParams<TEntity>? queryParams = null)
         {
@@ -35,11 +41,12 @@ namespace BucketOfThoughts.Core.Infrastructure.BaseClasses
             return data;
         }
 
-        public virtual async Task<TEntity> InsertAsync(TEntity newItem)
+        public virtual async Task<TEntity> InsertAsync(TDto newItem)
         {
-            await _repository.InsertAsync(newItem);
+            var itemToAdd = _mapper.Map<TEntity>(newItem);
+            await _repository.InsertAsync(itemToAdd);
             await _repository.SaveAsync();
-            return newItem;
+            return itemToAdd;
         }
 
         public virtual async Task<TEntity> UpdateAsync(TDto updateItem)
