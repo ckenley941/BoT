@@ -18,8 +18,8 @@ namespace BucketOfThoughts.Api.Handlers.Extensions
         public static WebApplication AddDashoardApiEndpoints(this WebApplication app)
         {
             app.MapGet("/api/dashboards/selected",
-                 async (GetSelectedDashboardHandler handler, string dashboardType) =>
-                     await handler.HandleAsync(dashboardType)
+                 async (GetSelectedDashboardHandler handler, string dashboardType, int? thoughtBucketId) =>
+                     await handler.HandleAsync(dashboardType, thoughtBucketId)
                      is DashboardResponse results
                      ? Results.Ok(results)
                      : Results.NotFound()

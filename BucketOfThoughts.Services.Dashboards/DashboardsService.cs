@@ -11,14 +11,14 @@ namespace BucketOfThoughts.Service.Dashboards
             _serviceContainer = serviceContainer;
         }
 
-        public async Task<DashboardResponse> Get(string dashboardType)
+        public async Task<DashboardResponse> Get(string dashboardType, int? thoughtBucketId)
         {
             var dashboardResults = new DashboardResponse();
             
             switch (dashboardType)
             {
                 case "RandomThought":
-                    dashboardResults.Data = (await _serviceContainer.ThoughtsService.GetRandomThoughtAsync()).AsEnumerable();
+                    dashboardResults.Data = (await _serviceContainer.ThoughtsService.GetRandomThoughtAsync(thoughtBucketId)).AsEnumerable();
                     break;
                 case "RandomWord":
                     dashboardResults.Data = (await _serviceContainer.WordsService.GetRandomWordAsync()).AsEnumerable();

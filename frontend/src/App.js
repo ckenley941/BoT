@@ -1,6 +1,6 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import WordCard from './components/word/WordCard';
 import Thought from './components/thought/Thought'
@@ -17,10 +17,16 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
 const App = () => {
+  const [globalSearch, setGlobalSearch] = useState("");  
+
+  const handleGlobalSearchChange = (e) => {
+    setGlobalSearch(e.target.value);
+  }
+  
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
     <Router>
-      <Layout className="layout">
+      <Layout className="layout" globalSearchChange={handleGlobalSearchChange}>
         <Routes>
         <Route exact path="/" element={ <Dashboard/> }>
         </Route>
@@ -32,7 +38,7 @@ const App = () => {
         </Route>
         <Route exact path="/add-thought"  element={ <AddThought/>}>
         </Route>
-        <Route exact path="/organize-thoughts"  element={ <ThoughtsGrid/>}>
+        <Route exact path="/organize-thoughts"  element={<ThoughtsGrid globalSearch={globalSearch}/>}>
         </Route>
         <Route exact path="/add-outdoor-activity"  element={ <AddOutdoorActivity/>}>
         </Route>

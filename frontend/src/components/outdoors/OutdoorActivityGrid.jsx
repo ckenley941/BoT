@@ -69,14 +69,26 @@ export default function OutdoorActivityGrid(props) {
             type: "number"
           },
           {
-            field: 'activityTimeHours',
-            headerName: 'Hours',
+            field: 'totalTimeHours',
+            headerName: 'Total Hours',
             width: 100,
             type: "number"
           },
           {
-            field: 'activityTimeMinutes',
-            headerName: 'Minutes',
+            field: 'totalTimeMinutes',
+            headerName: 'Total Minutes',
+            width: 100,
+            type: "number"
+          },
+          {
+            field: 'movingTimeHours',
+            headerName: 'Moving Hours',
+            width: 100,
+            type: "number"
+          },
+          {
+            field: 'movingTimeMinutes',
+            headerName: 'Moving Minutes',
             width: 100,
             type: "number"
           },

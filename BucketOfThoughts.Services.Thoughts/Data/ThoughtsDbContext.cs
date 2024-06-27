@@ -44,6 +44,9 @@ public partial class ThoughtsDbContext : BaseDbContext<ThoughtsDbContext>
             entity.Property(e => e.ActivityType)
                .HasMaxLength(100);
 
+            entity.Property(e => e.ActivityDayOfWeek)
+             .HasMaxLength(20);
+
             entity.Property(e => e.CreatedDateTime)
                 .HasDefaultValueSql("(getutcdate())");
         });

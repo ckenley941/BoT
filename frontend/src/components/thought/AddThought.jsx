@@ -22,6 +22,7 @@ import {
   getThoughtBuckets,
   insertThought,
 } from "../../services/ThoughtsService.ts";
+import AddOutdoorActivity from "../outdoors/AddOutdoorActivity.jsx";
 
 export default function AddThought() {
   const [thought, setThought] = useState({
@@ -35,6 +36,7 @@ export default function AddThought() {
   const [thoughtBuckets, setThoughtBuckets] = useState([]);  
   const [tabValue, setTabValue] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedThoughtType, setSelectedThoughtType]= useState("Thought");
 
   useEffect(() => {
     loadBuckets();
@@ -53,6 +55,10 @@ export default function AddThought() {
     _.set(newState, name, value);
     setThought(newState);
   };
+
+  const handleSelectedThoughtTypeChange = (e) => {
+    setSelectedThoughtType(e.target.value);
+  }
 
   const handleDetailChange = (e) => {
     var index = parseInt(e.target.name);
@@ -97,9 +103,11 @@ export default function AddThought() {
         alert("Thought added");
         setThought({
           description: "",
-          thoughtBucketId: 0,
-          details: [],
-          websiteLinks: [],
+          thoughtBucketId: 1,
+          details: new Array(""),
+          jsonDetails: { keys: new Array(""), values: [{ Column1: ""}]},
+          websiteLinks: new Array(""),
+          textType: "PlainText"
         });
       });
     }
@@ -183,7 +191,7 @@ export default function AddThought() {
   return (
     <Grid container spacing={2} className="m-2">
        <Grid xs={12}>
-          <FormControl fullWidth>
+          <FormControl sx={{width:"50%"}}>
             <InputLabel id="thought-bucket-select-label">
               Bucket
             </InputLabel>
@@ -203,17 +211,35 @@ export default function AddThought() {
               ))}
             </Select>
           </FormControl>
-        </Grid>
-        <Grid xs={10}>
-          <TextField
-            name="description"
-            value={thought.description}
-            label="Thought"
-            onChange={handleInputChange}
-            fullWidth
-            multiline
-          />
-        </Grid>
+          {thought.thoughtBucketId === 2 && (
+          <FormControl sx={{width:"20%"}} className="ml-2">
+          <Select              
+              value={selectedThoughtType}
+              onChange={handleSelectedThoughtTypeChange}
+            >
+              <MenuItem key={"Thought"} value={"Thought"}>
+                Thought
+                </MenuItem>
+                <MenuItem key={"OutdoorActivity"} value={"OutdoorActivity"}>
+                Outdoor Activity
+                </MenuItem>
+               </Select>
+          </FormControl>)}
+        </Grid>       
+       
+        
+        {selectedThoughtType === "Thought" && (
+          <>
+           <Grid xs={10}>
+           <TextField
+             name="description"
+             value={thought.description}
+             label="Thought"
+             onChange={handleInputChange}
+             fullWidth
+             multiline
+           />
+         </Grid>
         <Grid xs={12}>
           {/* <AddItemToDropdownDialog isOpen={false} title="Bucket" saveCallback={addThoughtBucket}></AddItemToDropdownDialog> */}
           <Tabs
@@ -267,7 +293,12 @@ export default function AddThought() {
               <SaveIcon fontSize="large" />
             </Tooltip>
           </IconButton></div>
-        </Grid>
+        </Grid> </>)}
+        {selectedThoughtType === "OutdoorActivity" && (
+          <Grid xs={12}>
+            <AddOutdoorActivity></AddOutdoorActivity>
+          </Grid>
+        )}
     </Grid>
   );
 }

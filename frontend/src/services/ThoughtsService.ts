@@ -4,8 +4,8 @@ export function getRandomThought() {
     return client.get(`${apiUrl}/thoughts/random`);
   }
 
-  export function getSelectedDashboard(dashboardType: string) {
-    return client.get(`${apiUrl}/dashboards/selected?dashboardType=${dashboardType}`);
+  export function getSelectedDashboard(dashboardType: string, selectedBucketId: number) {
+    return client.get(`${apiUrl}/dashboards/selected?dashboardType=${dashboardType}&thoughtBucketId=${selectedBucketId}`);
   }
 
   export function getThoughtBuckets() {

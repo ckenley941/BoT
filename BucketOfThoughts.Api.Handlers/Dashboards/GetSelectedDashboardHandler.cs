@@ -12,9 +12,9 @@ namespace BucketOfThoughts.Api.Handlers.Dashboards
         {
             _service = service;
         }
-        public async Task<DashboardResponse> HandleAsync(string dashboardType)
+        public async Task<DashboardResponse> HandleAsync(string dashboardType, int? thoughtBucketId)
         {
-            return await _service.Get(dashboardType);
+            return await _service.Get(dashboardType, thoughtBucketId);
         }
     }
 }

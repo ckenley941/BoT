@@ -44,49 +44,53 @@
   color: #61dafb;
 }
 
-.layout {
-  display: flex;
-}
 
 .page {
   background: #f9f9f9;
   width: 100%;
 }
 
-@media (max-width: 900px) {
-.drawer {
-  display: none !important
-}
-.appBar {
-  width:  90% !important;
-  margin-left: 10%;
-}
-.popover {
-  display: show !important;
-  width: 10%;
-}
-}
-@media (min-width: 900px) {
-.drawer {
-  width: 20%;
+.no-margin {
+  margin: 0 !important;
+  display: block;
 }
 
-.appBar {
-  width:  80% !important;
-  margin-left: 20%;
+@media (max-width: 900px) {
+  .drawer {
+    display: none !important
+  }
+  .appBar {
+    display: none !important
+  }
+  .popover {
+    display: show !important;
+    width: 100%;
+  }
 }
-.popover {
-  display: none !important
-}
+@media (min-width: 900px) {
+  .drawer {
+    width: 20%;
+  }
+
+  .appBar {
+    width:  80% !important;
+    margin-left: 20%;
+  }
+  .popover {
+    display: none !important;
+    width: 100%;
+  }
+  .toolBar {
+    padding-top: 41px;
+    padding-left: 303px;
+  }
 }
 .active-drawer {
   background: #f4f4f4 !important;
+  
 }
 
 
-.toolBar {
-  padding-top: 50px;
-}
 
 @keyframes App-logo-spin {
   from {

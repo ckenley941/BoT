@@ -10,8 +10,10 @@ namespace BucketOfThoughts.Services.Thoughts.Objects
         public string? GeographicArea { get; set; }
         public double? ActivityLength { get; set; }
         public double? ElevationGain { get; set; }
-        public int? ActivityTimeHours { get; set; }
-        public int? ActivityTimeMinutes { get; set; }
+        public int? TotalTimeHours { get; set; }
+        public int? TotalTimeMinutes { get; set; }
+        public int? MovingTimeHours { get; set; }
+        public int? MovingTimeMinutes { get; set; }
         public string? ActivityUrl { get; set; }
     }
 }

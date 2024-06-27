@@ -16,8 +16,8 @@ import { getSelectedDashboard } from "../../services/ThoughtsService.ts";
 import { getThoughtBuckets } from "../../services/ThoughtsService.ts";
 
 export default function Dashboard() {
-  const [currentlySelectedDashboard, setCurrentlySelectedDashboard] =
-    useState("RandomThought");
+  const [currentlySelectedDashboard, setCurrentlySelectedDashboard] = useState("RandomThought");
+  const [selectedBucketId, setSelectBucketId] = useState(0);
   const [data, setData] = useState(null);
   const [showBuckets, setShowBuckets] = useState(true); //setting to true for now while defaulting to RandomThought
   const [thoughtBuckets, setThoughtBuckets] = useState([]);
@@ -29,7 +29,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     loadData();
-  }, [currentlySelectedDashboard]);
+  }, [currentlySelectedDashboard, selectedBucketId]);
 
 
   const loadBuckets = async () => {
@@ -44,9 +44,13 @@ export default function Dashboard() {
     setCurrentlySelectedDashboard(e.target.value);
   };
 
+  const handleCategoryChange = (e) => {
+    setSelectBucketId(e.target.value);
+  };
+
   const loadData = () => {
     setIsLoading(true);
-    getSelectedDashboard(currentlySelectedDashboard).then((response) => {
+    getSelectedDashboard(currentlySelectedDashboard, selectedBucketId).then((response) => {
       setData(response.data.data[0]);
       setIsLoading(false);
     });
@@ -90,8 +94,8 @@ export default function Dashboard() {
               name="bucket"
               label="Bucket"
               maxWidth
-              value={currentlySelectedDashboard}
-              onChange={handleInputChange}
+              value={selectedBucketId}
+              onChange={handleCategoryChange}
             >
               <MenuItem value="0">
                 <em>None</em>

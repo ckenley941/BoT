@@ -26,6 +26,7 @@ namespace BucketOfThoughts.Api.Handlers.Extensions
 
             services.AddThoughtServices(configuration);
             services.AddLanguageServices(configuration);
+            services.AddMusicServices(configuration);
             services.AddDashboardServices();
           
 

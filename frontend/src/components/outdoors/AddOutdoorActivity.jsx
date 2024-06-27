@@ -26,8 +26,10 @@ export default function AddOutdoorActivity() {
     geographicArea: "",
     activityLength: "",
     elevationGain: "",
-    activityTimeHours: "",
-    activityTimeMinutes: "",
+    totalTimeHours: "",
+    totalTimeMinutes: "",
+    movingTimeHours: "",
+    movingTimeMinutes: "",
     activityUrl: "",
   });
   const [outdoorActivityTypes, setOutdoorActivityTypes] = useState([]);
@@ -70,8 +72,10 @@ export default function AddOutdoorActivity() {
           geographicArea: "",
           activityLength: "",
           elevationGain: "",
-          activityTimeHours: "",
-          activityTimeMinutes: "",
+          totalTimeHours: "",
+          totalTimeMinutes: "",
+          movingTimeHours: "",
+          movingTimeMinutes: "",
           activityUrl: "",
         });
       });
@@ -210,23 +214,42 @@ export default function AddOutdoorActivity() {
         <Grid.Row className="m-2">
           <Grid.Col md={2} width={12}>
             <TextField
-              name="activityTimeHours"
-              label="Activity Time (Hours)"
-              value={formState.activityTimeHours.length > 0 ? parseInt(formState.activityTimeHours) : null}
+              name="movingTimeHours"
+              label="Moving Time (Hours)"
+              value={formState.movingTimeHours.length > 0 ? parseInt(formState.movingTimeHours) : null}
               onChange={handleInputChange}
               type="number"
             />
           </Grid.Col>
           <Grid.Col md={2} width={12}>
             <TextField
-              name="activityTimeMinutes"
-              label="Activity Time (Minutes)"
-              value={formState.activityTimeMinutes.length > 0 ? parseInt(formState.activityTimeMinutes) : null}
+              name="movingTimeMinutes"
+              label="Moving Time (Minutes)"
+              value={formState.movingTimeMinutes.length > 0 ? parseInt(formState.movingTimeMinutes) : null}
               onChange={handleInputChange}
               type="number"
             />
           </Grid.Col>
+          <Grid.Col md={2} width={12}>
+            <TextField
+              name="totalTimeHours"
+              label="Total Time (Hours)"
+              value={formState.totalTimeHours.length > 0 ? parseInt(formState.totalTimeHours) : null}
+              onChange={handleInputChange}
+              type="number"
+            />
+          </Grid.Col>
+          <Grid.Col md={2} width={12}>
+            <TextField
+              name="totalTimeMinutes"
+              label="Total Time (Minutes)"
+              value={formState.totalTimeMinutes.length > 0 ? parseInt(formState.totalTimeMinutes) : null}
+              onChange={handleInputChange}
+              type="number"
+            />
+          </Grid.Col>          
         </Grid.Row>
+        
       )}
       <Grid.Row className="m-2">
         <Grid.Col md={8} width={12}>

@@ -11,7 +11,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 
-export default function ThoughtsGrid({data}) {
+export default function ThoughtsGrid(props) {
     const [thoughts, setThoughts] = useState([]);
     const [open, setOpen] = React.useState(false);
     const [selectedRow, setSelectedRow] = useState({ id: 0,
@@ -49,8 +49,8 @@ export default function ThoughtsGrid({data}) {
       }, []);
     
       const loadData = async () => {
-        if (data){
-          setThoughts(data);
+        if (props.data){
+          setThoughts(props.data);
         }
         else{
           getThoughtsGrid().then((response) => {
@@ -81,6 +81,12 @@ export default function ThoughtsGrid({data}) {
               pagination: {
                 paginationModel: {
                   pageSize: 10,
+                },               
+              },
+              filter: {
+                filterModel: {
+                  items: [],
+                  quickFilterValues: [props.globalSearch],
                 },
               },
             }}
@@ -89,6 +95,7 @@ export default function ThoughtsGrid({data}) {
             checkboxSelection
             disableRowSelectionOnClick
             slots={{ toolbar: GridToolbar }}
+            
             slotProps={{
               toolbar: {
                 showQuickFilter: true,

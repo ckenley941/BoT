@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BucketOfThoughts.Core.Infrastructure.BaseClasses;
+using BucketOfThoughts.Core.Infrastructure.Objects;
 using BucketOfThoughts.Services.Thoughts.Data;
 using BucketOfThoughts.Services.Thoughts.Objects;
 using Microsoft.Extensions.Caching.Distributed;
@@ -10,6 +11,17 @@ namespace BucketOfThoughts.Services.Thoughts
     {
         public OutdoorActivityLogService(IOutdoorActivityLogRepository repository, IDistributedCache cache, IMapper mapper) : base(repository, cache, mapper)
         {
+        }
+
+        public async Task<IEnumerable<OutdoorActivityLogDto>> GetDtoAsync()
+        {
+            var queryParams = new GetQueryParams<OutdoorActivityLog>()
+            {
+                 OrderBy =  t => t.OrderByDescending(ota => ota.ActivityDate)
+            };
+
+            var outdoorActivityLogs = await _repository.GetAsync(queryParams);
+            return _mapper.Map<IEnumerable<OutdoorActivityLogDto>>(outdoorActivityLogs);
         }
 
         public async Task<OutdoorActivityLogDto> GetRandomOutdoorActivityAsync()

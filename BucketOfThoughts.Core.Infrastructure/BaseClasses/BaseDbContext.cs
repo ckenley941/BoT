@@ -1,6 +1,7 @@
 ﻿using BucketOfThoughts.Core.Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BucketOfThoughts.Core.Infrastructure.BaseClasses
 {

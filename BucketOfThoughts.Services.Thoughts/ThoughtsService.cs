@@ -17,7 +17,7 @@ namespace BucketOfThoughts.Services.Thoughts
     public interface IThoughtsService : ICrudService<Thought, ThoughtDto>
     {
         Task<ThoughtDto> GetByIdAsync(int id);
-        Task<ThoughtDto> GetRandomThoughtAsync();
+        Task<ThoughtDto> GetRandomThoughtAsync(int? thoughtBucketId);
         Task<IEnumerable<ThoughtGridDto>> GetGridAsync();
         Task<IEnumerable<ThoughtGridDto>> GetRelatedThoughtsGridAsync(int thoughtId);
         Task<Thought> InsertAsync(InsertThoughtDto newItem); //Eventually use ICRudService version of insert
@@ -38,10 +38,15 @@ namespace BucketOfThoughts.Services.Thoughts
             return _mapper.Map<ThoughtDto>(thought);
         }
 
-        public async Task<ThoughtDto> GetRandomThoughtAsync()
+        public async Task<ThoughtDto> GetRandomThoughtAsync(int? thoughtBucketId)
         {
             //Eventually remove from cache what has already been used so we don't repeat random thoughts or added a flag
             var thoughts = await GetThoughtsFromCache();
+
+            if (thoughtBucketId > 0)
+            {
+                thoughts = thoughts.Where(t => t.ThoughtBucketId == thoughtBucketId).ToList();
+            }
 
             if (thoughts?.Count <= 0)
             {

@@ -22,18 +22,29 @@ namespace BucketOfThoughts.Services.Thoughts
             CreateMap<ThoughtDetail, ThoughtDetailDto>().ReverseMap();
 
             CreateMap<OutdoorActivityLogDto, OutdoorActivityLog>()
-                .ForMember(dest => dest.ActivityTime, opt => opt.MapFrom(src => new TimeSpan(src.ActivityTimeHours ?? 0, src.ActivityTimeMinutes ?? 0, 0) { }));
+                .ForMember(dest => dest.TotalTime, opt => opt.MapFrom(src => new TimeSpan(src.TotalTimeHours ?? 0, src.TotalTimeMinutes ?? 0, 0) { }))
+                .ForMember(dest => dest.MovingTime, opt => opt.MapFrom(src => new TimeSpan(src.MovingTimeHours ?? 0, src.MovingTimeMinutes ?? 0, 0) { }));
 
             CreateMap<OutdoorActivityLog, OutdoorActivityLogDto>()
-                .ForMember(dest => dest.ActivityTimeHours, opt => 
+                .ForMember(dest => dest.TotalTimeHours, opt => 
                 {
-                    opt.PreCondition(src => (src.ActivityTime.HasValue));
-                    opt.MapFrom(src => src.ActivityTime.Value.Hours);
+                    opt.PreCondition(src => (src.TotalTime.HasValue));
+                    opt.MapFrom(src => src.TotalTime.Value.Hours);
                 })
-                .ForMember(dest => dest.ActivityTimeMinutes, opt =>
+                .ForMember(dest => dest.TotalTimeMinutes, opt =>
                 {
-                    opt.PreCondition(src => (src.ActivityTime.HasValue));
-                    opt.MapFrom(src => src.ActivityTime.Value.Minutes);
+                    opt.PreCondition(src => (src.TotalTime.HasValue));
+                    opt.MapFrom(src => src.TotalTime.Value.Minutes);
+                })
+                .ForMember(dest => dest.MovingTimeHours, opt =>
+                 {
+                     opt.PreCondition(src => (src.MovingTime.HasValue));
+                     opt.MapFrom(src => src.MovingTime.Value.Hours);
+                 })
+                .ForMember(dest => dest.MovingTimeMinutes, opt =>
+                {
+                    opt.PreCondition(src => (src.MovingTime.HasValue));
+                    opt.MapFrom(src => src.MovingTime.Value.Minutes);
                 });
         }
     }

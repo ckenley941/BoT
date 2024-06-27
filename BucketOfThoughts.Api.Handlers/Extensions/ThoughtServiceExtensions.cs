@@ -51,8 +51,8 @@ namespace BucketOfThoughts.Api.Handlers.Extensions
         public static WebApplication AddThoughtApiEndpoints(this WebApplication app)
         {
             app.MapGet("/api/thoughts/random",
-              async (GetWebsiteLinksHandler handler) =>
-                  await handler.HandleAsync()
+              async (GetWebsiteLinksHandler handler, int? thoughtBucketId) =>
+                  await handler.HandleAsync(thoughtBucketId)
                   is ThoughtDto item
                   ? Results.Ok(item)
                   : Results.NotFound()

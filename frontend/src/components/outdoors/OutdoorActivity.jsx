@@ -10,7 +10,7 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 
-export default function OutdoorsActivity(props) {
+export default function OutdoorActivity(props) {
   const [formState, setFormState] = useState({
     activityName: "",
     activityType: "",
@@ -18,8 +18,10 @@ export default function OutdoorsActivity(props) {
     geographicArea: "",
     activityLength: "",
     elevationGain: "",
-    activityTimeHours: "",
-    activityTimeMinutes: "",
+    totalTimeHours: "",
+    totalTimeMinutes: "",
+    movingTimeHours: "",
+    movingTimeMinutes: "",
     activityUrl: "",
   });
 
@@ -110,7 +112,7 @@ export default function OutdoorsActivity(props) {
               </Grid.Col>
             )}
             {formState.elevationGain > 0 && (
-              <Grid.Col md={2} width={12}>
+              <Grid.Col md={3} width={12}>
                 <FormControl fullWidth>
                   <InputLabel id="elevation-gain-label">
                     {formState.elevationGain} {getElevationGainLabel()}
@@ -118,17 +120,31 @@ export default function OutdoorsActivity(props) {
                 </FormControl>
               </Grid.Col>
             )}
-            {(formState.activityTimeHours > 0 ||
-              formState.activityTimeMinutes > 0) && (
-              <Grid.Col md={4} width={12}>
+            {(formState.movingTimeHours > 0 ||
+              formState.movingTimeMinutes > 0) && (
+              <Grid.Col md={3} width={12}>
                 <FormControl fullWidth>
-                  <InputLabel id="activity-time-label">
-                    {formState.activityTimeHours} hours{" "}
-                    {formState.activityTimeMinutes} minutes
+                  <InputLabel id="moving-time-label">
+                  Moving Time:{" "}
+                    {formState.movingTimeHours}h{" "}
+                    {formState.movingTimeMinutes}m
                   </InputLabel>
                 </FormControl>
               </Grid.Col>
             )}
+            {(formState.totalTimeHours > 0 ||
+              formState.totalTimeMinutes > 0) && (
+              <Grid.Col md={3} width={12}>
+                <FormControl fullWidth>
+                  <InputLabel id="total-time-label">
+                  Total Time:{" "} 
+                    {formState.totalTimeHours}h{" "}
+                    {formState.totalTimeMinutes}m
+                  </InputLabel>
+                </FormControl>
+              </Grid.Col>
+            )}
+          
           </Grid.Row>
         </Grid>
       </CardContent>
