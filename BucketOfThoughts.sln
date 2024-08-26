@@ -13,6 +13,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BucketOfThoughts.Core.Infrastructure", "BucketOfThoughts.Core.Infrastructure\BucketOfThoughts.Core.Infrastructure.csproj", "{2E86B588-AD29-48CB-BF20-115B8025E705}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BucketOfThoughts.Services.Thoughts", "BucketOfThoughts.Services.Thoughts\BucketOfThoughts.Services.Thoughts.csproj", "{85506955-5714-460D-9B1C-32935B7715B0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BB12802F-8E41-48C9-A4FA-BCE357D2188C} = {BB12802F-8E41-48C9-A4FA-BCE357D2188C}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BucketOfThoughts.Api.Handlers", "BucketOfThoughts.Api.Handlers\BucketOfThoughts.Api.Handlers.csproj", "{34AD3BE3-BC99-4BE6-AAB5-CDB8654D37F1}"
 EndProject
@@ -21,6 +24,13 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BucketOfThoughts.Services.Dashboards", "BucketOfThoughts.Services.Dashboards\BucketOfThoughts.Services.Dashboards.csproj", "{4A527CF0-F501-42AC-9582-962076931C15}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BucketOfThoughts.Services.Music", "BucketOfThoughts.Services.Music\BucketOfThoughts.Services.Music.csproj", "{83D2D4D9-E313-4D0B-AACC-EC17BAA10F17}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BucketOfThoughts.Services.Cooking", "BucketOfThoughts.Services.Cooking\BucketOfThoughts.Services.Cooking.csproj", "{A3585516-8E3B-4E2E-9A19-56B0C06A0F8A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BB12802F-8E41-48C9-A4FA-BCE357D2188C} = {BB12802F-8E41-48C9-A4FA-BCE357D2188C}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BucketOfThoughts.Services.Shared", "BucketOfThoughts.Services.Shared\BucketOfThoughts.Services.Shared.csproj", "{BB12802F-8E41-48C9-A4FA-BCE357D2188C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,6 +62,14 @@ Global
 		{83D2D4D9-E313-4D0B-AACC-EC17BAA10F17}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83D2D4D9-E313-4D0B-AACC-EC17BAA10F17}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83D2D4D9-E313-4D0B-AACC-EC17BAA10F17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3585516-8E3B-4E2E-9A19-56B0C06A0F8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3585516-8E3B-4E2E-9A19-56B0C06A0F8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3585516-8E3B-4E2E-9A19-56B0C06A0F8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3585516-8E3B-4E2E-9A19-56B0C06A0F8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB12802F-8E41-48C9-A4FA-BCE357D2188C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB12802F-8E41-48C9-A4FA-BCE357D2188C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB12802F-8E41-48C9-A4FA-BCE357D2188C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB12802F-8E41-48C9-A4FA-BCE357D2188C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

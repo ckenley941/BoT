@@ -2,7 +2,6 @@
 using BucketOfThoughts.Api.Handlers.ThoughtBuckets;
 using BucketOfThoughts.Api.Handlers.Thoughts;
 using BucketOfThoughts.Core.Infrastructure.Constants;
-using BucketOfThoughts.Core.Infrastructure.Enums;
 using BucketOfThoughts.Services.Thoughts;
 using BucketOfThoughts.Services.Thoughts.Data;
 using BucketOfThoughts.Services.Thoughts.Objects;
@@ -141,6 +140,14 @@ namespace BucketOfThoughts.Api.Handlers.Extensions
                  ? Results.Ok(data)
                  : Results.NotFound()
              );
+
+            //app.MapGet("/api/outdooractivitysummary",
+            // async (GetOutdoorActivitySummaryHandler handler, DateOnly dateFrom, DateOnly dateTo, [FromBody] List<string> activityTypes) =>
+            //   await handler.HandleAsync(dateFrom, dateTo, activityTypes)
+            //    is IEnumerable<OutdoorActivitySummaryDto> data
+            //    ? Results.Ok(data)
+            //    : Results.NotFound()
+            //);
 
             app.MapPost("/api/outdooractivitylog",
               async (InsertOutdoorActivityLogHandler handler, OutdoorActivityLogDto newItem) =>

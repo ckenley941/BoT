@@ -26,6 +26,7 @@ namespace BucketOfThoughts.Services.Thoughts
     public class ThoughtsService : BaseService<Thought, ThoughtDto>, IThoughtsService
     {
         protected new readonly IThoughtsRepository _repository;
+        private int recentThoughtCount = 100; //TODO - make configurable
         public ThoughtsService(IThoughtsRepository repository, IDistributedCache cache, IMapper mapper) : base (repository, cache, mapper)
         {
             _repository = repository;
@@ -55,6 +56,18 @@ namespace BucketOfThoughts.Services.Thoughts
 
             var rand = new Random();
 
+            var randThought = thoughts[rand.Next(thoughts.Count)];
+
+            return _mapper.Map<ThoughtDto>(randThought);
+        }
+
+        public async Task<ThoughtDto> GetRecentThoughtAsync()
+        {
+            //Eventually remove from cache what has already been used so we don't repeat random thoughts or added a flag
+            var thoughts = await GetThoughtsFromCache();
+
+            thoughts = thoughts.OrderByDescending(t => t.CreatedDateTime).Take(recentThoughtCount).ToList();     
+            var rand = new Random();
             var randThought = thoughts[rand.Next(thoughts.Count)];
 
             return _mapper.Map<ThoughtDto>(randThought);
@@ -134,11 +147,11 @@ namespace BucketOfThoughts.Services.Thoughts
                     sortOrder++;
                     thought.ThoughtWebsiteLinks.Add(new ()
                         {
-                            WebsiteLink = new ()
-                            {
-                                WebsiteUrl = link,
-                                SortOrder = sortOrder
-                            }
+                            //WebsiteLink = new ()
+                            //{
+                            //    WebsiteUrl = link,
+                            //    SortOrder = sortOrder
+                            //}
                         });
                 }
             }

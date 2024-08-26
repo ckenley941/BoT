@@ -28,10 +28,9 @@ public partial class ThoughtsDbContext : BaseDbContext<ThoughtsDbContext>
 
     public virtual DbSet<ThoughtWebsiteLink> ThoughtWebsiteLinks { get; set; }
 
-    public virtual DbSet<WebsiteLink> WebsiteLinks { get; set; }
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+
         modelBuilder.Entity<OutdoorActivityLog>(entity =>
         {
             entity.HasKey(e => e.Id);
@@ -148,21 +147,11 @@ public partial class ThoughtsDbContext : BaseDbContext<ThoughtsDbContext>
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_ThoughtWebsiteLink_Thought");
 
-            entity.HasOne(d => d.WebsiteLink).WithMany(p => p.ThoughtWebsiteLinks)
-                .HasForeignKey(d => d.WebsiteLinkId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_ThoughtWebsiteLink_WebsiteLink");
-        });
-
-        modelBuilder.Entity<WebsiteLink>(entity =>
-        {
-            entity.HasKey(e => e.Id);
-
-            entity.ToTable("WebsiteLink");
-
-            entity.Property(e => e.CreatedDateTime)
-                .HasDefaultValueSql("(getutcdate())");
-        });
+            //entity.HasOne(d => d.WebsiteLink).WithMany(p => p.ThoughtWebsiteLinks)
+            //    .HasForeignKey(d => d.WebsiteLinkId)
+            //    .OnDelete(DeleteBehavior.ClientSetNull)
+            //    .HasConstraintName("FK_ThoughtWebsiteLink_WebsiteLink");
+        });       
 
         OnModelCreatingPartial(modelBuilder);
     }

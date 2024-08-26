@@ -8,5 +8,5 @@ public partial class ThoughtWebsiteLink
 
     public virtual Thought Thought { get; set; } = null!;
 
-    public virtual WebsiteLink WebsiteLink { get; set; } = null!;
+   // public virtual WebsiteLink WebsiteLink { get; set; } = null!;
 }

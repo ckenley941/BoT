@@ -73,6 +73,9 @@ export default function Dashboard() {
             <MenuItem key={"RandomThought"} value={"RandomThought"}>
               Random Thought
             </MenuItem>
+            <MenuItem key={"RecentThought"} value={"RecentThought"}>
+              Recent Thought
+            </MenuItem>
             <MenuItem key={"RandomWord"} value={"RandomWord"}>
               Random Word
             </MenuItem>

@@ -8,7 +8,8 @@ export default function SelectedDashboard( {selected, data} ) {
         <div className="selectedDashboard">
         {
         {
-          'RandomThought': <Thought data= {data} />,
+          'RandomThought': <Thought data= {data} />,          
+          'RecentThought': <Thought data= {data} />,
           'RandomWord': <WordCard data= {data} />,
           'RandomOutdoorActivity': <OutdoorActivity data={data}/>,
           '': <div></div>

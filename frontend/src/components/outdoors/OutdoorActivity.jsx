@@ -15,6 +15,7 @@ export default function OutdoorActivity(props) {
     activityName: "",
     activityType: "",
     activityDate: "",
+    activityDayOfWeek: "",
     geographicArea: "",
     activityLength: "",
     elevationGain: "",
@@ -59,6 +60,7 @@ export default function OutdoorActivity(props) {
             <Grid.Col md={3} width={12}>
               <FormControl fullWidth>
                 <InputLabel id="activity-date-label">
+                  {formState.activityDayOfWeek}{", "}
                   {formState.activityDate}
                 </InputLabel>
               </FormControl>

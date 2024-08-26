@@ -39,5 +39,28 @@ namespace BucketOfThoughts.Services.Thoughts
 
             return _mapper.Map<OutdoorActivityLogDto>(randOutdoorActivity);
         }
+
+        public async Task<IEnumerable<OutdoorActivitySummaryDto>> GetOutdoorActivitySummaryAsync(DateOnly dateFrom, DateOnly dateTo, List<string> activityTypes)
+        {
+            var outdoorActivities = (await _repository.GetAsync()).Where(oa => oa.ActivityDate >= dateFrom && oa.ActivityDate <= dateTo);
+
+            if (activityTypes?.Count > 0)
+            {
+                outdoorActivities = outdoorActivities.Where(oa => activityTypes.Contains(oa.ActivityType));
+            }
+
+            var outdoorActivitySummary = outdoorActivities.GroupBy(oa => oa.ActivityType)
+                .Select(oa =>            
+                new OutdoorActivitySummaryDto()
+                {
+                    ActivityType = oa.Key,
+                    TotalActivityLength = oa.Sum(o => o.ActivityLength),
+                    TotalElevationGain = oa.Sum(o => o.ElevationGain)
+                }
+            ).ToList();
+
+
+            return outdoorActivitySummary;
+        }
     }
 }
