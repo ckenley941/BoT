@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using BucketOfThoughts.Core.Infrastructure.Constants;
+using BucketOfThoughts.Core.Infrastructure.Exceptions;
 using BucketOfThoughts.Core.Infrastructure.Extensions;
 using BucketOfThoughts.Core.Infrastructure.Interfaces;
 using BucketOfThoughts.Core.Infrastructure.Objects;
@@ -8,30 +8,43 @@ using Microsoft.Extensions.Caching.Distributed;
 
 namespace BucketOfThoughts.Core.Infrastructure.BaseClasses
 {
-    public abstract class BaseService<TEntity, TDto> where TEntity : class where TDto : BaseDto
+    public abstract class BaseCRUDService<TEntity, TDto> : ICrudService<TEntity, TDto> where TEntity : BaseDbTable where TDto : BaseDto 
     {
-        protected readonly ICrudRepository<TEntity> _repository;
         protected readonly IDistributedCache _cache;
         protected readonly IMapper _mapper;
         protected readonly DbContext _dbContext;
         protected DbSet<TEntity> _dbSet;
 
-        public BaseService(ICrudRepository<TEntity> repository, IDistributedCache cache, IMapper mapper)
-        {
-            _repository = repository;
-            _cache = cache;
-            _mapper = mapper;
-        }
-        public BaseService(DbContext dbContext, IDistributedCache cache, IMapper mapper)
+        public BaseCRUDService(DbContext dbContext, IDistributedCache cache, IMapper mapper)
         {
             _dbContext = dbContext;
             _dbSet = dbContext.Set<TEntity>();
             _cache = cache;
             _mapper = mapper;
         }
-        public async virtual Task<TEntity> GetByIdAsync(int id)
+
+        public async virtual Task<TEntity> GetByIdAsync(int id, string? includeProperties = null)        
         {
-            return await _dbSet.FindAsync(id) ?? throw new Exception("Not found.");
+            if (includeProperties.HasValue())
+            {
+                IQueryable<TEntity> query = _dbSet;
+                foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProperty);
+                }
+                return await query.SingleOrDefaultAsync(q => q.Id == id) ?? throw new NotFoundException();
+            }
+            else
+            {
+                return await _dbSet.FindAsync(id) ?? throw new NotFoundException();
+            }
+        }
+
+        public virtual async Task<IEnumerable<TDto>> GetDtoByIdAsync(GetQueryParams<TEntity>? queryParams = null)
+        {
+            var data = await GetAsync(queryParams);
+            var dtoData = _mapper.Map<IEnumerable<TDto>>(data);
+            return dtoData;
         }
 
         public virtual async Task<IEnumerable<TEntity>> GetAsync(GetQueryParams<TEntity>? queryParams = null)
@@ -46,8 +59,7 @@ namespace BucketOfThoughts.Core.Infrastructure.BaseClasses
 
             if (queryParams.IncludeProperties.HasValue())
             {
-                foreach (var includeProperty in queryParams.IncludeProperties.Split
-                    (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                foreach (var includeProperty in queryParams.IncludeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
                 {
                     query = query.Include(includeProperty);
                 }
@@ -62,17 +74,9 @@ namespace BucketOfThoughts.Core.Infrastructure.BaseClasses
                 return await query.ToListAsync();
             }
         }
-
-        public virtual async Task<IEnumerable<TDto>> GetDtoAsync(GetQueryParams<TEntity>? queryParams = null)
-        {
-            var data = await GetAsync(queryParams);
-            var dtoData = _mapper.Map<IEnumerable<TDto>>(data);
-            return dtoData;
-        }
-
         public virtual async Task<IEnumerable<TEntity>> GetFromCacheAsync(string cacheKey, GetQueryParams<TEntity>? queryParams = null)
         {
-            var data = await _cache.GetRecordAsync<IEnumerable<TEntity>>(cacheKey); 
+            var data = await _cache.GetRecordAsync<IEnumerable<TEntity>>(cacheKey);
             if (data == null)
             {
                 data = await GetAsync(queryParams);
@@ -82,7 +86,28 @@ namespace BucketOfThoughts.Core.Infrastructure.BaseClasses
             return data;
         }
 
-        public virtual async Task<TEntity> InsertAsync(TDto newItem, bool performSave = true, string cacheKey = "")
+        public virtual async Task<IEnumerable<TDto>> GetDtoAsync(GetQueryParams<TEntity>? queryParams = null)
+        {
+            var data = await GetAsync(queryParams);
+            var dtoData = _mapper.Map<IEnumerable<TDto>>(data);
+            return dtoData;
+        }
+       
+        public virtual async Task<TEntity> InsertAsync(TEntity itemToAdd, bool performSave = true, string cacheKey = "")
+        {
+            await _dbSet.AddAsync(itemToAdd);
+            if (performSave)
+            {
+                await SaveAsync();
+                if (!string.IsNullOrEmpty(cacheKey))
+                {
+                    await _cache.RemoveAsync(cacheKey);
+                }
+            }
+            return itemToAdd;
+        }
+
+        public virtual async Task<TEntity> InsertDtoAsync(TDto newItem, bool performSave = true, string cacheKey = "")
         {
             var itemToAdd = _mapper.Map<TEntity>(newItem);
             await _dbSet.AddAsync(itemToAdd);
@@ -97,11 +122,28 @@ namespace BucketOfThoughts.Core.Infrastructure.BaseClasses
             return itemToAdd;
         }
 
-        public virtual async Task<TEntity> UpdateAsync(TDto updateItem, bool performSave = true, string cacheKey = "")
+        public virtual async Task<TEntity> UpdateAsync(TEntity updateItem, bool performSave = true, string cacheKey = "")
+        {
+            _dbSet.Attach(updateItem);
+            _dbContext.Entry(updateItem).State = EntityState.Modified;
+            if (performSave)
+            {
+                await SaveAsync();
+                if (!string.IsNullOrEmpty(cacheKey))
+                {
+                    await _cache.RemoveAsync(cacheKey);
+                }
+            }
+            return updateItem;
+        }
+
+        public virtual async Task<TEntity> UpdateDtoAsync(TDto updateItem, bool performSave = true, string cacheKey = "")
         {
             var dbItem = await GetByIdAsync(updateItem.Id);
             _mapper.Map(updateItem, dbItem);
 
+            _dbSet.Attach(dbItem);
+            _dbContext.Entry(updateItem).State = EntityState.Modified;
             if (performSave)
             {
                 await SaveAsync();

@@ -1,41 +1,38 @@
-﻿using AutoMapper
-    ;
+﻿using AutoMapper;
 using BucketOfThoughts.Core.Infrastructure.BaseClasses;
+using BucketOfThoughts.Core.Infrastructure.Constants;
 using BucketOfThoughts.Core.Infrastructure.Enums;
-using BucketOfThoughts.Core.Infrastructure.Interfaces;
+using BucketOfThoughts.Core.Infrastructure.Exceptions;
 using BucketOfThoughts.Core.Infrastructure.Objects;
 using BucketOfThoughts.Services.Thoughts.Data;
 using BucketOfThoughts.Services.Thoughts.Objects;
-using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
-using Newtonsoft.Json;
-using System.IdentityModel.Tokens.Jwt;
-using System.Text.Json.Nodes;
 
 namespace BucketOfThoughts.Services.Thoughts
 {
     public interface IThoughtsService 
     {
-        Task<ThoughtDto> GetByIdAsync(int id);
+        Task<ThoughtDto> GetDtoByIdAsync(int id);
         Task<ThoughtDto> GetRandomThoughtAsync(int? thoughtBucketId);
         Task<IEnumerable<ThoughtGridDto>> GetGridAsync();
         Task<IEnumerable<ThoughtGridDto>> GetRelatedThoughtsGridAsync(int thoughtId);
-        Task<Thought> InsertAsync(InsertThoughtDto newItem); //Eventually use ICRudService version of insert
+        Task<Thought> InsertAsync(InsertThoughtDto newItem);
     }
 
-    public class ThoughtsService : BaseService<Thought, ThoughtDto>, IThoughtsService
+    public class ThoughtsService : BaseCRUDService<Thought, ThoughtDto>, IThoughtsService
     {
-        protected new readonly IThoughtsRepository _repository;
+        protected new readonly ThoughtsDbContext _dbContext;
         private int recentThoughtCount = 100; //TODO - make configurable
-        public ThoughtsService(IThoughtsRepository repository, IDistributedCache cache, IMapper mapper) : base (repository, cache, mapper)
+
+        public ThoughtsService(ThoughtsDbContext dbContext, IDistributedCache cache, IMapper mapper) : base(dbContext, cache, mapper)
         {
-            _repository = repository;
+            _dbContext = dbContext;
         }
 
-        public async Task<ThoughtDto> GetByIdAsync(int id)
+        public async Task<ThoughtDto> GetDtoByIdAsync(int id)
         {
-            var thought = await _repository.GetByIdAsync(id);
-            var thoughtDto = _mapper.Map<ThoughtDto>(thought);
+            var thought = await base.GetByIdAsync(id, "ThoughtBucket,ThoughtDetails");
             return _mapper.Map<ThoughtDto>(thought);
         }
 
@@ -51,7 +48,7 @@ namespace BucketOfThoughts.Services.Thoughts
 
             if (thoughts?.Count <= 0)
             {
-                throw new Exception("Thoughts not found"); //TODO make custom not found exception passing in name of object not found "{} not found"
+                throw new NotFoundException("Random Thought");
             }
 
             var rand = new Random();
@@ -63,7 +60,7 @@ namespace BucketOfThoughts.Services.Thoughts
 
         public async Task<ThoughtDto> GetRecentThoughtAsync()
         {
-            //Eventually remove from cache what has already been used so we don't repeat random thoughts or added a flag
+            //Eventually remove from cache what has already been used so we don't repeat random thoughts or add a processing table to show recent ones that were prompted
             var thoughts = await GetThoughtsFromCache();
 
             thoughts = thoughts.OrderByDescending(t => t.CreatedDateTime).Take(recentThoughtCount).ToList();     
@@ -87,7 +84,7 @@ namespace BucketOfThoughts.Services.Thoughts
                 Filter = (t) => (t.Id == thoughtId)
             };
 
-            var relatedThoughts = _repository.GetRelatedThoughts(thoughtId);
+            var relatedThoughts = GetRelatedThoughts(thoughtId);
             return _mapper.Map<IEnumerable<ThoughtGridDto>>(relatedThoughts);
         }
 
@@ -156,9 +153,19 @@ namespace BucketOfThoughts.Services.Thoughts
                 }
             }
 
-            await _repository.InsertAsync(thought);
-            await _repository.SaveAsync();
+            await base.InsertAsync(thought);
             return thought;
+        }
+
+        private IEnumerable<Thought>? GetRelatedThoughts(int thoughtId)
+        {
+            var relatedThought1 = _dbContext.RelatedThoughts.Where(x => x.ThoughtId1 == thoughtId)
+                .Join(_dbContext.Thoughts.Include(x => x.ThoughtDetails).Include(x => x.ThoughtBucket), rt => rt.ThoughtId2, t => t.Id, (rt, t) => t);
+
+            var relatedThought2 = _dbContext.RelatedThoughts.Where(x => x.ThoughtId2 == thoughtId)
+                .Join(_dbContext.Thoughts.Include(x => x.ThoughtDetails).Include(x => x.ThoughtBucket), rt => rt.ThoughtId1, t => t.Id, (rt, t) => t);
+
+            return relatedThought1.Union(relatedThought2).AsEnumerable();
         }
 
         private async Task<List<Thought>> GetThoughtsFromCache()
@@ -167,7 +174,7 @@ namespace BucketOfThoughts.Services.Thoughts
             {
                 IncludeProperties = "ThoughtBucket,ThoughtDetails"
             };
-            return (await base.GetFromCacheAsync("Thoughts", queryParams)).ToList();
+            return (await base.GetFromCacheAsync(CacheKeys.Thoughts, queryParams)).ToList();
         }
 
         public Task<Thought> InsertAsync(Thought newItem)

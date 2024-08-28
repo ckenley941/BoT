@@ -8,7 +8,7 @@ using Microsoft.Extensions.Caching.Distributed;
 
 namespace BucketOfThoughts.Services.Thoughts
 {
-    public class ThoughtBucketsService : BaseService<ThoughtBucket, ThoughtBucketDto>
+    public class ThoughtBucketsService : BaseCRUDService<ThoughtBucket, ThoughtBucketDto>
     {
         private readonly ThoughtsDbContext _dbContext;
         public ThoughtBucketsService(ThoughtsDbContext dbContext, IDistributedCache cache, IMapper mapper) : base (dbContext, cache, mapper)
@@ -43,10 +43,9 @@ namespace BucketOfThoughts.Services.Thoughts
         {
             //Set default ThoughtModuleId if not supplied by user
             newItem.ThoughtModuleId = newItem.ThoughtModuleId == 0 ? await GetDefaultModuleId() : newItem.ThoughtModuleId;
-            var itemToAdd = await base.InsertAsync(newItem, true, CacheKeys.ThoughtBuckets);
+            var itemToAdd = await base.InsertDtoAsync(newItem, true, CacheKeys.ThoughtBuckets);
             return itemToAdd;
         }
-
 
         private async Task<int> GetDefaultModuleId()
         {

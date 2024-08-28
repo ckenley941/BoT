@@ -1,21 +1,20 @@
 ﻿using BucketOfThoughts.Core.Infrastructure.BaseClasses;
 using BucketOfThoughts.Core.Infrastructure.Objects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BucketOfThoughts.Core.Infrastructure.Interfaces
 {
-    //TODO - standardize and use later...perhaps
-    public interface ICrudService<TEntity, TDto> where TEntity : class where TDto : BaseDto
+    public interface ICrudService<TEntity, TDto> where TEntity : BaseDbTable where TDto : BaseDto
     {
-        Task<IEnumerable<TEntity>> GetAsync(GetQueryParams<TEntity>? queryParams = null);
-        Task<IEnumerable<TEntity>> GetFromCacheAsync(string cacheKey, GetQueryParams<TEntity>? queryParams = null);
-        Task<TEntity> InsertAsync(TEntity newItem);
-        Task<TEntity> UpdateAsync(TDto updateItem);
-        Task DeleteAsync(int id);
-        Task DeleteAsync(TEntity deleteItem);
+        Task<TEntity> GetByIdAsync(int id, string? includeProperties = null);
+        public Task<IEnumerable<TDto>> GetDtoByIdAsync(GetQueryParams<TEntity>? queryParams = null);
+        public Task<IEnumerable<TEntity>> GetAsync(GetQueryParams<TEntity>? queryParams = null);
+        public Task<IEnumerable<TEntity>> GetFromCacheAsync(string cacheKey, GetQueryParams<TEntity>? queryParams = null);
+        public Task<IEnumerable<TDto>> GetDtoAsync(GetQueryParams<TEntity>? queryParams = null);
+        public Task<TEntity> InsertAsync(TEntity itemToAdd, bool performSave = true, string cacheKey = "");
+        public Task<TEntity> InsertDtoAsync(TDto newItem, bool performSave = true, string cacheKey = "");
+        public Task<TEntity> UpdateAsync(TEntity updateItem, bool performSave = true, string cacheKey = "");
+        public Task<TEntity> UpdateDtoAsync(TDto updateItem, bool performSave = true, string cacheKey = "");
+        public Task DeleteAsync(int id, bool performSave = true);
+        public Task DeleteAsync(TEntity deleteItem, bool performSave = true);
     }
 }

@@ -23,7 +23,6 @@ namespace BucketOfThoughts.Api.Handlers.Extensions
 
             services.AddScoped<ThoughtBucketsService>();
             services.AddScoped<IThoughtsService, ThoughtsService>();
-            services.AddScoped<IThoughtsRepository, ThoughtsRepository>();
             services.AddScoped<OutdoorActivityLogService>();
 
 

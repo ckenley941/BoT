@@ -1,4 +1,5 @@
-﻿using BucketOfThoughts.Services.Languages.Data;
+﻿using BucketOfThoughts.Core.Infrastructure.Exceptions;
+using BucketOfThoughts.Services.Languages.Data;
 using BucketOfThoughts.Services.Languages.Objects;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
@@ -169,12 +170,7 @@ namespace BucketOfThoughts.Services.Languages
                await _dbContext.Words
                .Where(x => x.Id == id)
                .Select(x => new WordTranslationDto(x.Id,  x.Description))
-               .FirstOrDefaultAsync();
-
-            if (word == null)
-            {
-                throw new Exception("Record not found"); //TODO make custom not found exception
-            }
+               .FirstOrDefaultAsync() ?? throw new NotFoundException("Word");
 
             word.PrimaryTranslation = await GetPrimaryTranslation(word.Id);
             word.Pronunication = await _dbContext.WordPronunciations.Where(x => x.WordId == word.Id).Select(x => x.Phonetic).ToListAsync();
@@ -187,12 +183,7 @@ namespace BucketOfThoughts.Services.Languages
                await _dbContext.Words
                .Where(x => x.Description == description)
                .Select(x => new WordTranslationDto(x.Id, x.Description))
-               .FirstOrDefaultAsync();
-
-            if (word == null)
-            {
-                throw new Exception("Record not found"); //TODO make custom not found exception
-            }
+               .FirstOrDefaultAsync() ?? throw new NotFoundException("Word");
 
             word.PrimaryTranslation = await GetPrimaryTranslation(word.Id);
 
@@ -207,7 +198,7 @@ namespace BucketOfThoughts.Services.Languages
             var spanishWords = _dbContext.Words.Where(x => x.LanguageId == 2).ToList();
             if (!spanishWords.Any())
             {
-                throw new Exception("Words not found"); //TODO make custom not found exception
+                throw new NotFoundException("Random Word");
             }
 
             var randomWord = spanishWords[rnd.Next(spanishWords.Count())];

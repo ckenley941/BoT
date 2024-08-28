@@ -15,7 +15,7 @@ namespace BucketOfThoughts.Api.Handlers.Outdoors
 
         public async Task<OutdoorActivityLog> HandleAsync(OutdoorActivityLogDto newItem)
         {
-            return await _service.InsertAsync(newItem);
+            return await _service.InsertDtoAsync(newItem);
         }
     }
 }

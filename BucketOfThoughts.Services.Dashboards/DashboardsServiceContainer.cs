@@ -20,10 +20,10 @@ namespace BucketOfThoughts.Service.Dashboards
         public ThoughtsService ThoughtsService { get { return _thoughtsService.Value; } }
         public OutdoorActivityLogService OutdoorActivityLogService { get { return _outdoorActivityLogService.Value; } }
         public ConcertService ConcertService { get { return _concertService.Value; } }
-        public DashboardsServiceContainer(IDistributedCache cache, IMapper mapper, LanguageDbContext languageDbContext, IThoughtsRepository thoughtsRepository, ThoughtsDbContext thoughtsDbContext, MusicDbContext musicDbContext)
+        public DashboardsServiceContainer(IDistributedCache cache, IMapper mapper, LanguageDbContext languageDbContext, ThoughtsDbContext thoughtsDbContext, MusicDbContext musicDbContext)
         {
             _wordsService = new(() => { return new WordsService(languageDbContext); });
-            _thoughtsService = new(() => { return new ThoughtsService(thoughtsRepository, cache, mapper); });
+            _thoughtsService = new(() => { return new ThoughtsService(thoughtsDbContext, cache, mapper); });
             _outdoorActivityLogService = new(() => { return new OutdoorActivityLogService(thoughtsDbContext, cache, mapper); });
             _concertService = new(() => { return new ConcertService(musicDbContext, cache, mapper); });
         }

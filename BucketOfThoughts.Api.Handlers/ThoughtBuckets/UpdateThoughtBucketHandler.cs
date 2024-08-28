@@ -14,7 +14,7 @@ namespace BucketOfThoughts.Api.Handlers.ThoughtBuckets
 
         public async Task HandleAsync(ThoughtBucketDto updateItem)
         {
-            await _service.UpdateAsync(updateItem, true, CacheKeys.ThoughtBuckets);
+            await _service.UpdateDtoAsync(updateItem, true, CacheKeys.ThoughtBuckets);
         }
     }
 }

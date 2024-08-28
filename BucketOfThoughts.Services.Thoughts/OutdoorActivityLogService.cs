@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BucketOfThoughts.Core.Infrastructure.BaseClasses;
+using BucketOfThoughts.Core.Infrastructure.Exceptions;
 using BucketOfThoughts.Core.Infrastructure.Objects;
 using BucketOfThoughts.Services.Thoughts.Data;
 using BucketOfThoughts.Services.Thoughts.Objects;
@@ -8,7 +9,7 @@ using Microsoft.Extensions.Caching.Distributed;
 
 namespace BucketOfThoughts.Services.Thoughts
 {
-    public class OutdoorActivityLogService : BaseService<OutdoorActivityLog, OutdoorActivityLogDto>
+    public class OutdoorActivityLogService : BaseCRUDService<OutdoorActivityLog, OutdoorActivityLogDto>
     {
         protected readonly ThoughtsDbContext _dbContext;
         public OutdoorActivityLogService(ThoughtsDbContext dbContext, IDistributedCache cache, IMapper mapper) : base(dbContext, cache, mapper)
@@ -18,11 +19,13 @@ namespace BucketOfThoughts.Services.Thoughts
 
         public async Task<IEnumerable<OutdoorActivityLogDto>> GetDtoAsync()
         {
-            var outdoorActivityLogs = await _dbContext.OutdoorActivityLogs
-                .OrderByDescending(ota => ota.ActivityDate)
-                .ToListAsync();
+            var queryParams = new GetQueryParams<OutdoorActivityLog>()
+            {
+                OrderBy = t => t.OrderByDescending(ota => ota.ActivityDate)
+            };
 
-            return _mapper.Map<IEnumerable<OutdoorActivityLogDto>>(outdoorActivityLogs);
+            var outdoorActivityLogs = await base.GetDtoAsync(queryParams);
+            return outdoorActivityLogs;
         }
 
         public async Task<OutdoorActivityLogDto> GetRandomOutdoorActivityAsync()
@@ -31,7 +34,7 @@ namespace BucketOfThoughts.Services.Thoughts
 
             if (outdoorActivities?.Count <= 0)
             {
-                throw new Exception("Outdoor activities not found"); //TODO don't throw error?
+                throw new NotFoundException("Outdoor Activities");
             }
 
             var rand = new Random();
