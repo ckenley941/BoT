@@ -6,6 +6,7 @@ using BucketOfThoughts.Services.Thoughts;
 using BucketOfThoughts.Services.Thoughts.Data;
 using Microsoft.Extensions.Caching.Distributed;
 using BucketOfThoughts.Services.Music;
+using BucketOfThoughts.Services.Music.Data;
 
 namespace BucketOfThoughts.Service.Dashboards
 {
@@ -19,12 +20,12 @@ namespace BucketOfThoughts.Service.Dashboards
         public ThoughtsService ThoughtsService { get { return _thoughtsService.Value; } }
         public OutdoorActivityLogService OutdoorActivityLogService { get { return _outdoorActivityLogService.Value; } }
         public ConcertService ConcertService { get { return _concertService.Value; } }
-        public DashboardsServiceContainer(IDistributedCache cache, IMapper mapper, LanguageDbContext languageDbContext, IThoughtsRepository thoughtsRepository, IOutdoorActivityLogRepository outdoorActivityLogRepository, IConcertRepository concertRepository)
+        public DashboardsServiceContainer(IDistributedCache cache, IMapper mapper, LanguageDbContext languageDbContext, IThoughtsRepository thoughtsRepository, ThoughtsDbContext thoughtsDbContext, MusicDbContext musicDbContext)
         {
             _wordsService = new(() => { return new WordsService(languageDbContext); });
             _thoughtsService = new(() => { return new ThoughtsService(thoughtsRepository, cache, mapper); });
-            _outdoorActivityLogService = new(() => { return new OutdoorActivityLogService(outdoorActivityLogRepository, cache, mapper); });
-            _concertService = new(() => { return new ConcertService(concertRepository, cache, mapper); });
+            _outdoorActivityLogService = new(() => { return new OutdoorActivityLogService(thoughtsDbContext, cache, mapper); });
+            _concertService = new(() => { return new ConcertService(musicDbContext, cache, mapper); });
         }
 
     }

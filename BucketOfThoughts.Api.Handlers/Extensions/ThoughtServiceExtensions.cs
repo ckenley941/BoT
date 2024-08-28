@@ -22,11 +22,8 @@ namespace BucketOfThoughts.Api.Handlers.Extensions
                 ServiceLifetime.Scoped);
 
             services.AddScoped<ThoughtBucketsService>();
-            services.AddScoped<IThoughtBucketsRepository, ThoughtBucketsRepository>();
             services.AddScoped<IThoughtsService, ThoughtsService>();
-            //services.AddScoped<ICrudRepository<Thought>, ThoughtsRepository>();
             services.AddScoped<IThoughtsRepository, ThoughtsRepository>();
-            services.AddScoped<IOutdoorActivityLogRepository, OutdoorActivityLogRepository>();
             services.AddScoped<OutdoorActivityLogService>();
 
 

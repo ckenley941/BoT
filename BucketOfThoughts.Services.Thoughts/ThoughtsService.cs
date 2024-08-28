@@ -14,7 +14,7 @@ using System.Text.Json.Nodes;
 
 namespace BucketOfThoughts.Services.Thoughts
 {
-    public interface IThoughtsService : ICrudService<Thought, ThoughtDto>
+    public interface IThoughtsService 
     {
         Task<ThoughtDto> GetByIdAsync(int id);
         Task<ThoughtDto> GetRandomThoughtAsync(int? thoughtBucketId);

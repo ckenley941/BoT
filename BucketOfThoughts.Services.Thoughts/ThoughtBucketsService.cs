@@ -11,7 +11,7 @@ namespace BucketOfThoughts.Services.Thoughts
     public class ThoughtBucketsService : BaseService<ThoughtBucket, ThoughtBucketDto>
     {
         private readonly ThoughtsDbContext _dbContext;
-        public ThoughtBucketsService(IThoughtBucketsRepository repository, IDistributedCache cache, ThoughtsDbContext dbContext, IMapper mapper) : base (repository, cache, mapper)
+        public ThoughtBucketsService(ThoughtsDbContext dbContext, IDistributedCache cache, IMapper mapper) : base (dbContext, cache, mapper)
         {
             _dbContext = dbContext;
         }
@@ -39,14 +39,11 @@ namespace BucketOfThoughts.Services.Thoughts
             return categories;
         }
 
-        public override async Task<ThoughtBucket> InsertAsync(ThoughtBucketDto newItem)
+        public async Task<ThoughtBucket> InsertAsync(ThoughtBucketDto newItem)
         {
             //Set default ThoughtModuleId if not supplied by user
             newItem.ThoughtModuleId = newItem.ThoughtModuleId == 0 ? await GetDefaultModuleId() : newItem.ThoughtModuleId;
-
-            var itemToAdd = await base.InsertAsync(newItem);
-            await _cache.RemoveAsync(CacheKeys.ThoughtBuckets);
-
+            var itemToAdd = await base.InsertAsync(newItem, true, CacheKeys.ThoughtBuckets);
             return itemToAdd;
         }
 

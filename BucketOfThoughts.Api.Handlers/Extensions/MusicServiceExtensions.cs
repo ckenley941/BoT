@@ -21,7 +21,6 @@ namespace BucketOfThoughts.Api.Handlers.Extensions
                b => b.MigrationsAssembly(typeof(MusicDbContext).Assembly.FullName)),
              ServiceLifetime.Scoped);
 
-            services.AddScoped<IConcertRepository, ConcertRepository>();
             services.AddScoped<ConcertService>();
 
             return services;

@@ -3,6 +3,7 @@ using BucketOfThoughts.Core.Infrastructure.BaseClasses;
 using BucketOfThoughts.Core.Infrastructure.Objects;
 using BucketOfThoughts.Services.Music.Data;
 using BucketOfThoughts.Services.Music.Objects;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
 
 namespace BucketOfThoughts.Services.Music
@@ -10,8 +11,10 @@ namespace BucketOfThoughts.Services.Music
 
     public class ConcertService: BaseService<Concert, ConcertDto>
     {
-        public ConcertService(IConcertRepository repository, IDistributedCache cache, IMapper mapper) : base(repository, cache, mapper)
+        protected readonly new MusicDbContext _dbContext;
+        public ConcertService(MusicDbContext dbContext, IDistributedCache cache, IMapper mapper) : base(dbContext, cache, mapper)
         {
+            _dbContext = dbContext;
         }
 
         public async Task<ConcertDto> GetRandomConcertAsync()
@@ -20,8 +23,7 @@ namespace BucketOfThoughts.Services.Music
             {
                 IncludeProperties = "Band,Venue,Songs",
             };
-            var concerts = (await _repository.GetAsync(queryParams)).ToList();
-
+            var concerts = (await base.GetAsync(queryParams)).ToList();
             if (concerts?.Count <= 0)
             {
                 throw new Exception("Concerts not found"); //TODO don't throw error?

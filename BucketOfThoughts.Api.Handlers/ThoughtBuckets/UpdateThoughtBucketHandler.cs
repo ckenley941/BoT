@@ -1,4 +1,5 @@
-﻿using BucketOfThoughts.Services.Thoughts;
+﻿using BucketOfThoughts.Core.Infrastructure.Constants;
+using BucketOfThoughts.Services.Thoughts;
 using BucketOfThoughts.Services.Thoughts.Objects;
 
 namespace BucketOfThoughts.Api.Handlers.ThoughtBuckets
@@ -13,7 +14,7 @@ namespace BucketOfThoughts.Api.Handlers.ThoughtBuckets
 
         public async Task HandleAsync(ThoughtBucketDto updateItem)
         {
-            await _service.UpdateAsync(updateItem);
+            await _service.UpdateAsync(updateItem, true, CacheKeys.ThoughtBuckets);
         }
     }
 }
