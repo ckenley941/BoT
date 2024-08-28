@@ -3,13 +3,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BucketOfThoughts.Services.Shared.Data;
 
-public partial class SharedDbContext : BaseDbContext<SharedDbContext>
+public partial class SharedDbContext<T> : BaseDbContext<T> where T : DbContext
 {
     public SharedDbContext()
     {
     }
 
-    public SharedDbContext(DbContextOptions<SharedDbContext> options)
+    public SharedDbContext(DbContextOptions<T> options)
         : base(options)
     {
     }

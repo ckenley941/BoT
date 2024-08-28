@@ -87,7 +87,7 @@ namespace BucketOfThoughts.Services.Music.Migrations
                     CreatedDateTime = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false, defaultValueSql: "(getutcdate())"),
                     ModifiedDateTime = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     ConcertId = table.Column<int>(type: "int", nullable: false),
-                    SetNo = table.Column<int>(type: "int", nullable: false),
+                    SetNo = table.Column<int>(type: "nvarchar(5)", nullable: false),
                     SongNo = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SongLength = table.Column<TimeSpan>(type: "time", nullable: true),

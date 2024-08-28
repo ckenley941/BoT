@@ -2,6 +2,7 @@
 using BucketOfThoughts.Api.Handlers.ThoughtBuckets;
 using BucketOfThoughts.Api.Handlers.Thoughts;
 using BucketOfThoughts.Core.Infrastructure.Constants;
+using BucketOfThoughts.Services.Music;
 using BucketOfThoughts.Services.Thoughts;
 using BucketOfThoughts.Services.Thoughts.Data;
 using BucketOfThoughts.Services.Thoughts.Objects;

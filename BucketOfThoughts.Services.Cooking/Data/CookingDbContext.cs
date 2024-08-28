@@ -1,11 +1,11 @@
-﻿using BucketOfThoughts.Core.Infrastructure.BaseClasses;
-using BucketOfThoughts.Services.Cooking.Data;
+﻿using BucketOfThoughts.Services.Cooking.Data;
+using BucketOfThoughts.Services.Shared.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BucketOfThoughts.Services.Thoughts.Data;
 
-public partial class CookingDbContext : BaseDbContext<CookingDbContext>
+public partial class CookingDbContext : SharedDbContext<CookingDbContext>
 {
     public CookingDbContext()
     {
@@ -15,13 +15,11 @@ public partial class CookingDbContext : BaseDbContext<CookingDbContext>
         : base(options)
     {
     }
-    //public virtual DbSet<Note> Notes { get; set; }
     public virtual DbSet<Recipe> Recipes { get; set; }
     public virtual DbSet<RecipeIngredient> RecipeIngredients { get; set; }
     public virtual DbSet<RecipeInstruction> RecipeInstructions { get; set; }
     public virtual DbSet<RecipeNote> RecipeNotes { get; set; }
     public virtual DbSet<RecipeWebsiteLink> RecipeWebsiteLinks { get; set; }
-   // public virtual DbSet<WebsiteLink> WebsiteLinks { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

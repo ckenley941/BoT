@@ -4,7 +4,9 @@ using BucketOfThoughts.Core.Infrastructure.Interfaces;
 using BucketOfThoughts.Services.Languages;
 using BucketOfThoughts.Services.Languages.Data;
 using BucketOfThoughts.Services.Languages.Objects;
+using BucketOfThoughts.Services.Music;
 using BucketOfThoughts.Services.Music.Data;
+using BucketOfThoughts.Services.Thoughts;
 using Microsoft.EntityFrameworkCore;
 
 namespace BucketOfThoughts.Api.Handlers.Extensions
@@ -18,6 +20,9 @@ namespace BucketOfThoughts.Api.Handlers.Extensions
                options.UseSqlServer(configuration.GetConnectionString(ConnectionStrings.BucketOfThoughts),
                b => b.MigrationsAssembly(typeof(MusicDbContext).Assembly.FullName)),
              ServiceLifetime.Scoped);
+
+            services.AddScoped<IConcertRepository, ConcertRepository>();
+            services.AddScoped<ConcertService>();
 
             return services;
         }

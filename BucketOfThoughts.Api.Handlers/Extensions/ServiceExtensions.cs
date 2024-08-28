@@ -1,4 +1,5 @@
 ﻿using BucketOfThoughts.Core.Infrastructure.Exceptions;
+using BucketOfThoughts.Services.Music;
 using BucketOfThoughts.Services.Thoughts;
 using System.Text.Json.Serialization;
 
@@ -16,8 +17,9 @@ namespace BucketOfThoughts.Api.Handlers.Extensions
 
 
             services.AddAutoMapper(cfg => {
-                //cfg.AddExpressionMapping();
-            }, typeof(ThoughtProfile));
+            }, typeof(ThoughtProfile))
+                .AddAutoMapper(cfg => {
+            }, typeof(MusicProfile));
 
             services.AddCors(p => p.AddPolicy("corsapp", builder =>
             {
@@ -27,6 +29,7 @@ namespace BucketOfThoughts.Api.Handlers.Extensions
             services.AddThoughtServices(configuration);
             services.AddLanguageServices(configuration);
             services.AddMusicServices(configuration);
+            services.AddCookingServices(configuration);
             services.AddDashboardServices();
           
 

@@ -29,6 +29,9 @@ namespace BucketOfThoughts.Service.Dashboards
                 case "RecentThought":
                     dashboardResults.Data = (await _serviceContainer.ThoughtsService.GetRecentThoughtAsync()).AsEnumerable();
                     break;
+                case "RandomConcert":
+                    dashboardResults.Data = (await _serviceContainer.ConcertService.GetRandomConcertAsync()).AsEnumerable();
+                    break;
                 case "AllThoughts":
                     dashboardResults.Data = await _serviceContainer.ThoughtsService.GetGridAsync();
                     break;

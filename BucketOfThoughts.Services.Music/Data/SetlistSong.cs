@@ -5,8 +5,8 @@ namespace BucketOfThoughts.Services.Music.Data
     public partial class SetlistSong : BaseModifiableDbTable
     {
         public int ConcertId { get; set; }
-        public int SetNo { get; set; }
-        public string SongNo { get; set; }
+        public string SetNo { get; set; }
+        public int SongNo { get; set; }
         public string Name { get; set; } = null!;
         public TimeSpan? SongLength { get; set; }   
         public bool HasCarrot { get; set; } = false;

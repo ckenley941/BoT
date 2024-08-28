@@ -1,4 +1,6 @@
-﻿namespace BucketOfThoughts.Services.Thoughts.Data;
+﻿using BucketOfThoughts.Services.Shared.Data;
+
+namespace BucketOfThoughts.Services.Thoughts.Data;
 
 public partial class ThoughtWebsiteLink 
 {
@@ -8,5 +10,5 @@ public partial class ThoughtWebsiteLink
 
     public virtual Thought Thought { get; set; } = null!;
 
-   // public virtual WebsiteLink WebsiteLink { get; set; } = null!;
+    public virtual WebsiteLink WebsiteLink { get; set; } = null!;
 }

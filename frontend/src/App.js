@@ -15,6 +15,7 @@ import AddOutdoorActivity from './components/outdoors/AddOutdoorActivity.jsx'
 import OutdoorActivityGrid from './components/outdoors/OutdoorActivityGrid.jsx'
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import Concert from './components/music/Concert.jsx';
 
 const App = () => {
   const [globalSearch, setGlobalSearch] = useState("");  
@@ -43,6 +44,8 @@ const App = () => {
         <Route exact path="/add-outdoor-activity"  element={ <AddOutdoorActivity/>}>
         </Route>
         <Route exact path="/outdoor-activity-logs"  element={ <OutdoorActivityGrid/>}>
+        </Route>
+        <Route exact path="/concert"  element={ <Concert/>}>
         </Route>
         <Route exact path="/settings"  element={ <Settings/>}>
         </Route>

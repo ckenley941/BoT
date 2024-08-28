@@ -1,10 +1,11 @@
 ﻿using BucketOfThoughts.Core.Infrastructure.BaseClasses;
+using BucketOfThoughts.Services.Shared.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BucketOfThoughts.Services.Thoughts.Data;
 
-public partial class ThoughtsDbContext : BaseDbContext<ThoughtsDbContext>
+public partial class ThoughtsDbContext : SharedDbContext<ThoughtsDbContext>
 {
     public ThoughtsDbContext()
     {
@@ -30,7 +31,7 @@ public partial class ThoughtsDbContext : BaseDbContext<ThoughtsDbContext>
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-
+        base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<OutdoorActivityLog>(entity =>
         {
             entity.HasKey(e => e.Id);

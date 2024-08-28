@@ -82,6 +82,9 @@ export default function Dashboard() {
             <MenuItem key={"RandomOutdoorActivity"} value={"RandomOutdoorActivity"}>
               Random Outdoor Activity
             </MenuItem>
+            <MenuItem key={"RandomConcert"} value={"RandomConcert"}>
+              Random Concert
+            </MenuItem>
           </Select>
         </FormControl>
       </Grid>
