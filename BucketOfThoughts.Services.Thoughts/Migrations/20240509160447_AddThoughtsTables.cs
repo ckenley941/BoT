@@ -1,4 +1,5 @@
 ﻿using System;
+using BucketOfThoughts.Data;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -186,7 +187,7 @@ namespace BucketOfThoughts.Services.Thoughts.Migrations
                 table: "ThoughtWebsiteLink",
                 column: "WebsiteLinkId");
 
-            SeedData(migrationBuilder);
+            SeedData.AddDefaultThoughtModule(migrationBuilder);
         }
 
         /// <inheritdoc />
@@ -212,17 +213,6 @@ namespace BucketOfThoughts.Services.Thoughts.Migrations
 
             migrationBuilder.DropTable(
                 name: "ThoughtModule");
-        }
-
-        private void SeedData(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.Sql(@"IF NOT EXISTS (SELECT id FROM ThoughtModule WHERE Description = 'ThoughtModule')
-                      BEGIN
-                         INSERT INTO ThoughtModule (Description) VALUES ('Thought')
-                         INSERT INTO ThoughtCategory (ModifiedDateTime, ThoughtModuleId, Description, SortOrder)
-                         VALUES (GETUTCDATE(), SCOPE_IDENTITY(), 'Thought', 1)
-                      END
-                      GO");
         }
     }
 }

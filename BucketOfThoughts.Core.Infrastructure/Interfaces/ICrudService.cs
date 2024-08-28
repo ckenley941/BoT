@@ -6,7 +6,7 @@ namespace BucketOfThoughts.Core.Infrastructure.Interfaces
     public interface ICrudService<TEntity, TDto> where TEntity : BaseDbTable where TDto : BaseDto
     {
         Task<TEntity> GetByIdAsync(int id, string? includeProperties = null);
-        public Task<IEnumerable<TDto>> GetDtoByIdAsync(GetQueryParams<TEntity>? queryParams = null);
+        public Task<TDto> GetDtoByIdAsync(int id, string? includeProperties = null);
         public Task<IEnumerable<TEntity>> GetAsync(GetQueryParams<TEntity>? queryParams = null);
         public Task<IEnumerable<TEntity>> GetFromCacheAsync(string cacheKey, GetQueryParams<TEntity>? queryParams = null);
         public Task<IEnumerable<TDto>> GetDtoAsync(GetQueryParams<TEntity>? queryParams = null);

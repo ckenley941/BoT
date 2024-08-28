@@ -1,5 +1,7 @@
 ﻿using BucketOfThoughts.Core.Infrastructure.Extensions;
+using BucketOfThoughts.Core.Infrastructure.Objects;
 using BucketOfThoughts.Service.Dashboards.Objects;
+using BucketOfThoughts.Services.Music.Data;
 
 namespace BucketOfThoughts.Service.Dashboards
 {
@@ -24,13 +26,14 @@ namespace BucketOfThoughts.Service.Dashboards
                     dashboardResults.Data = (await _serviceContainer.WordsService.GetRandomWordAsync()).AsEnumerable();
                     break;
                 case "RandomOutdoorActivity":
-                    dashboardResults.Data = (await _serviceContainer.OutdoorActivityLogService.GetRandomOutdoorActivityAsync()).AsEnumerable();
+                    dashboardResults.Data = (await _serviceContainer.OutdoorActivityLogService.GetRandomDtoAsync()).AsEnumerable();
                     break;
                 case "RecentThought":
                     dashboardResults.Data = (await _serviceContainer.ThoughtsService.GetRecentThoughtAsync()).AsEnumerable();
                     break;
                 case "RandomConcert":
-                    dashboardResults.Data = (await _serviceContainer.ConcertService.GetRandomConcertAsync()).AsEnumerable();
+                    dashboardResults.Data = (await _serviceContainer.ConcertService.GetRandomDtoAsync(new GetQueryParams<Concert>(){ IncludeProperties = "Band,Venue,Songs" }))
+                        .AsEnumerable();
                     break;
                 case "AllThoughts":
                     dashboardResults.Data = await _serviceContainer.ThoughtsService.GetGridAsync();

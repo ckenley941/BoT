@@ -1,4 +1,5 @@
 ﻿using System;
+using BucketOfThoughts.Data;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -52,7 +53,7 @@ namespace BucketOfThoughts.Services.Thoughts.Migrations
                 table: "ThoughtBucket",
                 column: "ThoughtModuleId");
 
-            SeedData(migrationBuilder);
+            SeedData.MoveFromThoughtCategoryToThoughtBucket(migrationBuilder);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Thought_ThoughtBucket",
@@ -79,14 +80,6 @@ namespace BucketOfThoughts.Services.Thoughts.Migrations
             migrationBuilder.DropColumn(
                 name: "ThoughtBucketId",
                 table: "Thought");
-        }
-
-        private void SeedData(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.Sql(@"
-                  INSERT INTO ThoughtBucket (ModifiedDateTime, ThoughtModuleId, Description, ParentId, SortOrder)
-                  SELECT ModifiedDateTime, ThoughtModuleId, Description, ParentId, SortOrder FROM ThoughtCategory;
-                  UPDATE THOUGHT SET ThoughtBucketId = ThoughtCategoryId");
         }
     }
 }

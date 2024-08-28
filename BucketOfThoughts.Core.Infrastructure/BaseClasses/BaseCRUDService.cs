@@ -5,6 +5,7 @@ using BucketOfThoughts.Core.Infrastructure.Interfaces;
 using BucketOfThoughts.Core.Infrastructure.Objects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
+using System;
 
 namespace BucketOfThoughts.Core.Infrastructure.BaseClasses
 {
@@ -40,10 +41,30 @@ namespace BucketOfThoughts.Core.Infrastructure.BaseClasses
             }
         }
 
-        public virtual async Task<IEnumerable<TDto>> GetDtoByIdAsync(GetQueryParams<TEntity>? queryParams = null)
+        public virtual async Task<TDto> GetDtoByIdAsync(int id, string? includeProperties = null)
+        {
+            var data = await GetByIdAsync(id, includeProperties);
+            var dtoData = _mapper.Map<TDto>(data);
+            return dtoData;
+        }
+
+        public virtual async Task<TEntity> GetRandomAsync(GetQueryParams<TEntity>? queryParams = null)
         {
             var data = await GetAsync(queryParams);
-            var dtoData = _mapper.Map<IEnumerable<TDto>>(data);
+            if (!data.Any())
+            {
+                throw new NotFoundException();
+            }
+            var rand = new Random();
+
+            var randData = data.ToList()[rand.Next(data.Count())];
+            return randData;
+        }
+
+        public virtual async Task<TDto> GetRandomDtoAsync(GetQueryParams<TEntity>? queryParams = null)
+        {
+            var data = await GetRandomAsync(queryParams);
+            var dtoData = _mapper.Map<TDto>(data);
             return dtoData;
         }
 

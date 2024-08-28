@@ -18,24 +18,47 @@ namespace BucketOfThoughts.Services.Music
             _dbContext = dbContext;
         }
 
-        public async Task<ConcertDto> GetRandomConcertAsync()
+        public async Task InsertBySetlistAsync(InsertConcertDto concertDto)
         {
-            var queryParams = new GetQueryParams<Concert>()
+            var concert = new Concert()
             {
-                IncludeProperties = "Band,Venue,Songs",
+                BandId = concertDto.BandId,
+                VenueId = concertDto.VenueId,
+                ConcertDate = concertDto.ConcertDate,
+                ConcertDayOfWeek = concertDto.ConcertDayOfWeek ?? concertDto.ConcertDate.DayOfWeek.ToString(),
+                Notes = concertDto.Notes
             };
-            var concerts = (await base.GetAsync(queryParams)).ToList();
-            if (concerts?.Count <= 0)
+
+            concertDto.Setlist.ForEach(sl =>
             {
-                throw new NotFoundException("Concerts");
-            }
+                var songNo = 1;
+                var songs = sl.SetlistBody.Split(", ").ToList();                
+                songs.ForEach(s =>
+                {
+                    var songsWithCarrots = s.Split(" > ").ToList();
+                    //Creating copy of list so that if there is a jam sandwich we properly carrot the first and not the second
+                    //i.e. YEM > Wilson > YEM  as we iterate through the songsWithCarrotsCopy list it will know to only carrot the first YEM and not the second one since it will be removed
+                    var songsWithCarrotsCopy = songsWithCarrots.ConvertAll(s => s);
+                    songsWithCarrots.ForEach(swc =>
+                    {
+                        var setlistSong = new SetlistSong()
+                        {
+                            Name = swc,
+                            SetNo = sl.SetNo,
+                            SongNo = songNo,
+                        };
 
-            var rand = new Random();
+                        if (songsWithCarrotsCopy.IndexOf(swc) != songsWithCarrotsCopy.Count - 1)
+                        {
+                            setlistSong.HasCarrot = true;
+                        }
 
-            var randConcert = concerts[rand.Next(concerts.Count)];
-
-            return _mapper.Map<ConcertDto>(randConcert);
+                        songNo++;
+                        concert.Songs.Add(setlistSong);
+                        songsWithCarrotsCopy.Remove(swc);
+                    });
+                });
+            }); 
         }
-
     }   
 }

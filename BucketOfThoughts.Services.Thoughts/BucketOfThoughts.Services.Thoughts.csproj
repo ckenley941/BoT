@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BucketOfThoughts.Core.Infrastructure\BucketOfThoughts.Core.Infrastructure.csproj" />
+    <ProjectReference Include="..\BucketOfThoughts.Data\BucketOfThoughts.Data.csproj" />
     <ProjectReference Include="..\BucketOfThoughts.Services.Shared\BucketOfThoughts.Services.Shared.csproj" />
   </ItemGroup>
 
