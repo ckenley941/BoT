@@ -32,7 +32,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BucketOfThoughts.Services.C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BucketOfThoughts.Services.Shared", "BucketOfThoughts.Services.Shared\BucketOfThoughts.Services.Shared.csproj", "{BB12802F-8E41-48C9-A4FA-BCE357D2188C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BucketOfThoughts.Data", "BucketOfThoughts.Data\BucketOfThoughts.Data.csproj", "{0C174D86-FE86-4266-8608-453DB712F2D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BucketOfThoughts.Data", "BucketOfThoughts.Data\BucketOfThoughts.Data.csproj", "{0C174D86-FE86-4266-8608-453DB712F2D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BucketOfThoughts.Tests.Integration", "BucketOfThoughts.Tests.Integration\BucketOfThoughts.Tests.Integration.csproj", "{61BA9024-3583-44D7-9768-8304867BE336}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -76,6 +78,10 @@ Global
 		{0C174D86-FE86-4266-8608-453DB712F2D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C174D86-FE86-4266-8608-453DB712F2D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C174D86-FE86-4266-8608-453DB712F2D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61BA9024-3583-44D7-9768-8304867BE336}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61BA9024-3583-44D7-9768-8304867BE336}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61BA9024-3583-44D7-9768-8304867BE336}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61BA9024-3583-44D7-9768-8304867BE336}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
