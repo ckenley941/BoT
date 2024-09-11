@@ -60,7 +60,7 @@ namespace BucketOfThoughts.Services.Music.Migrations
                     VenueId = table.Column<int>(type: "int", nullable: true),
                     ConcertDate = table.Column<DateTime>(type: "date", nullable: false),
                     ConcertDayOfWeek = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Story = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>

@@ -10,7 +10,7 @@ import Tab from '@mui/material/Tab';
 import ThoughtsGrid from './ThoughtsGrid.jsx'
 import TabPanel from "../controls/TabPanel.jsx"
 
-import { getRandomThought, getRelatedThoughts, getThoughtById } from "../../services/ThoughtsService.ts";
+import { getRelatedThoughts } from "../../services/ThoughtsService.ts";
 import JsonDataGrid from "../controls/JsonDataGrid.jsx";
 
 export default function Thought(props) {

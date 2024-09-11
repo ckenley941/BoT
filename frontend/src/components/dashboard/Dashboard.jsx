@@ -17,7 +17,7 @@ import { getThoughtBuckets } from "../../services/ThoughtsService.ts";
 
 export default function Dashboard() {
   const [currentlySelectedDashboard, setCurrentlySelectedDashboard] = useState("RandomThought");
-  const [selectedBucketId, setSelectBucketId] = useState(0);
+  const [selectedBucketId, setSelectedBucketId] = useState(0);
   const [data, setData] = useState(null);
   const [showBuckets, setShowBuckets] = useState(true); //setting to true for now while defaulting to RandomThought
   const [thoughtBuckets, setThoughtBuckets] = useState([]);
@@ -28,6 +28,7 @@ export default function Dashboard() {
   }, []);
 
   useEffect(() => {
+    console.log('effect');
     loadData();
   }, [currentlySelectedDashboard, selectedBucketId]);
 
@@ -45,7 +46,7 @@ export default function Dashboard() {
   };
 
   const handleCategoryChange = (e) => {
-    setSelectBucketId(e.target.value);
+    setSelectedBucketId(e.target.value);
   };
 
   const loadData = () => {

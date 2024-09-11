@@ -2,6 +2,7 @@
 using BucketOfThoughts.Core.Infrastructure.Objects;
 using BucketOfThoughts.Service.Dashboards.Objects;
 using BucketOfThoughts.Services.Music.Data;
+using System.Text.Json.Nodes;
 
 namespace BucketOfThoughts.Service.Dashboards
 {
@@ -32,6 +33,8 @@ namespace BucketOfThoughts.Service.Dashboards
                     dashboardResults.Data = (await _serviceContainer.ThoughtsService.GetRecentThoughtAsync()).AsEnumerable();
                     break;
                 case "RandomConcert":
+                    var a = await _serviceContainer.ConcertService.GetRandomDtoAsync(new GetQueryParams<Concert>() { IncludeProperties = "Band,Venue,Songs" });
+                    var b = System.Text.Json.JsonSerializer.Serialize(a);
                     dashboardResults.Data = (await _serviceContainer.ConcertService.GetRandomDtoAsync(new GetQueryParams<Concert>(){ IncludeProperties = "Band,Venue,Songs" }))
                         .AsEnumerable();
                     break;

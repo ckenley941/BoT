@@ -29,6 +29,7 @@ import {
   Chalet,
   Settings,
   Search,
+  AccountBalance
 } from "@mui/icons-material/";
 import HikingIcon from "@mui/icons-material/Hiking";
 
@@ -67,6 +68,11 @@ export default function Layout(props) {
       text: "Add Thought",
       icon: <AddCircleOutlineOutlined color="secondary" />,
       path: "/add-thought",
+    },
+    {
+      text: "Thought Bank",
+      icon: <AccountBalance color="secondary" />,
+      path: "/thought-bank",
     },
     {
       text: "Organize Thoughts",

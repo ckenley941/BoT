@@ -83,7 +83,7 @@ export default function Concert(props) {
                 <></>}
                 </Grid.Col>
                 </Grid.Row>
-                       {formState.notes.length > 0 && (
+                       {formState.notes && formState.notes.length > 0 && (
             <Grid.Row className="mt-5 ml-3">              
               {formState.notes}
             </Grid.Row>

@@ -20,6 +20,10 @@ export function getRandomThought() {
     return client.get(`${apiUrl}/thoughts/${id}`);
   }
 
+  export function getThoughtBank() {
+    return client.get(`${apiUrl}/thoughts/bank`);
+  }
+
   export function getRelatedThoughts(id: number) {
     return client.get(`${apiUrl}/thoughts/related/${id}`);
   }

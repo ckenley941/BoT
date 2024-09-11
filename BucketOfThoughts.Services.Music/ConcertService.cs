@@ -18,7 +18,7 @@ namespace BucketOfThoughts.Services.Music
             _dbContext = dbContext;
         }
 
-        public async Task InsertBySetlistAsync(InsertConcertDto concertDto)
+        public async Task<Concert> InsertBySetlistAsync(InsertConcertDto concertDto)
         {
             var concert = new Concert()
             {
@@ -59,6 +59,9 @@ namespace BucketOfThoughts.Services.Music
                     });
                 });
             }); 
+
+            await base.InsertAsync(concert);
+            return concert;
         }
     }   
 }

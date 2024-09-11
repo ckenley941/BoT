@@ -3,6 +3,7 @@ using BucketOfThoughts.Core.Infrastructure.BaseClasses;
 using BucketOfThoughts.Core.Infrastructure.Constants;
 using BucketOfThoughts.Core.Infrastructure.Enums;
 using BucketOfThoughts.Core.Infrastructure.Exceptions;
+using BucketOfThoughts.Core.Infrastructure.Extensions;
 using BucketOfThoughts.Core.Infrastructure.Objects;
 using BucketOfThoughts.Services.Thoughts.Data;
 using BucketOfThoughts.Services.Thoughts.Objects;
@@ -17,6 +18,7 @@ namespace BucketOfThoughts.Services.Thoughts
         Task<ThoughtDto> GetRandomThoughtAsync(int? thoughtBucketId);
         Task<IEnumerable<ThoughtGridDto>> GetGridAsync();
         Task<IEnumerable<ThoughtGridDto>> GetRelatedThoughtsGridAsync(int thoughtId);
+        Task<IEnumerable<ThoughtGridDto>> GetThoughtBankAsync();
         Task<Thought> InsertAsync(InsertThoughtDto newItem);
     }
 
@@ -52,8 +54,8 @@ namespace BucketOfThoughts.Services.Thoughts
             }
 
             var rand = new Random();
-
             var randThought = thoughts[rand.Next(thoughts.Count)];
+            await AddToThoughtBank(randThought);      
 
             return _mapper.Map<ThoughtDto>(randThought);
         }
@@ -74,6 +76,12 @@ namespace BucketOfThoughts.Services.Thoughts
         {
             var thoughts = (await GetThoughtsFromCache()).OrderByDescending(x => x.CreatedDateTime);
             return _mapper.Map<IEnumerable<ThoughtGridDto>>(thoughts);
+        }
+
+        public async Task<IEnumerable<ThoughtGridDto>> GetThoughtBankAsync()
+        {
+            var thoughtBank = await _cache.GetRecordAsync<List<Thought>>(CacheKeys.ThoughtBank) ?? new List<Thought>();
+            return _mapper.Map<IEnumerable<ThoughtGridDto>>(thoughtBank);
         }
 
         public async Task<IEnumerable<ThoughtGridDto>> GetRelatedThoughtsGridAsync(int thoughtId)
@@ -175,6 +183,17 @@ namespace BucketOfThoughts.Services.Thoughts
                 IncludeProperties = "ThoughtBucket,ThoughtDetails"
             };
             return (await base.GetFromCacheAsync(CacheKeys.Thoughts, queryParams)).ToList();
+        }
+
+        private async Task AddToThoughtBank(Thought thought)
+        {
+            //Eventually add this to DB but for now just using caching
+            var thoughtBank = await _cache.GetRecordAsync<List<Thought>>(CacheKeys.ThoughtBank) ?? new List<Thought>();
+            if (!thoughtBank.Any(tb => tb.Id == thought.Id))
+            {
+                thoughtBank.Add(thought);
+                await _cache.SetRecordAsync(CacheKeys.ThoughtBank, thoughtBank);
+            }
         }
 
         public Task<Thought> InsertAsync(Thought newItem)

@@ -86,7 +86,6 @@ namespace BucketOfThoughts.Services.Music.Migrations
                         .HasColumnOrder(3);
 
                     b.Property<string>("Notes")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Story")

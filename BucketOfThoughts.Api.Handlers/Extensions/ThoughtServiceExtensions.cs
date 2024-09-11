@@ -29,6 +29,7 @@ namespace BucketOfThoughts.Api.Handlers.Extensions
             services.AddScoped<GetWebsiteLinksHandler>();
             services.AddScoped<GetRelatedThoughtsHandler>();
             services.AddScoped<GetThoughtByIdHandler>();
+            services.AddScoped<GetThoughtBankHandler>();
             services.AddScoped<GetThoughtsGridHandler>();
             services.AddScoped<InsertThoughtHandler>();
 
@@ -56,6 +57,14 @@ namespace BucketOfThoughts.Api.Handlers.Extensions
 
             app.MapGet("/api/thoughts/grid",
              async (GetThoughtsGridHandler handler) =>
+                 await handler.HandleAsync()
+                 is IEnumerable<ThoughtGridDto> data
+                 ? Results.Ok(data)
+                 : Results.NotFound()
+             );
+
+            app.MapGet("/api/thoughts/bank",
+             async (GetThoughtBankHandler handler) =>
                  await handler.HandleAsync()
                  is IEnumerable<ThoughtGridDto> data
                  ? Results.Ok(data)
