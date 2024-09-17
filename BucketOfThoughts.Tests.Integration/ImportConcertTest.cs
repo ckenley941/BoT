@@ -17,22 +17,22 @@ namespace BucketOfThoughts.Tests.Integration
 
         public static readonly object[][] ConcertData =
         {
-            new object[] { "Phish", "Verizon Wireless Music Center", new DateOnly(2010, 8, 13), new List<SetDto>()
+            new object[] { "Phish", "Dick's Sporting Goods Park", new DateOnly(2014, 8, 31), new List<SetDto>()
             {
                 new ()
                 {
                     SetNo = "1",
-                    SetlistBody = "Chalk Dust Torture, Guelah Papyrus, My Sweet One, Axilla, I Didn't Know, Walls of the Cave, Stash, Train Song > Backwards Down the Number Line, Ocelot, The Ballad of Curtis Loew, Wilson > Possum"
+                    SetlistBody = "The Curtain With, Wombat, Kill Devil Falls, Bouncing Around the Room > Poor Heart, A Song I Heard the Ocean Sing, Lawn Boy, Wolfman's Brother, Waiting All Night, Winterqueen, Funky Bitch, Tube > Possum"
                 },
                 new ()
                 {
                     SetNo = "2",
-                    SetlistBody = "Halley's Comet > Light > 46 Days > Maze, Meatstick -> The Mango Song > Fluffhead > Julius"
+                    SetlistBody = "Chalk Dust Torture > Twist > The Wedge > Tweezer > Sand > Piper > Joy > Mike's Song > Sneakin' Sally Through the Alley > Weekapaug Groove"
                 },
                  new ()
                 {
                     SetNo = "E",
-                    SetlistBody = "Contact > Slave to the Traffic Light"
+                    SetlistBody = "Loving Cup > Tweezer Reprise"
                 }
             } }, 
         };

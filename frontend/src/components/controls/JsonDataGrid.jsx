@@ -30,7 +30,6 @@ const parseColumns = () => {
 const parseData = () => {
   let jsonData = JSON.parse(props.jsonString);
   jsonData.forEach((jd, i) => {
-    console.log(i + 1);
     jd.Id = i + 1;
   })
   setJsonData(jsonData);

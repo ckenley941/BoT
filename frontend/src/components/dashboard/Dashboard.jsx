@@ -28,7 +28,6 @@ export default function Dashboard() {
   }, []);
 
   useEffect(() => {
-    console.log('effect');
     loadData();
   }, [currentlySelectedDashboard, selectedBucketId]);
 
@@ -61,12 +60,12 @@ export default function Dashboard() {
     <Grid container spacing={2} className="m-2">
       <Grid xs={4}>
         <FormControl fullWidth>
-          <InputLabel id="dashboard-select-label">Dashboard Panel</InputLabel>
+          <InputLabel id="dashboard-select-label">Memory Lane</InputLabel>
           <Select
             labelId="dashboard-select-label"
             id="dashboard-select"
             name="dashboard-select"
-            label="Dashboard Panel"
+            label="Memory Lane"
             maxWidth
             value={currentlySelectedDashboard}
             onChange={handleInputChange}

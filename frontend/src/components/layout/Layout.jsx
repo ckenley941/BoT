@@ -60,27 +60,27 @@ export default function Layout(props) {
  */
   const menuItems = [
     {
-      text: "Dashboard",
+      text: "Memories of Yesterday",
       icon: <Chalet color="secondary" />,
       path: "/",
     },
     {
-      text: "Add Thought",
+      text: "What's Going Through Your Mind",
       icon: <AddCircleOutlineOutlined color="secondary" />,
       path: "/add-thought",
     },
     {
-      text: "Thought Bank",
+      text: "Short Term Memory",
       icon: <AccountBalance color="secondary" />,
       path: "/thought-bank",
     },
     {
-      text: "Organize Thoughts",
+      text: "Thought Closet",
       icon: <Psychology color="secondary" />,
       path: "/organize-thoughts",
     },
     {
-      text: "Outdoor Life",
+      text: "Outdoor Adventures",
       icon: <HikingIcon color="secondary" />,
       path: "/outdoor-activity-logs",
     },
