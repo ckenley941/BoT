@@ -37,8 +37,9 @@ namespace BucketOfThoughts.Tests.Integration
             } }, 
         };
 
-
-        [Theory, MemberData(nameof(ConcertData))]//(Skip = "Batch process and not a test.")]
+        [Theory(Skip = "Batch process and not a test.")]
+        //[Theory]
+        [MemberData(nameof(ConcertData))]
         public async Task ImportConcert(string bandName, string venueName, DateOnly concertDate, List<SetDto> setlist)
         {
             var performSave = false;

@@ -37,6 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BucketOfThoughts.Services.Languages\BucketOfThoughts.Services.Languages.csproj" />
     <ProjectReference Include="..\BucketOfThoughts.Services.Music\BucketOfThoughts.Services.Music.csproj" />
     <ProjectReference Include="..\BucketOfThoughts.Services.Thoughts\BucketOfThoughts.Services.Thoughts.csproj" />
   </ItemGroup>
