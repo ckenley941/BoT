@@ -12,7 +12,7 @@ namespace BucketOfThoughts.Api.Handlers.Thoughts
         }
         public async Task<ThoughtDto> HandleAsync(int? thoughtBucketId)
         {
-            return await _service.GetRandomThoughtAsync(thoughtBucketId);
+            return await _service.GetRandomThoughtAsync(thoughtBucketId, false);
         }
     }
 }

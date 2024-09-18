@@ -147,12 +147,48 @@ export default function AddThought() {
     setThought(newState);
   };
 
+  const deleteColumn = (index) => {
+    if (index > 0){
+      thought.jsonDetails.keys.splice(1, index);
+    }
+    else if (thought.jsonDetails.keys.length > 1){
+      thought.jsonDetails.keys.splice(index, 1);
+    }
+
+    thought.jsonDetails.values.forEach(v => {
+      let columns = Object.getOwnPropertyNames(v);
+      columns.forEach(c => {
+        var colName = parseInt(c.replace("Column", ""));
+        if (colName === index + 1){
+          delete v[`Column${colName}`];
+        }
+        else if (colName > index + 1){
+          v[`Column${colName - 1}`] = v[`Column${colName}`]; 
+          delete v[`Column${colName}`];
+        }
+      });
+    });    
+    let newState = { ...thought };
+    setThought(newState);
+  };
+
   const addRow = () => {
-    var newRow = {};
+    let newRow = {};
     thought.jsonDetails.keys.forEach((k, i) => {
-      newRow[`Column${i}`] = "";
+      newRow[`Column${i + 1}`] = "";
     });
-    thought.jsonDetails.values.push({});
+    thought.jsonDetails.values.push(newRow);
+    let newState = { ...thought };
+    setThought(newState);
+  };
+
+  const deleteRow = (index) => {
+    if (index > 0){
+      thought.jsonDetails.values.splice(1, index);
+    }
+    else if (thought.jsonDetails.values.length > 1){
+      thought.jsonDetails.values.splice(index, 1);
+    }
     let newState = { ...thought };
     setThought(newState);
   };
@@ -266,7 +302,9 @@ export default function AddThought() {
               handleJsonRowChange={handleJsonRowChange}
               handleAddDetail={addDetail}
               handleAddColumn={addColumn}
+              handleDeleteColumn={deleteColumn}
               handleAddRow={addRow}
+              handleDeleteRow={deleteRow}
               handleDelete={deleteDetail}
             ></DetailRow>
           </TabPanel>

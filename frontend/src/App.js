@@ -16,7 +16,7 @@ import OutdoorActivityGrid from './components/outdoors/OutdoorActivityGrid.jsx'
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import Concert from './components/music/Concert.jsx';
-import ThoughtBank from './components/thought/ThoughtBank.jsx';
+import RecentThoughts from './components/thought/RecentThoughts.jsx';
 
 const App = () => {
   const [globalSearch, setGlobalSearch] = useState("");  
@@ -40,7 +40,7 @@ const App = () => {
         </Route>
         <Route exact path="/add-thought"  element={ <AddThought/>}>
         </Route>
-        <Route exact path="/thought-bank"  element={<ThoughtBank/>}>
+        <Route exact path="/recent-thoughts"  element={<RecentThoughts/>}>
         </Route>
         <Route exact path="/organize-thoughts"  element={<ThoughtsGrid globalSearch={globalSearch}/>}>
         </Route>

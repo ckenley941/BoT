@@ -72,7 +72,7 @@ export default function Layout(props) {
     {
       text: "Short Term Memory",
       icon: <AccountBalance color="secondary" />,
-      path: "/thought-bank",
+      path: "/recent-thoughts",
     },
     {
       text: "Thought Closet",

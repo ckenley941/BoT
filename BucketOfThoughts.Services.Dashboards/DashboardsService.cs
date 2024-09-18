@@ -21,7 +21,7 @@ namespace BucketOfThoughts.Service.Dashboards
             switch (dashboardType)
             {
                 case "RandomThought":
-                    dashboardResults.Data = (await _serviceContainer.ThoughtsService.GetRandomThoughtAsync(thoughtBucketId)).AsEnumerable();
+                    dashboardResults.Data = (await _serviceContainer.ThoughtsService.GetRandomThoughtAsync(thoughtBucketId, false)).AsEnumerable();
                     break;
                 case "RandomWord":
                     dashboardResults.Data = (await _serviceContainer.WordsService.GetRandomWordAsync()).AsEnumerable();
@@ -30,11 +30,9 @@ namespace BucketOfThoughts.Service.Dashboards
                     dashboardResults.Data = (await _serviceContainer.OutdoorActivityLogService.GetRandomDtoAsync()).AsEnumerable();
                     break;
                 case "RecentThought":
-                    dashboardResults.Data = (await _serviceContainer.ThoughtsService.GetRecentThoughtAsync()).AsEnumerable();
+                    dashboardResults.Data = (await _serviceContainer.ThoughtsService.GetRandomThoughtAsync(0, true)).AsEnumerable();
                     break;
                 case "RandomConcert":
-                    var a = await _serviceContainer.ConcertService.GetRandomDtoAsync(new GetQueryParams<Concert>() { IncludeProperties = "Band,Venue,Songs" });
-                    var b = System.Text.Json.JsonSerializer.Serialize(a);
                     dashboardResults.Data = (await _serviceContainer.ConcertService.GetRandomDtoAsync(new GetQueryParams<Concert>(){ IncludeProperties = "Band,Venue,Songs" }))
                         .AsEnumerable();
                     break;

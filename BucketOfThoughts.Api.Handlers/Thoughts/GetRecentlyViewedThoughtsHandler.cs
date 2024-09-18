@@ -3,16 +3,16 @@ using BucketOfThoughts.Services.Thoughts.Objects;
 
 namespace BucketOfThoughts.Api.Handlers.Thoughts
 {
-    public class GetRandomThoughtHandler
+    public class GetRecentlyViewedThoughtsHandler
     {
         protected readonly IThoughtsService _service;
-        public GetRandomThoughtHandler(IThoughtsService service)
+        public GetRecentlyViewedThoughtsHandler(IThoughtsService service)
         {
             _service = service;
         }
-        public async Task<ThoughtDto> HandleAsync(int? thoughtBucketId)
+        public async Task<IEnumerable<ThoughtGridDto>> HandleAsync()
         {
-            return await _service.GetRandomThoughtAsync(thoughtBucketId, false);
+            return await _service.GetRecentlyViewedThoughtsAsync();
         }
     }
 }

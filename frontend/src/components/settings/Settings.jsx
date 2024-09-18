@@ -1,15 +1,19 @@
-import Link from '@mui/material/Link';
-import Grid from "@mui/material/Unstable_Grid2";
+import Link from "@mui/material/Link";
+import { Grid } from "tabler-react";
 
-export default function Settings() 
-{
-    return (
-      <Grid container spacing={2} className="m-2">
-        <Grid xs={4}>
-            <Link href="/settings/thought-buckets">Thought Buckets</Link>
-          </Grid>
-      </Grid>
-    );
+export default function Settings() {
+  return (
+    <Grid container>
+      <Grid.Row className="m-2">
+        <Grid.Col md={4} width={12}>
+          <Link href="/settings/thought-buckets">Thought Buckets</Link>
+        </Grid.Col>
+      </Grid.Row>
+      <Grid.Row className="m-2">
+        <Grid.Col md={4} width={12}>
+          <Link href="/settings/thought-buckets">Thought Detail Templates</Link> 
+        </Grid.Col>
+      </Grid.Row>
+    </Grid>
+  );
 }
-
-

@@ -15,10 +15,11 @@ namespace BucketOfThoughts.Services.Thoughts
     public interface IThoughtsService 
     {
         Task<ThoughtDto> GetDtoByIdAsync(int id);
-        Task<ThoughtDto> GetRandomThoughtAsync(int? thoughtBucketId);
         Task<IEnumerable<ThoughtGridDto>> GetGridAsync();
+        Task<ThoughtDto> GetRandomThoughtAsync(int? thoughtBucketId, bool onlyRecentThoughts);
+        Task<IEnumerable<ThoughtGridDto>> GetRecentlyAddedThoughtsAsync();
+        Task<IEnumerable<ThoughtGridDto>> GetRecentlyViewedThoughtsAsync();
         Task<IEnumerable<ThoughtGridDto>> GetRelatedThoughtsGridAsync(int thoughtId);
-        Task<IEnumerable<ThoughtGridDto>> GetThoughtBankAsync();
         Task<Thought> InsertAsync(InsertThoughtDto newItem);
     }
 
@@ -38,10 +39,15 @@ namespace BucketOfThoughts.Services.Thoughts
             return _mapper.Map<ThoughtDto>(thought);
         }
 
-        public async Task<ThoughtDto> GetRandomThoughtAsync(int? thoughtBucketId)
+        public async Task<ThoughtDto> GetRandomThoughtAsync(int? thoughtBucketId, bool onlyRecentThoughts)
         {
             //Eventually remove from cache what has already been used so we don't repeat random thoughts or added a flag
             var thoughts = await GetThoughtsFromCache();
+
+            if (onlyRecentThoughts)
+            {
+                thoughts = thoughts.OrderByDescending(t => t.CreatedDateTime).Take(recentThoughtCount).ToList();
+            }
 
             if (thoughtBucketId > 0)
             {
@@ -60,28 +66,23 @@ namespace BucketOfThoughts.Services.Thoughts
             return _mapper.Map<ThoughtDto>(randThought);
         }
 
-        public async Task<ThoughtDto> GetRecentThoughtAsync()
-        {
-            //Eventually remove from cache what has already been used so we don't repeat random thoughts or add a processing table to show recent ones that were prompted
-            var thoughts = await GetThoughtsFromCache();
-
-            thoughts = thoughts.OrderByDescending(t => t.CreatedDateTime).Take(recentThoughtCount).ToList();     
-            var rand = new Random();
-            var randThought = thoughts[rand.Next(thoughts.Count)];
-
-            return _mapper.Map<ThoughtDto>(randThought);
-        }
-
         public async Task<IEnumerable<ThoughtGridDto>> GetGridAsync()
         {
             var thoughts = (await GetThoughtsFromCache()).OrderByDescending(x => x.CreatedDateTime);
             return _mapper.Map<IEnumerable<ThoughtGridDto>>(thoughts);
         }
 
-        public async Task<IEnumerable<ThoughtGridDto>> GetThoughtBankAsync()
+        public async Task<IEnumerable<ThoughtGridDto>> GetRecentlyAddedThoughtsAsync()
         {
-            var thoughtBank = await _cache.GetRecordAsync<List<Thought>>(CacheKeys.ThoughtBank) ?? new List<Thought>();
-            return _mapper.Map<IEnumerable<ThoughtGridDto>>(thoughtBank);
+            //Eventually remove from cache what has already been used so we don't repeat random thoughts or add a processing table to show recent ones that were prompted
+            var thoughts = (await GetThoughtsFromCache()).OrderByDescending(t => t.CreatedDateTime).Take(recentThoughtCount);
+            return _mapper.Map<IEnumerable<ThoughtGridDto>>(thoughts);
+        }
+
+        public async Task<IEnumerable<ThoughtGridDto>> GetRecentlyViewedThoughtsAsync()
+        {
+            var recentlyViewedThoughts = await _cache.GetRecordAsync<List<Thought>>(CacheKeys.RecentlyViewedThoughts) ?? new List<Thought>();
+            return _mapper.Map<IEnumerable<ThoughtGridDto>>(recentlyViewedThoughts);
         }
 
         public async Task<IEnumerable<ThoughtGridDto>> GetRelatedThoughtsGridAsync(int thoughtId)
@@ -188,11 +189,11 @@ namespace BucketOfThoughts.Services.Thoughts
         private async Task AddToThoughtBank(Thought thought)
         {
             //Eventually add this to DB but for now just using caching
-            var thoughtBank = await _cache.GetRecordAsync<List<Thought>>(CacheKeys.ThoughtBank) ?? new List<Thought>();
+            var thoughtBank = await _cache.GetRecordAsync<List<Thought>>(CacheKeys.RecentlyViewedThoughts) ?? new List<Thought>();
             if (!thoughtBank.Any(tb => tb.Id == thought.Id))
             {
                 thoughtBank.Add(thought);
-                await _cache.SetRecordAsync(CacheKeys.ThoughtBank, thoughtBank);
+                await _cache.SetRecordAsync(CacheKeys.RecentlyViewedThoughts, thoughtBank);
             }
         }
 
