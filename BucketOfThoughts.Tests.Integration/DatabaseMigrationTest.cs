@@ -30,13 +30,9 @@ namespace BucketOfThoughts.Tests.Integration
         [InlineData(@"C:\Users\ckenl\Documents\")]
         public async Task ImportTableData(string filePath)
         {
-            List<ThoughtDetail> importData = new List<ThoughtDetail>(); //For now this is hard code but eventually create system
-
-            using (StreamReader r = new StreamReader($"{filePath}ThoughtDetails.json"))
-            {
-                string json = r.ReadToEnd();
-                importData = JsonSerializer.Deserialize<List<ThoughtDetail>>(json);
-            }
+            using StreamReader r = new($"{filePath}ThoughtDetails.json");
+            string json = r.ReadToEnd();
+            var importData = JsonSerializer.Deserialize<List<ThoughtDetail>>(json); //For now this is hard code but eventually create system
         }
     }
 }

@@ -20,12 +20,9 @@ namespace BucketOfThoughts.Tests.Integration
         [InlineData(@"C:\Users\ckenl\Documents\Quick-Add-Word-Data.json")]
         public async Task ImportWord(string filePath)
         {
-            InsertWordCardDto importData = new InsertWordCardDto();
-            using (StreamReader r = new StreamReader(filePath))
-            {
-                string json = r.ReadToEnd();
-                importData = JsonSerializer.Deserialize<InsertWordCardDto>(json);
-            }
+            using StreamReader r = new(filePath);
+            string json = r.ReadToEnd();
+            var importData = JsonSerializer.Deserialize<InsertWordCardDto>(json);
         }
 
         [Theory(Skip = "Batch process and not a test.")]
@@ -33,12 +30,9 @@ namespace BucketOfThoughts.Tests.Integration
         [InlineData(@"C:\Users\ckenl\Documents\Quick-Add-Word-Data.json")]
         public async Task ImportWords(string filePath)
         {
-            List<InsertWordCardDto> importData = new List<InsertWordCardDto>();
-            using (StreamReader r = new StreamReader(filePath))
-            {
-                string json = r.ReadToEnd();
-                importData = JsonSerializer.Deserialize<List<InsertWordCardDto>>(json);
-            }
+            using StreamReader r = new(filePath);
+            string json = r.ReadToEnd();
+            var importData = JsonSerializer.Deserialize<List<InsertWordCardDto>>(json);
         }
     }
 }
