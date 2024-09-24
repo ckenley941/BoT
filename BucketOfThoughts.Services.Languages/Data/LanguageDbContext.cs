@@ -66,6 +66,32 @@ public partial class LanguageDbContext : DbContext
                 .HasConstraintName("FK_WordExample_WordContext");
         });
 
+        modelBuilder.Entity<WordFlashCardSet>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+
+            entity.ToTable("WordFlashCardSet");
+
+            entity.Property(e => e.CreatedDateTime).HasDefaultValueSql("(getutcdate())");
+        });
+
+        modelBuilder.Entity<WordFlashCardSetDetail>(entity =>
+        {
+            entity.HasKey(e => new { e.WordXrefId, e.WordFlashCardSetId });
+
+            entity.ToTable("WordFlashCardSetDetail");
+
+            entity.HasOne(d => d.WordXref).WithMany(p => p.WordFlashCardSetDetails)
+                .HasForeignKey(d => d.WordXrefId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_WordFlashCardSetDetail_WordXref");
+
+            entity.HasOne(d => d.WordFlashCardSet).WithMany(p => p.Details)
+                .HasForeignKey(d => d.WordFlashCardSetId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_WordFlashCardSetDetail_WordFlashCardSet");
+        });
+
         modelBuilder.Entity<WordPronunciation>(entity =>
         {
             entity.HasKey(e => e.Id);

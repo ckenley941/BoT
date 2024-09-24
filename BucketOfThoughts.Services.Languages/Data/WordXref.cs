@@ -13,6 +13,7 @@ public partial class WordXref : BaseDbTable
     public int SortOrder { get; set; }
 
     public virtual ICollection<WordContext> WordContexts { get; set; } = new List<WordContext>();
+    public virtual ICollection<WordFlashCardSetDetail> WordFlashCardSetDetails { get; set; } = new List<WordFlashCardSetDetail>();
 
     public virtual Word WordId1Navigation { get; set; } = null!;
 
