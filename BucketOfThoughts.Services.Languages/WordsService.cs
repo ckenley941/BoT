@@ -76,7 +76,8 @@ namespace BucketOfThoughts.Services.Languages
                 word = new Word()
                 {
                     Description = primaryWord,
-                    LanguageId = languageId
+                    LanguageId = languageId,
+                    ModifiedDateTime = DateTime.UtcNow
                 };
 
                 await _dbContext.Words.AddAsync(word);

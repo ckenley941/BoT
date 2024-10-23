@@ -6,7 +6,7 @@ namespace BucketOfThoughts.Services.Languages.Objects
     {
         [Required]
         public string Word { get; set; }
-        public List<InsertWordContextDto> WordContexts { get; set; }
+        public List<InsertWordContextDto> WordContexts { get; set; } = new List<InsertWordContextDto>();
         public bool IsPrimaryTranslation { get; set; }
         public int SortOrder { get; set; }
         //public InsertWordRelationship WordRelationship { get; set; }

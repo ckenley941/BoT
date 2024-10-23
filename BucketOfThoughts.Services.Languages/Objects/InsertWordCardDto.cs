@@ -6,8 +6,8 @@ namespace BucketOfThoughts.Services.Languages.Objects
     {
         [Required]
         public string PrimaryWord { get; set; }
-        public List<InsertWordDto> WordDictionary { get; set; }
-        public List<InsertWordPronunciation> Pronunication { get; set; }
+        public List<InsertWordDto> WordDictionary { get; set; } = new List<InsertWordDto>();
+        public List<InsertWordPronunciation> Pronunication { get; set; } = new List<InsertWordPronunciation>();
 
     }
 }
